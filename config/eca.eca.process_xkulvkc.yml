@@ -1,0 +1,236 @@
+uuid: 1fcd0462-4dfd-4ff0-bbd9-096f18cc7e4b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.certificate.field_date_creation
+    - field.field.node.certificate.field_employee
+    - field.field.node.certificate.field_numb_vac_day
+    - field.storage.node.field_date_creation
+    - field.storage.node.field_employee
+    - field.storage.node.field_numb_vac_day
+    - node.type.certificate
+  module:
+    - eca_content
+    - eca_queue
+    - eca_user
+    - user
+id: process_xkulvkc
+modeller: bpmn_io
+label: 'Set value into Certificate'
+version: v1
+weight: null
+events:
+  Event_0he3scw:
+    plugin: 'content_entity:insert'
+    label: 'User created'
+    configuration:
+      type: 'user user'
+    successors:
+      -
+        id: Activity_0sf03tt
+        condition: ''
+      -
+        id: Activity_0i7ejre
+        condition: ''
+  Event_0azw4w1:
+    plugin: 'eca_queue:processing_task'
+    label: Task
+    configuration:
+      distribute: false
+      task_name: delaysertificate
+      task_value: ''
+      cron: ''
+    successors:
+      -
+        id: Activity_1yfeyl9
+        condition: ''
+conditions: {  }
+gateways: {  }
+actions:
+  Activity_12jvxut:
+    plugin: eca_enqueue_task_delayed
+    label: 'Queue task'
+    configuration:
+      delay_value: '30'
+      delay_unit: '1'
+      task_name: delaysertificate
+      task_value: ''
+      tokens: user
+    successors:
+      -
+        id: Activity_0sjrv5c
+        condition: ''
+  Activity_0gr7n7o:
+    plugin: eca_new_entity
+    label: 'Create certificate'
+    configuration:
+      token_name: certificate
+      type: 'node certificate'
+      langcode: en
+      label: ''
+      published: true
+      owner: user
+    successors:
+      -
+        id: Activity_0ya2jl3
+        condition: ''
+      -
+        id: Activity_10rnhbw
+        condition: ''
+  Activity_1yfeyl9:
+    plugin: eca_switch_account
+    label: 'User to admin'
+    configuration:
+      user_id: '1'
+    successors:
+      -
+        id: Activity_0gr7n7o
+        condition: ''
+      -
+        id: Activity_01l0h6r
+        condition: ''
+  Activity_0i7ejre:
+    plugin: eca_token_load_user_current
+    label: 'Load user'
+    configuration:
+      token_name: user
+    successors:
+      -
+        id: Activity_12jvxut
+        condition: ''
+      -
+        id: Activity_1c8uugl
+        condition: ''
+  Activity_0ya2jl3:
+    plugin: eca_set_field_value
+    label: 'Set title'
+    configuration:
+      field_name: title
+      field_value: 'Certificate #[random:number]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certificate
+    successors:
+      -
+        id: Activity_0h3562s
+        condition: ''
+      -
+        id: Activity_1mpchlu
+        condition: ''
+  Activity_0h3562s:
+    plugin: eca_set_field_value
+    label: 'Set employee'
+    configuration:
+      field_name: field_employee
+      field_value: '[user]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certificate
+    successors:
+      -
+        id: Activity_03gs3b2
+        condition: ''
+      -
+        id: Activity_107r8jx
+        condition: ''
+  Activity_03gs3b2:
+    plugin: eca_set_field_value
+    label: 'Set current date'
+    configuration:
+      field_name: field_date_creation
+      field_value: '[current-date:row]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certificate
+    successors:
+      -
+        id: Activity_1tnmmmy
+        condition: ''
+      -
+        id: Activity_1idgnve
+        condition: ''
+  Activity_1tnmmmy:
+    plugin: eca_set_field_value
+    label: 'Set Numb Vac Day'
+    configuration:
+      field_name: field_numb_vac_day
+      field_value: '7'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certificate
+    successors:
+      -
+        id: Activity_04aemay
+        condition: ''
+  Activity_0sf03tt:
+    plugin: action_message_action
+    label: Activity_0sf03tt
+    configuration:
+      replace_tokens: false
+      message: '1'
+    successors: {  }
+  Activity_1c8uugl:
+    plugin: action_message_action
+    label: Activity_1c8uugl
+    configuration:
+      replace_tokens: false
+      message: '2'
+    successors: {  }
+  Activity_0sjrv5c:
+    plugin: action_message_action
+    label: Activity_0sjrv5c
+    configuration:
+      replace_tokens: false
+      message: '3'
+    successors: {  }
+  Activity_01l0h6r:
+    plugin: action_message_action
+    label: Activity_01l0h6r
+    configuration:
+      replace_tokens: false
+      message: '4'
+    successors: {  }
+  Activity_10rnhbw:
+    plugin: action_message_action
+    label: Activity_10rnhbw
+    configuration:
+      replace_tokens: false
+      message: '5'
+    successors: {  }
+  Activity_1mpchlu:
+    plugin: action_message_action
+    label: Activity_1mpchlu
+    configuration:
+      replace_tokens: false
+      message: '6'
+    successors: {  }
+  Activity_107r8jx:
+    plugin: action_message_action
+    label: Activity_107r8jx
+    configuration:
+      replace_tokens: false
+      message: '7'
+    successors: {  }
+  Activity_1idgnve:
+    plugin: action_message_action
+    label: Activity_1idgnve
+    configuration:
+      replace_tokens: false
+      message: '8'
+    successors: {  }
+  Activity_04aemay:
+    plugin: action_message_action
+    label: Activity_04aemay
+    configuration:
+      replace_tokens: false
+      message: '9'
+    successors: {  }
