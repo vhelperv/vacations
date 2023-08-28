@@ -4,14 +4,18 @@ status: true
 dependencies:
   config:
     - filter.format.basic_html
+    - node.type.vacation
   module:
     - comment
     - contact
     - filter
+    - node
+    - scheduler
     - search
     - shortcut
     - system
-    - workflow
+    - toolbar
+    - update
 _core:
   default_config_hash: I44QAB4es39lNzMQWiJLq2dfjX7VRSOzT_5KzAcUq_M
 id: authenticated
@@ -21,10 +25,20 @@ is_admin: false
 permissions:
   - 'access comments'
   - 'access content'
+  - 'access content overview'
   - 'access shortcuts'
   - 'access site-wide contact form'
-  - 'create request_status workflow_transition'
+  - 'access toolbar'
+  - 'access user profiles'
+  - 'change own username'
+  - 'create vacation content'
+  - 'edit own comments'
   - 'post comments'
+  - 'schedule publishing of nodes'
   - 'search content'
   - 'skip comment approval'
   - 'use text format basic_html'
+  - 'view own unpublished content'
+  - 'view scheduled content'
+  - 'view update notifications'
+  - 'view user email addresses'

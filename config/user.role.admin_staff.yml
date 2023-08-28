@@ -6,11 +6,13 @@ dependencies:
     - node.type.vacation
   module:
     - node
+    - workflow
 id: admin_staff
 label: 'Admin Staff'
 weight: 18
 is_admin: null
 permissions:
+  - 'create request_status workflow_transition'
   - 'create vacation content'
   - 'edit own vacation content'
   - 'view vacation revisions'

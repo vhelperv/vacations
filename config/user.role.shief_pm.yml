@@ -3,14 +3,20 @@ langcode: en
 status: true
 dependencies:
   config:
+    - node.type.certificate
     - node.type.vacation
   module:
     - node
+    - workflow
 id: shief_pm
 label: 'Сhief PM'
 weight: 10
 is_admin: null
 permissions:
+  - 'create certificate content'
+  - 'create request_status workflow_transition'
   - 'create vacation content'
+  - 'edit own certificate content'
   - 'edit own vacation content'
+  - 'view certificate revisions'
   - 'view vacation revisions'
