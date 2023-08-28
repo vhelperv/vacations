@@ -1,0 +1,91 @@
+uuid: e86234d6-8a71-4a7b-8cfc-26370e61701a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.vacation.field_date_end
+    - field.field.node.vacation.field_date_start
+    - field.field.node.vacation.field_numb_day
+    - field.field.node.vacation.field_state_vacation
+    - field.field.node.vacation.field_timestamp
+    - field.field.node.vacation.field_vacation_s_employee_
+    - node.type.vacation
+  module:
+    - datetime
+    - path
+    - workflow
+id: node.vacation.default
+targetEntityType: node
+bundle: vacation
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_date_end:
+    type: datetime_default
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_date_start:
+    type: datetime_default
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_state_vacation:
+    type: workflow_default
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_vacation_s_employee_:
+    type: entity_reference_autocomplete
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 8
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 6
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  field_numb_day: true
+  field_timestamp: true
+  promote: true
+  sticky: true

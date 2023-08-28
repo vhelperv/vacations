@@ -1,0 +1,16 @@
+uuid: 29c93b3e-8768-49d8-977b-2f03e839d529
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.vacation
+  module:
+    - node
+id: shief_pm
+label: 'Сhief PM'
+weight: 10
+is_admin: null
+permissions:
+  - 'create vacation content'
+  - 'edit own vacation content'
+  - 'view vacation revisions'

@@ -1,0 +1,16 @@
+uuid: 62861b3e-2c0d-46f8-b480-7611958263e1
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.vacation
+  module:
+    - node
+id: accounting
+label: Accounting
+weight: 17
+is_admin: null
+permissions:
+  - 'create vacation content'
+  - 'edit own vacation content'
+  - 'view vacation revisions'

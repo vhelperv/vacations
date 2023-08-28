@@ -1,0 +1,16 @@
+uuid: 7c761d60-d537-4e7f-bbf6-ccc5ed192657
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.vacation
+  module:
+    - node
+id: hr
+label: HR
+weight: 15
+is_admin: null
+permissions:
+  - 'create vacation content'
+  - 'edit own vacation content'
+  - 'view vacation revisions'

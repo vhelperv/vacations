@@ -1,0 +1,16 @@
+uuid: 23451a17-b2b6-4777-94e2-f54df50d11cb
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.vacation
+  module:
+    - node
+id: pm
+label: PM
+weight: 9
+is_admin: null
+permissions:
+  - 'create vacation content'
+  - 'edit own vacation content'
+  - 'view vacation revisions'

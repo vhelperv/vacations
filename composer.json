@@ -23,6 +23,9 @@
         "drupal/core-recommended": "^9",
         "drupal/eca": "^1.1",
         "drupal/gin": "^3.0@RC",
+        "drupal/masquerade": "^2.0@RC",
+        "drupal/scheduler": "^2.0",
+        "drupal/workflow": "^1.7",
         "drush/drush": "^10.2"
     },
     "conflict": {

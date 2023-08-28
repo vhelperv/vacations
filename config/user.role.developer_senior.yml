@@ -1,0 +1,16 @@
+uuid: a9154b0f-4cb0-477d-8425-ca5c2d77ed42
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.vacation
+  module:
+    - node
+id: developer_senior
+label: Developer-Senior
+weight: 7
+is_admin: null
+permissions:
+  - 'create vacation content'
+  - 'edit own vacation content'
+  - 'view vacation revisions'

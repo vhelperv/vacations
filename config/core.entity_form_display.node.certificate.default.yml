@@ -1,0 +1,85 @@
+uuid: a1af4708-e4b8-492f-a641-f409ae7f3172
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.certificate.field_date_combustion
+    - field.field.node.certificate.field_date_creation
+    - field.field.node.certificate.field_employee
+    - field.field.node.certificate.field_numb_vac_day
+    - node.type.certificate
+  module:
+    - datetime
+    - path
+id: node.certificate.default
+targetEntityType: node
+bundle: certificate
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_date_creation:
+    type: datetime_default
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_employee:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_numb_vac_day:
+    type: number
+    weight: 3
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  scheduler_settings:
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 7
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 4
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  field_date_combustion: true
+  promote: true
+  publish_on: true
+  sticky: true
+  unpublish_on: true

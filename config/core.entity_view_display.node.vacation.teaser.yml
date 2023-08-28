@@ -1,0 +1,32 @@
+uuid: 74db9d0e-c76b-450a-a84c-3690dbe8963c
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.vacation.field_date_end
+    - field.field.node.vacation.field_date_start
+    - field.field.node.vacation.field_numb_day
+    - field.field.node.vacation.field_state_vacation
+    - field.field.node.vacation.field_timestamp
+    - field.field.node.vacation.field_vacation_s_employee_
+    - node.type.vacation
+  module:
+    - user
+id: node.vacation.teaser
+targetEntityType: node
+bundle: vacation
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_date_end: true
+  field_date_start: true
+  field_numb_day: true
+  field_state_vacation: true
+  field_timestamp: true
+  field_vacation_s_employee_: true

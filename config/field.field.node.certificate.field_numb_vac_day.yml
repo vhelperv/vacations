@@ -1,0 +1,23 @@
+uuid: aaf967a4-74c4-40db-8092-ca6d35d943f0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_numb_vac_day
+    - node.type.certificate
+id: node.certificate.field_numb_vac_day
+field_name: field_numb_vac_day
+entity_type: node
+bundle: certificate
+label: 'Numb Vac Day'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

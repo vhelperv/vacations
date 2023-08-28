@@ -1,0 +1,59 @@
+uuid: 512d4930-21f9-44d5-87ee-e3b84b75c6b7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.certificate.field_date_combustion
+    - field.field.node.certificate.field_date_creation
+    - field.field.node.certificate.field_employee
+    - field.field.node.certificate.field_numb_vac_day
+    - node.type.certificate
+  module:
+    - datetime
+    - user
+id: node.certificate.default
+targetEntityType: node
+bundle: certificate
+mode: default
+content:
+  field_date_combustion:
+    type: datetime_default
+    label: inline
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_date_creation:
+    type: datetime_default
+    label: inline
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_employee:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_numb_vac_day:
+    type: number_integer
+    label: inline
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
+hidden: {  }

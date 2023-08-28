@@ -1,0 +1,16 @@
+uuid: 2e2b8716-ae6b-4d61-b2d0-7b8a2a27fe7a
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.vacation
+  module:
+    - node
+id: sales
+label: Sales
+weight: 12
+is_admin: null
+permissions:
+  - 'create vacation content'
+  - 'edit own vacation content'
+  - 'view vacation revisions'

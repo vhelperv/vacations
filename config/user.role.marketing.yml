@@ -1,0 +1,16 @@
+uuid: 86263151-a8ec-4a63-9e68-96af71d64880
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.vacation
+  module:
+    - node
+id: marketing
+label: Marketing
+weight: 13
+is_admin: null
+permissions:
+  - 'create vacation content'
+  - 'edit own vacation content'
+  - 'view vacation revisions'

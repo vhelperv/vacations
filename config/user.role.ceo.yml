@@ -1,0 +1,16 @@
+uuid: e758b2c4-ba3c-4369-9d08-57326ab1a32f
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.vacation
+  module:
+    - node
+id: ceo
+label: CEO
+weight: 4
+is_admin: null
+permissions:
+  - 'create vacation content'
+  - 'edit own vacation content'
+  - 'view vacation revisions'

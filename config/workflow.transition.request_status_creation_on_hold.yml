@@ -1,0 +1,13 @@
+uuid: d1571d53-0724-4ece-b613-9739ed6077e0
+langcode: en
+status: true
+dependencies:
+  config:
+    - workflow.state.request_status_creation
+    - workflow.state.request_status_on_hold
+id: request_status_creation_on_hold
+label: null
+module: workflow
+from_sid: request_status_creation
+to_sid: request_status_on_hold
+roles: {  }

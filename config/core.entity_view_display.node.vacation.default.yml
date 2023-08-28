@@ -1,0 +1,78 @@
+uuid: e57dd416-dee1-4d55-975c-ec3dd641736c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.vacation.field_date_end
+    - field.field.node.vacation.field_date_start
+    - field.field.node.vacation.field_numb_day
+    - field.field.node.vacation.field_state_vacation
+    - field.field.node.vacation.field_timestamp
+    - field.field.node.vacation.field_vacation_s_employee_
+    - node.type.vacation
+  module:
+    - datetime
+    - options
+    - user
+id: node.vacation.default
+targetEntityType: node
+bundle: vacation
+mode: default
+content:
+  field_date_end:
+    type: datetime_custom
+    label: inline
+    settings:
+      timezone_override: ''
+      date_format: d-m-Y
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_date_start:
+    type: datetime_custom
+    label: inline
+    settings:
+      timezone_override: ''
+      date_format: d-m-Y
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_numb_day:
+    type: number_integer
+    label: inline
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_state_vacation:
+    type: list_default
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_timestamp:
+    type: datetime_default
+    label: inline
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_vacation_s_employee_:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
+hidden: {  }

@@ -1,0 +1,13 @@
+uuid: 39efc814-f057-4398-b7d9-b5154701b840
+langcode: en
+status: true
+dependencies:
+  config:
+    - workflow.state.request_status_approved
+    - workflow.state.request_status_on_hold
+id: request_status_on_hold_approved
+label: null
+module: workflow
+from_sid: request_status_on_hold
+to_sid: request_status_approved
+roles: {  }

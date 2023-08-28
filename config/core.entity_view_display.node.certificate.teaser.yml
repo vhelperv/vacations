@@ -1,0 +1,28 @@
+uuid: e0760c18-a446-4b37-b1d3-442c4bbaff8e
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.certificate.field_date_combustion
+    - field.field.node.certificate.field_date_creation
+    - field.field.node.certificate.field_employee
+    - field.field.node.certificate.field_numb_vac_day
+    - node.type.certificate
+  module:
+    - user
+id: node.certificate.teaser
+targetEntityType: node
+bundle: certificate
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_date_combustion: true
+  field_date_creation: true
+  field_employee: true
+  field_numb_vac_day: true

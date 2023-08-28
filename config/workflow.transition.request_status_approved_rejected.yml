@@ -1,0 +1,13 @@
+uuid: 87122c42-aef7-4df8-a4b8-d32414b3c10a
+langcode: en
+status: true
+dependencies:
+  config:
+    - workflow.state.request_status_approved
+    - workflow.state.request_status_rejected
+id: request_status_approved_rejected
+label: null
+module: workflow
+from_sid: request_status_approved
+to_sid: request_status_rejected
+roles: {  }

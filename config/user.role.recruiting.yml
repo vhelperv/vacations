@@ -1,0 +1,16 @@
+uuid: e26174e2-3848-47ed-9b67-e1febc07fe90
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.vacation
+  module:
+    - node
+id: recruiting
+label: Recruiting
+weight: 14
+is_admin: null
+permissions:
+  - 'create vacation content'
+  - 'edit own vacation content'
+  - 'view vacation revisions'

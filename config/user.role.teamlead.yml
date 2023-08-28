@@ -1,0 +1,16 @@
+uuid: 436c882d-ea1e-4633-9f30-cb88db001741
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.vacation
+  module:
+    - node
+id: teamlead
+label: Teamlead
+weight: 8
+is_admin: null
+permissions:
+  - 'create vacation content'
+  - 'edit own vacation content'
+  - 'view vacation revisions'

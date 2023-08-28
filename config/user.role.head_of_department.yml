@@ -1,0 +1,16 @@
+uuid: f5764e0f-ea6f-4d3b-bbab-706c60fe469d
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.vacation
+  module:
+    - node
+id: head_of_department
+label: 'Head of Department'
+weight: 11
+is_admin: null
+permissions:
+  - 'create vacation content'
+  - 'edit own vacation content'
+  - 'view vacation revisions'

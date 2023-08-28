@@ -1,0 +1,16 @@
+uuid: 11497162-6a59-4bf2-abf5-2538708f3d21
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.vacation
+  module:
+    - node
+id: developer_junior
+label: Developer-Junior
+weight: 5
+is_admin: null
+permissions:
+  - 'create vacation content'
+  - 'edit own vacation content'
+  - 'view vacation revisions'
