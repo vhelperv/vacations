@@ -1,0 +1,216 @@
+uuid: 00cec90a-5ec8-40ae-ad03-2e4559f01415
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.person_who_approve.field_permission
+    - field.storage.paragraph.field_permission
+    - node.type.vacation
+    - paragraphs.paragraphs_type.person_who_approve
+  module:
+    - eca_base
+    - eca_content
+id: process_rifpqv5
+modeller: bpmn_io
+label: 'Approval system & Subtracting days'
+version: v1
+weight: -10
+events:
+  Event_0jt44x1:
+    plugin: 'content_entity:insert'
+    label: 'Insert Vacation'
+    configuration:
+      type: 'node vacation'
+    successors:
+      -
+        id: Activity_1d2pvzm
+        condition: ''
+      -
+        id: Activity_1tubcoc
+        condition: ''
+  Event_1cytdr3:
+    plugin: 'content_entity:insert'
+    label: 'Insert paragraph'
+    configuration:
+      type: 'paragraph person_who_approve'
+    successors:
+      -
+        id: Activity_1jd9bh0
+        condition: ''
+  Event_1pckq2l:
+    plugin: 'content_entity:update'
+    label: 'Update paragraph'
+    configuration:
+      type: 'paragraph person_who_approve'
+    successors:
+      -
+        id: Activity_1nv7w3k
+        condition: ''
+conditions:
+  Flow_1wdwrff:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[node:field_state_vacation:value]'
+      right: request_status_on_hold
+      operator: equal
+      type: value
+  Flow_1bill2y:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[node:field_type_vacation:target_id]'
+      right: '1'
+      operator: equal
+      type: value
+  Flow_1880gj1:
+    plugin: eca_scalar
+    configuration:
+      case: false
+      left: '[usercheck:field_person:entity:uid]'
+      right: '[current-user:uid]'
+      operator: equal
+      type: value
+      negate: true
+gateways:
+  Gateway_1gisisk:
+    type: 0
+    successors:
+      -
+        id: Activity_0igbcrn
+        condition: Flow_1bill2y
+      -
+        id: Activity_089s27b
+        condition: ''
+actions:
+  Activity_0igbcrn:
+    plugin: action_message_action
+    label: Activity_0igbcrn
+    configuration:
+      replace_tokens: false
+      message: 'TRUE'
+    successors: {  }
+  Activity_1d2pvzm:
+    plugin: eca_token_load_entity
+    label: 'Load Vacation'
+    configuration:
+      token_name: vacation
+      from: current
+      entity_type: _none
+      entity_id: ''
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      latest_revision: false
+      unchanged: false
+      object: ''
+    successors:
+      -
+        id: Gateway_1gisisk
+        condition: Flow_1wdwrff
+      -
+        id: Activity_02gg7vl
+        condition: ''
+  Activity_1tubcoc:
+    plugin: action_message_action
+    label: Activity_1tubcoc
+    configuration:
+      replace_tokens: false
+      message: '1'
+    successors: {  }
+  Activity_02gg7vl:
+    plugin: action_message_action
+    label: Activity_02gg7vl
+    configuration:
+      replace_tokens: false
+      message: '2'
+    successors: {  }
+  Activity_089s27b:
+    plugin: action_message_action
+    label: Activity_089s27b
+    configuration:
+      replace_tokens: false
+      message: '3'
+    successors: {  }
+  Activity_0qfc564:
+    plugin: action_message_action
+    label: Activity_0qfc564
+    configuration:
+      replace_tokens: false
+      message: gooooooood
+    successors: {  }
+  Activity_1jd9bh0:
+    plugin: eca_token_load_entity
+    label: 'Load paragraph entity'
+    configuration:
+      token_name: state
+      from: current
+      entity_type: _none
+      entity_id: ''
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      latest_revision: false
+      unchanged: false
+      object: ''
+    successors:
+      -
+        id: Activity_1gd1jm0
+        condition: ''
+  Activity_1gd1jm0:
+    plugin: eca_set_field_value
+    label: 'Set value [On-hold]'
+    configuration:
+      field_name: '[field_permission:value]'
+      field_value: request_status_on_hold
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: state
+    successors:
+      -
+        id: Activity_0qfc564
+        condition: ''
+  Activity_1nv7w3k:
+    plugin: eca_token_load_entity
+    label: 'Load paragraph entity'
+    configuration:
+      token_name: usercheck
+      from: current
+      entity_type: _none
+      entity_id: ''
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      latest_revision: false
+      unchanged: false
+      object: ''
+    successors:
+      -
+        id: Activity_1b7b2n4
+        condition: Flow_1880gj1
+  Activity_1b7b2n4:
+    plugin: eca_set_field_value
+    label: 'Set value [On-hold]'
+    configuration:
+      field_name: '[field_permission:value]'
+      field_value: request_status_on_hold
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: usercheck
+    successors:
+      -
+        id: Activity_179d31p
+        condition: ''
+  Activity_179d31p:
+    plugin: action_message_action
+    label: Activity_179d31p
+    configuration:
+      replace_tokens: false
+      message: gooooood
+    successors: {  }

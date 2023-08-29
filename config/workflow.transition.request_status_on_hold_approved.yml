@@ -16,6 +16,7 @@ roles:
   pm: pm
   shief_pm: shief_pm
   head_of_department: head_of_department
+  client: client
   workflow_author: '0'
   anonymous: '0'
   administrator: '0'

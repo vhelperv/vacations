@@ -14,5 +14,4 @@ is_admin: null
 permissions:
   - 'create request_status workflow_transition'
   - 'create vacation content'
-  - 'edit own vacation content'
   - 'view vacation revisions'

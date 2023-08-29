@@ -1,0 +1,40 @@
+uuid: c8146756-77df-4873-a420-4052eee5b4a9
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - node.type.vacation
+  module:
+    - admin_toolbar_search
+    - comment
+    - filter
+    - node
+    - paragraphs_type_permissions
+    - system
+    - toolbar
+    - workflow
+id: client
+label: Client
+weight: 19
+is_admin: null
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'access content overview'
+  - 'access toolbar'
+  - 'access user profiles'
+  - 'bypass node access'
+  - 'bypass request_status workflow_transition access'
+  - 'change own username'
+  - 'create request_status workflow_transition'
+  - 'edit any vacation content'
+  - 'edit own comments'
+  - 'post comments'
+  - 'skip comment approval'
+  - 'update paragraph content person_who_approve'
+  - 'use admin toolbar search'
+  - 'use text format basic_html'
+  - 'view paragraph content person_who_approve'
+  - 'view user email addresses'
+  - 'view vacation revisions'

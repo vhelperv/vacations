@@ -7,16 +7,21 @@ dependencies:
     - node.type.vacation
   module:
     - node
+    - paragraphs_type_permissions
     - workflow
 id: ceo
 label: CEO
 weight: 4
 is_admin: null
 permissions:
+  - 'bypass node access'
+  - 'bypass request_status workflow_transition access'
   - 'create certificate content'
   - 'create request_status workflow_transition'
   - 'create vacation content'
+  - 'edit any vacation content'
   - 'edit own certificate content'
-  - 'edit own vacation content'
+  - 'update paragraph content person_who_approve'
   - 'view certificate revisions'
+  - 'view paragraph content person_who_approve'
   - 'view vacation revisions'

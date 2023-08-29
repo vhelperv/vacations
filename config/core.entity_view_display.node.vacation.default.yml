@@ -3,15 +3,18 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.vacation.field_approve
     - field.field.node.vacation.field_date_end
     - field.field.node.vacation.field_date_start
     - field.field.node.vacation.field_numb_day
     - field.field.node.vacation.field_state_vacation
     - field.field.node.vacation.field_timestamp
+    - field.field.node.vacation.field_type_vacation
     - field.field.node.vacation.field_vacation_s_employee_
     - node.type.vacation
   module:
     - datetime
+    - entity_reference_revisions
     - options
     - user
 id: node.vacation.default
@@ -19,6 +22,15 @@ targetEntityType: node
 bundle: vacation
 mode: default
 content:
+  field_approve:
+    type: entity_reference_revisions_entity_view
+    label: inline
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 8
+    region: content
   field_date_end:
     type: datetime_custom
     label: inline
@@ -51,7 +63,7 @@ content:
     label: inline
     settings: {  }
     third_party_settings: {  }
-    weight: 5
+    weight: 6
     region: content
   field_timestamp:
     type: datetime_default
@@ -61,6 +73,14 @@ content:
       format_type: medium
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_type_vacation:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 5
     region: content
   field_vacation_s_employee_:
     type: entity_reference_label
@@ -73,6 +93,6 @@ content:
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 6
+    weight: 7
     region: content
 hidden: {  }
