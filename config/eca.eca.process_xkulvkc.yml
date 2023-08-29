@@ -11,6 +11,7 @@ dependencies:
     - field.storage.node.field_numb_vac_day
     - node.type.certificate
   module:
+    - eca_base
     - eca_content
     - eca_queue
     - eca_user
@@ -21,18 +22,6 @@ label: 'Set value into Certificate'
 version: v1
 weight: null
 events:
-  Event_0he3scw:
-    plugin: 'content_entity:insert'
-    label: 'User created'
-    configuration:
-      type: 'user user'
-    successors:
-      -
-        id: Activity_0sf03tt
-        condition: ''
-      -
-        id: Activity_0i7ejre
-        condition: ''
   Event_0azw4w1:
     plugin: 'eca_queue:processing_task'
     label: Task
@@ -45,18 +34,69 @@ events:
       -
         id: Activity_1yfeyl9
         condition: ''
-conditions: {  }
-gateways: {  }
+  Event_1umtqxz:
+    plugin: 'content_entity:insert'
+    label: 'Insert User'
+    configuration:
+      type: 'user user'
+    successors:
+      -
+        id: Activity_0sf03tt
+        condition: ''
+      -
+        id: Activity_0daw65u
+        condition: ''
+conditions:
+  Flow_10rcmug:
+    plugin: eca_user_role
+    configuration:
+      negate: false
+      account: '[employee]'
+      role: developer_middle
+  Flow_0nyymc5:
+    plugin: eca_user_role
+    configuration:
+      negate: false
+      account: '[employee]'
+      role: developer_senior
+  Flow_1gy2cvw:
+    plugin: eca_user_role
+    configuration:
+      negate: false
+      account: '[employee]'
+      role: pm
+gateways:
+  Gateway_043sdx6:
+    type: 0
+    successors:
+      -
+        id: Activity_04oobn0
+        condition: Flow_10rcmug
+      -
+        id: Activity_1x0xlzh
+        condition: Flow_0nyymc5
+      -
+        id: Activity_04oobn0
+        condition: Flow_1gy2cvw
+      -
+        id: Activity_04aemay
+        condition: ''
+  Gateway_1c0jzux:
+    type: 0
+    successors:
+      -
+        id: Activity_03gs3b2
+        condition: ''
 actions:
   Activity_12jvxut:
     plugin: eca_enqueue_task_delayed
     label: 'Queue task'
     configuration:
-      delay_value: '30'
-      delay_unit: '1'
+      delay_value: '6'
+      delay_unit: '2592000'
       task_name: delaysertificate
       task_value: ''
-      tokens: user
+      tokens: employee
     successors:
       -
         id: Activity_0sjrv5c
@@ -70,7 +110,7 @@ actions:
       langcode: en
       label: ''
       published: true
-      owner: user
+      owner: '[employee:uid]'
     successors:
       -
         id: Activity_0ya2jl3
@@ -89,18 +129,6 @@ actions:
         condition: ''
       -
         id: Activity_01l0h6r
-        condition: ''
-  Activity_0i7ejre:
-    plugin: eca_token_load_user_current
-    label: 'Load user'
-    configuration:
-      token_name: user
-    successors:
-      -
-        id: Activity_12jvxut
-        condition: ''
-      -
-        id: Activity_1c8uugl
         condition: ''
   Activity_0ya2jl3:
     plugin: eca_set_field_value
@@ -125,7 +153,7 @@ actions:
     label: 'Set employee'
     configuration:
       field_name: field_employee
-      field_value: '[user]'
+      field_value: '[employee:uid]'
       method: 'set:clear'
       strip_tags: false
       trim: false
@@ -133,43 +161,10 @@ actions:
       object: certificate
     successors:
       -
-        id: Activity_03gs3b2
+        id: Gateway_043sdx6
         condition: ''
       -
         id: Activity_107r8jx
-        condition: ''
-  Activity_03gs3b2:
-    plugin: eca_set_field_value
-    label: 'Set current date'
-    configuration:
-      field_name: field_date_creation
-      field_value: '[current-date:row]'
-      method: 'set:clear'
-      strip_tags: false
-      trim: false
-      save_entity: true
-      object: certificate
-    successors:
-      -
-        id: Activity_1tnmmmy
-        condition: ''
-      -
-        id: Activity_1idgnve
-        condition: ''
-  Activity_1tnmmmy:
-    plugin: eca_set_field_value
-    label: 'Set Numb Vac Day'
-    configuration:
-      field_name: field_numb_vac_day
-      field_value: '7'
-      method: 'set:clear'
-      strip_tags: false
-      trim: false
-      save_entity: true
-      object: certificate
-    successors:
-      -
-        id: Activity_04aemay
         condition: ''
   Activity_0sf03tt:
     plugin: action_message_action
@@ -183,7 +178,7 @@ actions:
     label: Activity_1c8uugl
     configuration:
       replace_tokens: false
-      message: '2'
+      message: '2 [employee:uid] - [employee:display-name]'
     successors: {  }
   Activity_0sjrv5c:
     plugin: action_message_action
@@ -232,5 +227,138 @@ actions:
     label: Activity_04aemay
     configuration:
       replace_tokens: false
-      message: '9'
+      message: '9 - setup 7'
+    successors:
+      -
+        id: Gateway_1c0jzux
+        condition: ''
+  Activity_0i7ejre:
+    plugin: eca_token_set_value
+    label: 'Load user name'
+    configuration:
+      token_name: employee
+      token_value: '[registartion]'
+      use_yaml: false
+    successors:
+      -
+        id: Activity_12jvxut
+        condition: ''
+      -
+        id: Activity_1c8uugl
+        condition: ''
+  Activity_03gs3b2:
+    plugin: eca_set_field_value
+    label: 'Set current date'
+    configuration:
+      field_name: field_date_creation
+      field_value: '[current-date:medium]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certificate
+    successors:
+      -
+        id: Activity_1idgnve
+        condition: ''
+      -
+        id: Activity_0u01q4q
+        condition: ''
+  Activity_0daw65u:
+    plugin: eca_token_load_entity
+    label: 'Load entity user'
+    configuration:
+      token_name: registartion
+      from: current
+      entity_type: _none
+      entity_id: ''
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      latest_revision: false
+      unchanged: false
+      object: ''
+    successors:
+      -
+        id: Activity_0i7ejre
+        condition: ''
+      -
+        id: Activity_0bm7713
+        condition: ''
+  Activity_0bm7713:
+    plugin: action_message_action
+    label: Activity_0bm7713
+    configuration:
+      replace_tokens: false
+      message: '1.1'
+    successors: {  }
+  Activity_04oobn0:
+    plugin: eca_set_field_value
+    label: 'Set Numb Vac Day [9]'
+    configuration:
+      field_name: field_numb_vac_day
+      field_value: '9'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certificate
+    successors:
+      -
+        id: Activity_08bvjbk
+        condition: ''
+  Activity_1x0xlzh:
+    plugin: eca_set_field_value
+    label: 'Set Numb Vac Day [11]'
+    configuration:
+      field_name: field_numb_vac_day
+      field_value: '11'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certificate
+    successors:
+      -
+        id: Gateway_1c0jzux
+        condition: ''
+      -
+        id: Activity_1n5h10e
+        condition: ''
+  Activity_1n5h10e:
+    plugin: action_message_action
+    label: Activity_1n5h10e
+    configuration:
+      replace_tokens: false
+      message: '9 - setup 11'
+    successors: {  }
+  Activity_08bvjbk:
+    plugin: action_message_action
+    label: Activity_08bvjbk
+    configuration:
+      replace_tokens: false
+      message: '9 - setup 9'
+    successors:
+      -
+        id: Gateway_1c0jzux
+        condition: ''
+  Activity_0u01q4q:
+    plugin: eca_enqueue_task_delayed
+    label: 'Queue task'
+    configuration:
+      delay_value: '6'
+      delay_unit: '2592000'
+      task_name: delaysertificate
+      task_value: ''
+      tokens: employee
+    successors:
+      -
+        id: Activity_030rfmp
+        condition: ''
+  Activity_030rfmp:
+    plugin: action_message_action
+    label: Activity_030rfmp
+    configuration:
+      replace_tokens: false
+      message: '10'
     successors: {  }

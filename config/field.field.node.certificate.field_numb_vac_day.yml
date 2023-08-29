@@ -13,7 +13,9 @@ label: 'Numb Vac Day'
 description: ''
 required: true
 translatable: false
-default_value: {  }
+default_value:
+  -
+    value: 7
 default_value_callback: ''
 settings:
   min: null
