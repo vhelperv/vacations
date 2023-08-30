@@ -15,7 +15,7 @@ mode: default
 content:
   field_permission:
     type: workflow_default
-    label: inline
+    label: above
     settings: {  }
     third_party_settings: {  }
     weight: 1

@@ -8,26 +8,33 @@ dependencies:
   module:
     - admin_toolbar_search
     - comment
+    - content_moderation
     - filter
     - node
+    - paragraphs
     - paragraphs_type_permissions
     - system
     - toolbar
+    - update
     - workflow
 id: client
 label: Client
 weight: 19
 is_admin: null
 permissions:
+  - 'access any request_status workflow_transion overview'
   - 'access comments'
   - 'access content'
   - 'access content overview'
+  - 'access request_status workflow_transition form'
   - 'access toolbar'
   - 'access user profiles'
   - 'bypass node access'
-  - 'bypass request_status workflow_transition access'
   - 'change own username'
+  - 'create paragraph content person_who_approve'
   - 'create request_status workflow_transition'
+  - 'create status_approve workflow_transition'
+  - 'delete paragraph content person_who_approve'
   - 'edit any vacation content'
   - 'edit own comments'
   - 'post comments'
@@ -35,6 +42,10 @@ permissions:
   - 'update paragraph content person_who_approve'
   - 'use admin toolbar search'
   - 'use text format basic_html'
+  - 'view any unpublished content'
+  - 'view own unpublished content'
   - 'view paragraph content person_who_approve'
+  - 'view unpublished paragraphs'
+  - 'view update notifications'
   - 'view user email addresses'
   - 'view vacation revisions'

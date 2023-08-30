@@ -3,31 +3,30 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.vacation.field_numb_day
+    - field.field.node.vacation.field_range
+    - field.field.node.vacation.field_state_vacation
+    - field.field.node.vacation.field_vacation_s_employee_
     - field.field.paragraph.person_who_approve.field_permission
+    - field.storage.node.field_numb_day
+    - field.storage.node.field_range
+    - field.storage.node.field_state_vacation
+    - field.storage.node.field_vacation_s_employee_
     - field.storage.paragraph.field_permission
     - node.type.vacation
     - paragraphs.paragraphs_type.person_who_approve
+    - views.view.count_field_approve
   module:
     - eca_base
     - eca_content
+    - eca_tamper
+    - eca_views
 id: process_rifpqv5
 modeller: bpmn_io
 label: 'Approval system & Subtracting days'
 version: v1
 weight: -10
 events:
-  Event_0jt44x1:
-    plugin: 'content_entity:insert'
-    label: 'Insert Vacation'
-    configuration:
-      type: 'node vacation'
-    successors:
-      -
-        id: Activity_1d2pvzm
-        condition: ''
-      -
-        id: Activity_1tubcoc
-        condition: ''
   Event_1cytdr3:
     plugin: 'content_entity:insert'
     label: 'Insert paragraph'
@@ -46,25 +45,25 @@ events:
       -
         id: Activity_1nv7w3k
         condition: ''
+  Event_1jpln7k:
+    plugin: 'content_entity:insert'
+    label: 'Insert vacation'
+    configuration:
+      type: 'node vacation'
+    successors:
+      -
+        id: Activity_00ejyen
+        condition: ''
+  Event_1mkjlbs:
+    plugin: 'content_entity:load'
+    label: Event_1mkjlbs
+    configuration:
+      type: 'node vacation'
+    successors:
+      -
+        id: Activity_0innsk8
+        condition: ''
 conditions:
-  Flow_1wdwrff:
-    plugin: eca_scalar
-    configuration:
-      negate: false
-      case: false
-      left: '[node:field_state_vacation:value]'
-      right: request_status_on_hold
-      operator: equal
-      type: value
-  Flow_1bill2y:
-    plugin: eca_scalar
-    configuration:
-      negate: false
-      case: false
-      left: '[node:field_type_vacation:target_id]'
-      right: '1'
-      operator: equal
-      type: value
   Flow_1880gj1:
     plugin: eca_scalar
     configuration:
@@ -74,66 +73,8 @@ conditions:
       operator: equal
       type: value
       negate: true
-gateways:
-  Gateway_1gisisk:
-    type: 0
-    successors:
-      -
-        id: Activity_0igbcrn
-        condition: Flow_1bill2y
-      -
-        id: Activity_089s27b
-        condition: ''
+gateways: {  }
 actions:
-  Activity_0igbcrn:
-    plugin: action_message_action
-    label: Activity_0igbcrn
-    configuration:
-      replace_tokens: false
-      message: 'TRUE'
-    successors: {  }
-  Activity_1d2pvzm:
-    plugin: eca_token_load_entity
-    label: 'Load Vacation'
-    configuration:
-      token_name: vacation
-      from: current
-      entity_type: _none
-      entity_id: ''
-      revision_id: ''
-      properties: ''
-      langcode: _interface
-      latest_revision: false
-      unchanged: false
-      object: ''
-    successors:
-      -
-        id: Gateway_1gisisk
-        condition: Flow_1wdwrff
-      -
-        id: Activity_02gg7vl
-        condition: ''
-  Activity_1tubcoc:
-    plugin: action_message_action
-    label: Activity_1tubcoc
-    configuration:
-      replace_tokens: false
-      message: '1'
-    successors: {  }
-  Activity_02gg7vl:
-    plugin: action_message_action
-    label: Activity_02gg7vl
-    configuration:
-      replace_tokens: false
-      message: '2'
-    successors: {  }
-  Activity_089s27b:
-    plugin: action_message_action
-    label: Activity_089s27b
-    configuration:
-      replace_tokens: false
-      message: '3'
-    successors: {  }
   Activity_0qfc564:
     plugin: action_message_action
     label: Activity_0qfc564
@@ -214,3 +155,124 @@ actions:
       replace_tokens: false
       message: gooooood
     successors: {  }
+  Activity_00ejyen:
+    plugin: eca_token_load_entity
+    label: 'Load vacation entity'
+    configuration:
+      token_name: vacation
+      from: current
+      entity_type: _none
+      entity_id: ''
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      latest_revision: false
+      unchanged: false
+      object: ''
+    successors:
+      -
+        id: Activity_0pj75s9
+        condition: ''
+  Activity_0pj75s9:
+    plugin: eca_set_field_value
+    label: 'Set state'
+    configuration:
+      field_name: '[field_state_vacation:value]'
+      field_value: request_status_on_hold
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: vacation
+    successors:
+      -
+        id: Activity_0ipphie
+        condition: ''
+  Activity_0a28vpb:
+    plugin: 'eca_tamper:math'
+    label: 'Calc Numb Day'
+    configuration:
+      operation: subtraction
+      flip: false
+      value: '[vacation:field_range:start_date:raw]'
+      eca_data: '[vacation:field_range:end_date:raw]'
+      eca_token_name: numb
+    successors:
+      -
+        id: Activity_0pxpwwn
+        condition: ''
+  Activity_0n6kbzq:
+    plugin: eca_set_field_value
+    label: 'Set Numb Day'
+    configuration:
+      field_name: '[field_numb_day:value]'
+      field_value: '[number]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: vacation
+    successors: {  }
+  Activity_0pxpwwn:
+    plugin: 'eca_tamper:timetodate'
+    label: 'Convert Unix to Day'
+    configuration:
+      date_format: d
+      eca_data: '[numb]'
+      eca_token_name: number
+    successors:
+      -
+        id: Activity_0n6kbzq
+        condition: ''
+  Activity_0ipphie:
+    plugin: eca_set_field_value
+    label: 'Set Vacation''s Employee'
+    configuration:
+      field_name: '[field_vacation_s_employee_:target_id]'
+      field_value: '[current-user:uid]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: vacation
+    successors:
+      -
+        id: Activity_0a28vpb
+        condition: ''
+  Activity_1raeu7w:
+    plugin: action_message_action
+    label: Activity_1raeu7w
+    configuration:
+      replace_tokens: false
+      message: 'work - [countapr]'
+    successors: {  }
+  Activity_18rbrxi:
+    plugin: eca_views_query
+    label: Activity_18rbrxi
+    configuration:
+      token_name: countapr
+      view_id: count_field_approve
+      display_id: default
+      arguments: '[vacation:nid]'
+    successors:
+      -
+        id: Activity_1raeu7w
+        condition: ''
+  Activity_0innsk8:
+    plugin: eca_token_load_entity
+    label: Activity_0innsk8
+    configuration:
+      token_name: loadvac
+      from: current
+      entity_type: _none
+      entity_id: ''
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      latest_revision: false
+      unchanged: false
+      object: ''
+    successors:
+      -
+        id: Activity_18rbrxi
+        condition: ''

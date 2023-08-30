@@ -4,19 +4,17 @@ status: true
 dependencies:
   config:
     - field.field.node.vacation.field_approve
-    - field.field.node.vacation.field_date_end
-    - field.field.node.vacation.field_date_start
     - field.field.node.vacation.field_numb_day
+    - field.field.node.vacation.field_range
     - field.field.node.vacation.field_state_vacation
     - field.field.node.vacation.field_timestamp
     - field.field.node.vacation.field_type_vacation
     - field.field.node.vacation.field_vacation_s_employee_
     - node.type.vacation
   module:
-    - datetime
+    - datetime_range
     - paragraphs
     - path
-    - workflow
 id: node.vacation.default
 targetEntityType: node
 bundle: vacation
@@ -24,13 +22,13 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 5
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
   field_approve:
     type: paragraphs
-    weight: 26
+    weight: 3
     region: content
     settings:
       title: Paragraph
@@ -41,47 +39,29 @@ content:
       closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: ''
+      default_paragraph_type: person_who_approve
       features:
-        collapse_edit_all: collapse_edit_all
+        add_above: '0'
+        collapse_edit_all: '0'
         duplicate: duplicate
     third_party_settings: {  }
-  field_date_end:
-    type: datetime_default
-    weight: 2
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_date_start:
-    type: datetime_default
+  field_range:
+    type: daterange_default
     weight: 1
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_state_vacation:
-    type: workflow_default
-    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
   field_type_vacation:
     type: options_select
-    weight: 4
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
   path:
     type: path
-    weight: 7
+    weight: 6
     region: content
     settings: {  }
-    third_party_settings: {  }
-  status:
-    type: boolean_checkbox
-    weight: 8
-    region: content
-    settings:
-      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -93,7 +73,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 6
+    weight: 5
     region: content
     settings:
       match_operator: CONTAINS
@@ -103,9 +83,11 @@ content:
     third_party_settings: {  }
 hidden:
   field_numb_day: true
+  field_state_vacation: true
   field_timestamp: true
   field_vacation_s_employee_: true
   promote: true
   publish_on: true
+  status: true
   sticky: true
   unpublish_on: true

@@ -6,12 +6,19 @@ dependencies:
     - node.type.vacation
   module:
     - node
+    - paragraphs_type_permissions
+    - update
     - workflow
 id: developer_senior
 label: Developer-Senior
 weight: 7
 is_admin: null
 permissions:
+  - 'create paragraph content person_who_approve'
   - 'create request_status workflow_transition'
+  - 'create status_approve workflow_transition'
   - 'create vacation content'
+  - 'delete paragraph content person_who_approve'
+  - 'view own unpublished content'
+  - 'view update notifications'
   - 'view vacation revisions'

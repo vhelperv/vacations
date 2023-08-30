@@ -4,9 +4,8 @@ status: true
 dependencies:
   config:
     - field.field.node.vacation.field_approve
-    - field.field.node.vacation.field_date_end
-    - field.field.node.vacation.field_date_start
     - field.field.node.vacation.field_numb_day
+    - field.field.node.vacation.field_range
     - field.field.node.vacation.field_state_vacation
     - field.field.node.vacation.field_timestamp
     - field.field.node.vacation.field_type_vacation
@@ -14,9 +13,144 @@ dependencies:
     - node.type.vacation
   module:
     - datetime
+    - datetime_range
     - entity_reference_revisions
+    - layout_builder
+    - layout_discovery
     - options
     - user
+third_party_settings:
+  layout_builder:
+    enabled: true
+    allow_custom: false
+    sections:
+      -
+        layout_id: layout_onecol
+        layout_settings:
+          label: ''
+        components:
+          2f6b3156-fd3b-4d33-bfc0-e732975a4982:
+            uuid: 2f6b3156-fd3b-4d33-bfc0-e732975a4982
+            region: content
+            configuration:
+              id: 'field_block:node:vacation:field_vacation_s_employee_'
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              formatter:
+                type: entity_reference_label
+                label: inline
+                settings:
+                  link: true
+                third_party_settings: {  }
+            weight: 0
+            additional: {  }
+          f41827da-c110-40ed-9124-2e50d90c9f04:
+            uuid: f41827da-c110-40ed-9124-2e50d90c9f04
+            region: content
+            configuration:
+              id: 'field_block:node:vacation:field_type_vacation'
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              formatter:
+                type: entity_reference_label
+                label: inline
+                settings:
+                  link: false
+                third_party_settings: {  }
+            weight: 4
+            additional: {  }
+          b17d3548-7490-40de-b379-ffa79643e8a0:
+            uuid: b17d3548-7490-40de-b379-ffa79643e8a0
+            region: content
+            configuration:
+              id: 'field_block:node:vacation:field_state_vacation'
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              formatter:
+                type: list_default
+                label: inline
+                settings: {  }
+                third_party_settings: {  }
+            weight: 5
+            additional: {  }
+          b10b0d9c-3484-4e7c-ba8a-5fdcdea21d52:
+            uuid: b10b0d9c-3484-4e7c-ba8a-5fdcdea21d52
+            region: content
+            configuration:
+              id: 'field_block:node:vacation:field_approve'
+              label: Approve
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: entity_reference_revisions_entity_view
+                label: hidden
+                settings:
+                  view_mode: default
+                third_party_settings: {  }
+            weight: 6
+            additional: {  }
+          f18e3a27-9341-455f-8c20-ae5f2b371cc7:
+            uuid: f18e3a27-9341-455f-8c20-ae5f2b371cc7
+            region: content
+            configuration:
+              id: 'field_block:node:vacation:field_numb_day'
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              formatter:
+                type: number_integer
+                label: inline
+                settings:
+                  thousand_separator: ''
+                  prefix_suffix: true
+                third_party_settings: {  }
+            weight: 3
+            additional: {  }
+          41c977ed-9017-43c9-b70b-e54399ea9b0c:
+            uuid: 41c977ed-9017-43c9-b70b-e54399ea9b0c
+            region: content
+            configuration:
+              id: 'field_block:node:vacation:field_timestamp'
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              formatter:
+                type: datetime_default
+                label: inline
+                settings:
+                  timezone_override: ''
+                  format_type: medium
+                third_party_settings: {  }
+            weight: 1
+            additional: {  }
+          69604d9d-687c-4a6b-9f12-1b80fcc8cdf0:
+            uuid: 69604d9d-687c-4a6b-9f12-1b80fcc8cdf0
+            region: content
+            configuration:
+              id: 'field_block:node:vacation:field_range'
+              label: Range
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: daterange_custom
+                label: inline
+                settings:
+                  timezone_override: Europe/Kyiv
+                  date_format: d/m/Y
+                  separator: to
+                third_party_settings: {  }
+            weight: 2
+            additional: {  }
+        third_party_settings: {  }
 id: node.vacation.default
 targetEntityType: node
 bundle: vacation
@@ -29,25 +163,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 8
-    region: content
-  field_date_end:
-    type: datetime_custom
-    label: inline
-    settings:
-      timezone_override: ''
-      date_format: d-m-Y
-    third_party_settings: {  }
-    weight: 3
-    region: content
-  field_date_start:
-    type: datetime_custom
-    label: inline
-    settings:
-      timezone_override: ''
-      date_format: d-m-Y
-    third_party_settings: {  }
-    weight: 2
+    weight: 7
     region: content
   field_numb_day:
     type: number_integer
@@ -57,6 +173,16 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     weight: 4
+    region: content
+  field_range:
+    type: daterange_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+      separator: '-'
+    third_party_settings: {  }
+    weight: 9
     region: content
   field_state_vacation:
     type: list_default
@@ -93,6 +219,6 @@ content:
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 7
+    weight: 8
     region: content
 hidden: {  }

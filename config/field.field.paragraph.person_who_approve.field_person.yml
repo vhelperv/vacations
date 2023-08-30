@@ -43,5 +43,5 @@ settings:
         om: '0'
         accounting: '0'
         admin_staff: '0'
-    include_anonymous: false
+    include_anonymous: true
 field_type: entity_reference

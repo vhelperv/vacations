@@ -8,7 +8,6 @@ dependencies:
     - comment
     - contact
     - filter
-    - search
     - workflow
 _core:
   default_config_hash: 6WavjUYXIegP9AAg2zXGx54MWIVoomC3SZhNiqe-Dyk
@@ -20,5 +19,5 @@ permissions:
   - 'access comments'
   - 'access site-wide contact form'
   - 'create request_status workflow_transition'
-  - 'search content'
+  - 'create status_approve workflow_transition'
   - 'use text format restricted_html'

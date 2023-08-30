@@ -6,22 +6,33 @@ dependencies:
     - node.type.certificate
     - node.type.vacation
   module:
+    - content_moderation
     - node
+    - paragraphs
     - paragraphs_type_permissions
+    - update
     - workflow
 id: pm
 label: PM
 weight: 9
 is_admin: null
 permissions:
+  - 'access any request_status workflow_transion overview'
+  - 'access request_status workflow_transition form'
   - 'bypass node access'
-  - 'bypass request_status workflow_transition access'
   - 'create certificate content'
+  - 'create paragraph content person_who_approve'
   - 'create request_status workflow_transition'
+  - 'create status_approve workflow_transition'
   - 'create vacation content'
+  - 'delete paragraph content person_who_approve'
   - 'edit any vacation content'
   - 'edit own certificate content'
   - 'update paragraph content person_who_approve'
+  - 'view any unpublished content'
   - 'view certificate revisions'
+  - 'view own unpublished content'
   - 'view paragraph content person_who_approve'
+  - 'view unpublished paragraphs'
+  - 'view update notifications'
   - 'view vacation revisions'

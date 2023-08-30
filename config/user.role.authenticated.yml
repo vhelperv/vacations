@@ -15,7 +15,6 @@ dependencies:
     - shortcut
     - system
     - toolbar
-    - update
 _core:
   default_config_hash: I44QAB4es39lNzMQWiJLq2dfjX7VRSOzT_5KzAcUq_M
 id: authenticated
@@ -31,6 +30,7 @@ permissions:
   - 'access toolbar'
   - 'access user profiles'
   - 'change own username'
+  - 'create status_approve workflow_transition'
   - 'create vacation content'
   - 'edit own comments'
   - 'post comments'
@@ -40,5 +40,4 @@ permissions:
   - 'use text format basic_html'
   - 'view own unpublished content'
   - 'view scheduled content'
-  - 'view update notifications'
   - 'view user email addresses'

@@ -5,9 +5,8 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.vacation.field_approve
-    - field.field.node.vacation.field_date_end
-    - field.field.node.vacation.field_date_start
     - field.field.node.vacation.field_numb_day
+    - field.field.node.vacation.field_range
     - field.field.node.vacation.field_state_vacation
     - field.field.node.vacation.field_timestamp
     - field.field.node.vacation.field_type_vacation
@@ -27,9 +26,8 @@ content:
     region: content
 hidden:
   field_approve: true
-  field_date_end: true
-  field_date_start: true
   field_numb_day: true
+  field_range: true
   field_state_vacation: true
   field_timestamp: true
   field_type_vacation: true
