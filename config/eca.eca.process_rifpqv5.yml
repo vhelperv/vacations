@@ -68,15 +68,6 @@ events:
       -
         id: Activity_0innsk8
         condition: ''
-  Event_10rtdy1:
-    plugin: 'content_entity:update'
-    label: 'Update Vacation'
-    configuration:
-      type: 'node vacation'
-    successors:
-      -
-        id: Activity_02hzyw5
-        condition: ''
 conditions:
   Flow_1880gj1:
     plugin: eca_scalar
@@ -141,36 +132,16 @@ conditions:
       right: request_status_on_hold
       operator: equal
       type: value
-  Flow_0e99xvh:
+  Flow_18mpxzm:
     plugin: eca_entity_field_value
     configuration:
       negate: false
       case: false
       expected_value: '1'
-      field_name: status.value
+      field_name: field_type_vacation.target_id
       operator: equal
       type: value
-      entity: combdayvac
-  Flow_06inww9:
-    plugin: eca_entity_field_value
-    configuration:
-      negate: false
-      case: false
-      expected_value: request_status_approved
-      field_name: field_state_vacation.value
-      operator: equal
-      type: value
-      entity: combdayvac
-  Flow_1vqgm0o:
-    plugin: eca_entity_field_value
-    configuration:
-      negate: false
-      case: false
-      expected_value: paid
-      field_name: field_type_vacation.value
-      operator: equal
-      type: value
-      entity: combdayvac
+      entity: loadvac
 gateways:
   Gateway_05pv8vu:
     type: 0
@@ -199,18 +170,6 @@ gateways:
       -
         id: Activity_0gmm4si
         condition: Flow_0x6ossg
-  Gateway_12n4v4h:
-    type: 0
-    successors:
-      -
-        id: Gateway_00yp5n9
-        condition: Flow_06inww9
-  Gateway_00yp5n9:
-    type: 0
-    successors:
-      -
-        id: Activity_1afvsba
-        condition: Flow_1vqgm0o
 actions:
   Activity_1jd9bh0:
     plugin: eca_token_load_entity
@@ -628,7 +587,10 @@ actions:
       trim: false
       save_entity: true
       object: loadvac
-    successors: {  }
+    successors:
+      -
+        id: Activity_0wjf3xb
+        condition: Flow_18mpxzm
   Activity_1996w30:
     plugin: eca_list_add_entity
     label: 'Create list field_approve [listreject]'
@@ -641,25 +603,14 @@ actions:
       -
         id: Gateway_1vzq9rl
         condition: ''
-  Activity_02hzyw5:
-    plugin: eca_token_load_entity
-    label: 'Load vacation entity [combdayvac]'
+  Activity_0shi393:
+    plugin: action_message_action
+    label: Activity_0shi393
     configuration:
-      token_name: combdayvac
-      from: current
-      entity_type: _none
-      entity_id: ''
-      revision_id: ''
-      properties: ''
-      langcode: _interface
-      latest_revision: false
-      unchanged: false
-      object: ''
-    successors:
-      -
-        id: Gateway_12n4v4h
-        condition: Flow_0e99xvh
-  Activity_1afvsba:
+      replace_tokens: false
+      message: 'work - [b]'
+    successors: {  }
+  Activity_0wjf3xb:
     plugin: eca_views_query
     label: 'Load Balance'
     configuration:
@@ -669,15 +620,15 @@ actions:
       arguments: ''
     successors:
       -
-        id: Activity_0be3jfu
+        id: Activity_0ou9s2n
         condition: ''
-  Activity_0be3jfu:
+  Activity_0ou9s2n:
     plugin: 'eca_tamper:math'
-    label: 'Subtraction day'
+    label: Activity_0ou9s2n
     configuration:
       operation: subtraction
       flip: false
-      value: '[combdayvac:field_numb_day:value]'
+      value: '[loadvac:field_numb_day:value]'
       eca_data: '[balance]'
-      eca_token_name: balance
+      eca_token_name: b
     successors: {  }
