@@ -24,7 +24,7 @@ weight: -10
 events:
   Event_0azw4w1:
     plugin: 'eca_queue:processing_task'
-    label: Task
+    label: 'Task [delaysertificate]'
     configuration:
       distribute: false
       task_name: delaysertificate
@@ -45,6 +45,18 @@ events:
         condition: ''
       -
         id: Activity_0daw65u
+        condition: ''
+  Event_0ygvgjb:
+    plugin: 'eca_queue:processing_task'
+    label: 'Task [burn]'
+    configuration:
+      distribute: false
+      task_name: burn
+      task_value: ''
+      cron: ''
+    successors:
+      -
+        id: Activity_037liw8
         condition: ''
 conditions:
   Flow_10rcmug:
@@ -92,8 +104,8 @@ actions:
     plugin: eca_enqueue_task_delayed
     label: 'Queue task'
     configuration:
-      delay_value: '6'
-      delay_unit: '2592000'
+      delay_value: '1'
+      delay_unit: '60'
       task_name: delaysertificate
       task_value: ''
       tokens: employee
@@ -143,10 +155,10 @@ actions:
       object: certificate
     successors:
       -
-        id: Activity_0h3562s
+        id: Activity_1mpchlu
         condition: ''
       -
-        id: Activity_1mpchlu
+        id: Activity_13lxvb5
         condition: ''
   Activity_0h3562s:
     plugin: eca_set_field_value
@@ -346,8 +358,8 @@ actions:
     plugin: eca_enqueue_task_delayed
     label: 'Queue task'
     configuration:
-      delay_value: '6'
-      delay_unit: '2592000'
+      delay_value: '1'
+      delay_unit: '60'
       task_name: delaysertificate
       task_value: ''
       tokens: employee
@@ -355,10 +367,70 @@ actions:
       -
         id: Activity_030rfmp
         condition: ''
+      -
+        id: Activity_05qt05s
+        condition: ''
   Activity_030rfmp:
     plugin: action_message_action
     label: Activity_030rfmp
     configuration:
       replace_tokens: false
       message: '10'
+    successors: {  }
+  Activity_05qt05s:
+    plugin: eca_enqueue_task_delayed
+    label: 'Queue task'
+    configuration:
+      delay_value: '2'
+      delay_unit: '60'
+      task_name: burn
+      task_value: ''
+      tokens: certificate
+    successors:
+      -
+        id: Activity_02x2tda
+        condition: ''
+  Activity_02x2tda:
+    plugin: action_message_action
+    label: Activity_02x2tda
+    configuration:
+      replace_tokens: false
+      message: '11'
+    successors: {  }
+  Activity_13lxvb5:
+    plugin: eca_set_field_value
+    label: 'Set status [1]'
+    configuration:
+      field_name: status.value
+      field_value: '1'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certificate
+    successors:
+      -
+        id: Activity_0h3562s
+        condition: ''
+      -
+        id: Activity_0euaq4t
+        condition: ''
+  Activity_0euaq4t:
+    plugin: action_message_action
+    label: Activity_0euaq4t
+    configuration:
+      replace_tokens: false
+      message: '7'
+    successors: {  }
+  Activity_037liw8:
+    plugin: eca_set_field_value
+    label: 'Set status [0]'
+    configuration:
+      field_name: status.value
+      field_value: '0'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certificate
     successors: {  }
