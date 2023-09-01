@@ -78,6 +78,7 @@ module:
   tour: 0
   update: 0
   user: 0
+  view_unpublished: 0
   views_ui: 0
   workflow: 0
   workflow_access: 0

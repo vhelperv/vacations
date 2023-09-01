@@ -1,0 +1,159 @@
+uuid: 19ee347b-2c27-407e-9b5b-ab3987887b2a
+langcode: en
+status: false
+dependencies:
+  config:
+    - field.field.node.transaction.field_numb_day
+    - field.field.node.transaction.field_timestamp
+    - field.field.node.transaction.field_vacation_s_employee_
+    - field.field.node.vacation.field_numb_day
+    - field.field.node.vacation.field_timestamp
+    - field.field.node.vacation.field_vacation_s_employee_
+    - field.storage.node.field_numb_day
+    - field.storage.node.field_timestamp
+    - field.storage.node.field_vacation_s_employee_
+    - node.type.transaction
+    - node.type.vacation
+  module:
+    - eca_base
+    - eca_content
+    - eca_user
+id: process_zul3tw0
+modeller: bpmn_io
+label: Transaction
+version: v1
+weight: -10
+events:
+  Event_0h25296:
+    plugin: 'content_entity:load'
+    label: 'Load Vacation'
+    configuration:
+      type: 'node vacation'
+    successors:
+      -
+        id: Activity_03vsknq
+        condition: ''
+conditions:
+  Flow_0wp5r3i:
+    plugin: eca_entity_field_value
+    configuration:
+      negate: false
+      case: false
+      expected_value: '1'
+      field_name: status.value
+      operator: equal
+      type: value
+      entity: vacation
+gateways: {  }
+actions:
+  Activity_03vsknq:
+    plugin: eca_token_load_entity
+    label: 'Load vacation entity [vacation]'
+    configuration:
+      token_name: vacation
+      from: current
+      entity_type: _none
+      entity_id: ''
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      latest_revision: false
+      unchanged: false
+      object: ''
+    successors:
+      -
+        id: Activity_1b18ht8
+        condition: Flow_0wp5r3i
+  Activity_0q9yt08:
+    plugin: eca_switch_account
+    label: 'Swich account to admin'
+    configuration:
+      user_id: '1'
+    successors:
+      -
+        id: Activity_1wy7jai
+        condition: ''
+  Activity_1wy7jai:
+    plugin: eca_new_entity
+    label: 'Create transaction [transaction]'
+    configuration:
+      token_name: transaction
+      type: 'node transaction'
+      langcode: en
+      label: ''
+      published: false
+      owner: '[user]'
+    successors:
+      -
+        id: Activity_1s5g69v
+        condition: ''
+  Activity_1b18ht8:
+    plugin: eca_token_set_value
+    label: 'Save author vacation as [user]'
+    configuration:
+      token_name: user
+      token_value: '[vacation:author:uid]'
+      use_yaml: false
+    successors:
+      -
+        id: Activity_0q9yt08
+        condition: ''
+  Activity_1s5g69v:
+    plugin: eca_set_field_value
+    label: 'Set title'
+    configuration:
+      field_name: title
+      field_value: 'Transaction #[transaction:nid]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: false
+      object: transaction
+    successors:
+      -
+        id: Activity_0305lf9
+        condition: ''
+  Activity_0305lf9:
+    plugin: eca_set_field_value
+    label: |-
+      Set -day from 
+      vacation
+    configuration:
+      field_name: field_numb_day.value
+      field_value: '[vacation:field_numb_day:value]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: false
+      object: transaction
+    successors:
+      -
+        id: Activity_0ask93m
+        condition: ''
+  Activity_0ask93m:
+    plugin: eca_set_field_value
+    label: 'Set TimeStamp'
+    configuration:
+      field_name: field_timestamp.value
+      field_value: '[current-date:raw]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: false
+      object: transaction
+    successors:
+      -
+        id: Activity_001ue9l
+        condition: ''
+  Activity_001ue9l:
+    plugin: eca_set_field_value
+    label: 'Set Vacation Employee '
+    configuration:
+      field_name: field_vacation_s_employee_.value
+      field_value: '[user]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: transaction
+    successors: {  }

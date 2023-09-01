@@ -7,7 +7,8 @@ dependencies:
     - field.field.node.certificate.field_date_combustion
     - field.field.node.certificate.field_date_creation
     - field.field.node.certificate.field_employee
-    - field.field.node.certificate.field_numb_vac_day
+    - field.field.node.certificate.field_issued_days
+    - field.field.node.certificate.field_remainder
     - node.type.certificate
   module:
     - user
@@ -25,4 +26,5 @@ hidden:
   field_date_combustion: true
   field_date_creation: true
   field_employee: true
-  field_numb_vac_day: true
+  field_issued_days: true
+  field_remainder: true

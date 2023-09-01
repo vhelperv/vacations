@@ -29,6 +29,7 @@
         "drupal/paragraphs": "^1.15",
         "drupal/scheduler": "^2.0",
         "drupal/token": "^1.12",
+        "drupal/view_unpublished": "^1.1",
         "drupal/workflow": "^1.7",
         "drush/drush": "^10.2"
     },

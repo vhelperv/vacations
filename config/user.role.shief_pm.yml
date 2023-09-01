@@ -11,6 +11,7 @@ dependencies:
     - paragraphs
     - paragraphs_type_permissions
     - update
+    - view_unpublished
     - workflow
 id: shief_pm
 label: 'Сhief PM'
@@ -28,8 +29,12 @@ permissions:
   - 'delete paragraph content person_who_approve'
   - 'edit any vacation content'
   - 'edit own certificate content'
+  - 'edit own vacation content'
   - 'update paragraph content person_who_approve'
+  - 'view any unpublished certificate content'
   - 'view any unpublished content'
+  - 'view any unpublished transaction content'
+  - 'view any unpublished vacation content'
   - 'view certificate revisions'
   - 'view own unpublished content'
   - 'view paragraph content person_who_approve'

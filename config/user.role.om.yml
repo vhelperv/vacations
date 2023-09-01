@@ -6,6 +6,7 @@ dependencies:
     - node.type.vacation
   module:
     - node
+    - paragraphs
     - paragraphs_type_permissions
     - update
     - workflow
@@ -19,6 +20,10 @@ permissions:
   - 'create status_approve workflow_transition'
   - 'create vacation content'
   - 'delete paragraph content person_who_approve'
+  - 'edit own vacation content'
+  - 'update paragraph content person_who_approve'
   - 'view own unpublished content'
+  - 'view paragraph content person_who_approve'
+  - 'view unpublished paragraphs'
   - 'view update notifications'
   - 'view vacation revisions'

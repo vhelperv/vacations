@@ -38,6 +38,5 @@ permissions:
   - 'search content'
   - 'skip comment approval'
   - 'use text format basic_html'
-  - 'view own unpublished content'
   - 'view scheduled content'
   - 'view user email addresses'
