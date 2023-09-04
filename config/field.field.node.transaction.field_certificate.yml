@@ -11,7 +11,7 @@ field_name: field_certificate
 entity_type: node
 bundle: transaction
 label: Certificate
-description: ''
+description: 'Link to the certificate from which the days are calculated'
 required: false
 translatable: false
 default_value: {  }

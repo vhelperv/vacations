@@ -10,7 +10,7 @@ field_name: field_numb_day
 entity_type: node
 bundle: transaction
 label: 'Numb Day'
-description: ''
+description: 'The number of days that is subtracted'
 required: false
 translatable: true
 default_value: {  }

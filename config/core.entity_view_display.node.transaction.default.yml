@@ -3,12 +3,13 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.transaction.field__account_balance
+    - field.field.node.transaction.field_balance
     - field.field.node.transaction.field_certificate
+    - field.field.node.transaction.field_employee_vacation
     - field.field.node.transaction.field_numb_day
     - field.field.node.transaction.field_numb_vac_day
     - field.field.node.transaction.field_timestamp
-    - field.field.node.transaction.field_total
-    - field.field.node.transaction.field_vacation_s_employee_
     - node.type.transaction
   module:
     - datetime
@@ -18,15 +19,16 @@ targetEntityType: node
 bundle: transaction
 mode: default
 content:
-  field_certificate:
-    type: entity_reference_label
+  field__account_balance:
+    type: number_integer
     label: inline
     settings:
-      link: true
+      thousand_separator: ''
+      prefix_suffix: true
     third_party_settings: {  }
-    weight: 0
+    weight: 6
     region: content
-  field_numb_day:
+  field_balance:
     type: number_integer
     label: inline
     settings:
@@ -35,7 +37,23 @@ content:
     third_party_settings: {  }
     weight: 3
     region: content
-  field_numb_vac_day:
+  field_certificate:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_employee_vacation:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_numb_day:
     type: number_integer
     label: inline
     settings:
@@ -44,16 +62,7 @@ content:
     third_party_settings: {  }
     weight: 4
     region: content
-  field_timestamp:
-    type: datetime_default
-    label: inline
-    settings:
-      timezone_override: ''
-      format_type: medium
-    third_party_settings: {  }
-    weight: 2
-    region: content
-  field_total:
+  field_numb_vac_day:
     type: number_integer
     label: inline
     settings:
@@ -62,17 +71,18 @@ content:
     third_party_settings: {  }
     weight: 5
     region: content
-  field_vacation_s_employee_:
-    type: entity_reference_label
+  field_timestamp:
+    type: datetime_default
     label: inline
     settings:
-      link: true
+      timezone_override: ''
+      format_type: medium
     third_party_settings: {  }
     weight: 1
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 6
+    weight: 7
     region: content
 hidden: {  }

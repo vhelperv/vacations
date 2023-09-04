@@ -10,7 +10,7 @@ field_name: field_numb_vac_day
 entity_type: node
 bundle: transaction
 label: 'Add Day'
-description: ''
+description: 'The number of days that the certificate issues'
 required: false
 translatable: true
 default_value: {  }
