@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.transaction.field_employee_vacation
     - field.field.node.transaction.field_numb_day
     - field.field.node.transaction.field_numb_vac_day
+    - field.field.node.transaction.field_refer_to_vacation_entity
     - field.field.node.transaction.field_timestamp
     - node.type.transaction
   module:
@@ -31,4 +32,5 @@ hidden:
   field_employee_vacation: true
   field_numb_day: true
   field_numb_vac_day: true
+  field_refer_to_vacation_entity: true
   field_timestamp: true

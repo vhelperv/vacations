@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.transaction.field_employee_vacation
     - field.field.node.transaction.field_numb_day
     - field.field.node.transaction.field_numb_vac_day
+    - field.field.node.transaction.field_refer_to_vacation_entity
     - field.field.node.transaction.field_timestamp
     - node.type.transaction
   module:
@@ -34,10 +35,14 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_certificate:
-    type: options_select
+    type: entity_reference_autocomplete
     weight: 3
     region: content
-    settings: {  }
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_employee_vacation:
     type: options_select
@@ -57,6 +62,16 @@ content:
     weight: 5
     region: content
     settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_refer_to_vacation_entity:
+    type: entity_reference_autocomplete
+    weight: 28
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
       placeholder: ''
     third_party_settings: {  }
   field_timestamp:

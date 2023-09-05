@@ -6,8 +6,10 @@ dependencies:
     - field.field.node.certificate.field_remainder
     - field.field.node.transaction.field__account_balance
     - field.field.node.transaction.field_balance
+    - field.field.node.transaction.field_certificate
     - field.field.node.transaction.field_employee_vacation
     - field.field.node.transaction.field_numb_day
+    - field.field.node.transaction.field_refer_to_vacation_entity
     - field.field.node.vacation.field_approve
     - field.field.node.vacation.field_numb_day
     - field.field.node.vacation.field_range
@@ -18,9 +20,11 @@ dependencies:
     - field.storage.node.field__account_balance
     - field.storage.node.field_approve
     - field.storage.node.field_balance
+    - field.storage.node.field_certificate
     - field.storage.node.field_employee_vacation
     - field.storage.node.field_numb_day
     - field.storage.node.field_range
+    - field.storage.node.field_refer_to_vacation_entity
     - field.storage.node.field_remainder
     - field.storage.node.field_state_vacation
     - field.storage.node.field_vacation_s_employee_
@@ -174,8 +178,40 @@ conditions:
     configuration:
       negate: false
       case: false
-      left: '[certsubtract:field_remainder:value]'
-      right: '[loadvac:field_numb_day:value]'
+      left: '[loadvac:field_numb_day:value]'
+      right: '[certsubtract:field_remainder:value]'
+      operator: equal
+      type: value
+  Flow_0ksli21:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[loadvac:field_numb_day:value]'
+      right: '[certsubtract:field_remainder:value]'
+      operator: greaterthan
+      type: value
+  Flow_1lvacce:
+    plugin: eca_token_exists
+    configuration:
+      negate: false
+      token_name: savenumbday
+  Flow_1yloyuz:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[loadvac:field_type_vacation:target_id]'
+      right: '1'
+      operator: equal
+      type: value
+  Flow_1wc1xma:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[rest]'
+      right: '0'
       operator: equal
       type: value
 gateways:
@@ -219,14 +255,20 @@ gateways:
     type: 0
     successors:
       -
+        id: Activity_0zkvs1o
+        condition: Flow_0ksli21
+      -
+        id: Gateway_1xveerc
+        condition: ''
+  Gateway_1xveerc:
+    type: 0
+    successors:
+      -
         id: Activity_1tonknm
         condition: Flow_0liimr4
       -
         id: Activity_1tonknm
         condition: Flow_176fw6t
-      -
-        id: Activity_1kap3hq
-        condition: ''
 actions:
   Activity_1jd9bh0:
     plugin: eca_token_load_entity
@@ -650,7 +692,7 @@ actions:
     successors:
       -
         id: Activity_00adqwq
-        condition: ''
+        condition: Flow_1yloyuz
   Activity_1996w30:
     plugin: eca_list_add_entity
     label: 'Create list field_approve [listreject]'
@@ -713,8 +755,8 @@ actions:
       object: transaction
     successors:
       -
-        id: Activity_11vsxln
-        condition: ''
+        id: Activity_1wd8qrn
+        condition: Flow_1lvacce
   Activity_1tgbbw3:
     plugin: eca_set_field_value
     label: 'Set Title'
@@ -728,7 +770,7 @@ actions:
       object: transaction
     successors:
       -
-        id: Activity_010wb3q
+        id: Activity_11vsxln
         condition: ''
   Activity_11vsxln:
     plugin: eca_set_field_value
@@ -773,14 +815,11 @@ actions:
       arguments: ''
     successors:
       -
-        id: Activity_1gniyyr
-        condition: ''
-      -
         id: Activity_1sxmt63
         condition: ''
   Activity_1sxmt63:
     plugin: eca_count
-    label: 'Count users certificate [countcert]'
+    label: 'Count user''s certificate [countcert]'
     configuration:
       token_name: countcert
       list_token: balanceview
@@ -851,7 +890,7 @@ actions:
       object: transaction
     successors:
       -
-        id: Activity_1wd8qrn
+        id: Activity_0o2cdwj
         condition: ''
   Activity_1wd8qrn:
     plugin: 'eca_tamper:math'
@@ -879,18 +918,8 @@ actions:
       object: transaction
     successors:
       -
-        id: Activity_0o2cdwj
+        id: Activity_0xm3lkw
         condition: ''
-      -
-        id: Activity_12ozvhh
-        condition: ''
-  Activity_1gniyyr:
-    plugin: action_message_action
-    label: Activity_1gniyyr
-    configuration:
-      replace_tokens: false
-      message: '[balanceview]'
-    successors: {  }
   Activity_0u6rnsn:
     plugin: eca_token_load_entity
     label: 'Load by nid [certsubtract]'
@@ -907,10 +936,7 @@ actions:
       object: ''
     successors:
       -
-        id: Gateway_1x8nv9p
-        condition: ''
-      -
-        id: Activity_0vctad1
+        id: Activity_1sbiffq
         condition: ''
   Activity_0o2cdwj:
     plugin: eca_views_query
@@ -923,9 +949,6 @@ actions:
     successors:
       -
         id: Activity_0u6rnsn
-        condition: ''
-      -
-        id: Activity_1nxi1bf
         condition: ''
   Activity_1tonknm:
     plugin: 'eca_tamper:math'
@@ -940,9 +963,6 @@ actions:
       -
         id: Activity_1cgkcbq
         condition: ''
-      -
-        id: Activity_15v099e
-        condition: ''
   Activity_1cgkcbq:
     plugin: eca_set_field_value
     label: 'Set new value into field_remainder'
@@ -956,47 +976,176 @@ actions:
       object: certsubtract
     successors:
       -
-        id: Activity_1029w7t
+        id: Activity_010wb3q
         condition: ''
-  Activity_12ozvhh:
-    plugin: action_message_action
-    label: Activity_12ozvhh
+      -
+        id: Activity_0jhr6au
+        condition: Flow_1wc1xma
+  Activity_0n3g0xi:
+    plugin: 'eca_tamper:math'
+    label: 'Set need subtraction from other certificate [needsubtract]'
     configuration:
-      replace_tokens: false
-      message: '1'
+      operation: subtraction
+      flip: false
+      value: '[certsubtract:field_remainder:value]'
+      eca_data: '[loadvac:field_numb_day:value]'
+      eca_token_name: needsubtract
+    successors:
+      -
+        id: Activity_0i3yonk
+        condition: ''
+  Activity_1prvh9t:
+    plugin: eca_set_field_value
+    label: 'Set new value into field_remainder'
+    configuration:
+      field_name: field_remainder
+      field_value: '0'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certsubtract
+    successors:
+      -
+        id: Activity_16vrahd
+        condition: ''
+  Activity_0i3yonk:
+    plugin: eca_set_field_value
+    label: 'Set new value into field_numb_day'
+    configuration:
+      field_name: field_numb_day
+      field_value: '[needsubtract]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: loadvac
+    successors:
+      -
+        id: Activity_1llcixo
+        condition: ''
+  Activity_16vrahd:
+    plugin: eca_set_field_value
+    label: 'Unpublish certificate'
+    configuration:
+      field_name: '[status:value]'
+      field_value: '0'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certsubtract
+    successors:
+      -
+        id: Activity_0comzng
+        condition: ''
+  Activity_0zkvs1o:
+    plugin: eca_token_set_value
+    label: 'Save value field_numb_day'
+    configuration:
+      token_name: savenumbday
+      token_value: '[loadvac:field_numb_day:value]'
+      use_yaml: false
+    successors:
+      -
+        id: Activity_0n3g0xi
+        condition: ''
+  Activity_0xm3lkw:
+    plugin: eca_set_field_value
+    label: 'Set value field_numb_day if [savenumbday] exists'
+    configuration:
+      field_name: field_numb_day
+      field_value: '[savenumbday]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: loadvac
     successors: {  }
-  Activity_1nxi1bf:
-    plugin: action_message_action
-    label: Activity_1nxi1bf
+  Activity_1sbiffq:
+    plugin: eca_set_field_value
+    label: 'Set sertificate into transaction'
     configuration:
-      replace_tokens: false
-      message: '2'
-    successors: {  }
-  Activity_0vctad1:
-    plugin: action_message_action
-    label: Activity_0vctad1
+      field_name: field_certificate
+      field_value: '[certsubtract:nid]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: transaction
+    successors:
+      -
+        id: Activity_1d92hop
+        condition: ''
+  Activity_1d92hop:
+    plugin: eca_set_field_value
+    label: 'Set vacation into transaction'
     configuration:
-      replace_tokens: false
-      message: '3'
-    successors: {  }
-  Activity_1kap3hq:
-    plugin: action_message_action
-    label: Activity_1kap3hq
+      field_name: field_refer_to_vacation_entity
+      field_value: '[loadvac:nid]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: transaction
+    successors:
+      -
+        id: Gateway_1x8nv9p
+        condition: ''
+  Activity_1llcixo:
+    plugin: eca_set_field_value
+    label: |-
+      Set -day from 
+      vacation
     configuration:
-      replace_tokens: false
-      message: '4'
-    successors: {  }
-  Activity_15v099e:
-    plugin: action_message_action
-    label: Activity_15v099e
+      field_name: field_numb_day.value
+      field_value: '[certsubtract:field_remainder:value]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: transaction
+    successors:
+      -
+        id: Activity_0ycdo84
+        condition: ''
+  Activity_1ecvcvi:
+    plugin: eca_set_field_value
+    label: 'Set Account Balance'
     configuration:
-      replace_tokens: false
-      message: '5 --- [rest]'
-    successors: {  }
-  Activity_1029w7t:
-    plugin: action_message_action
-    label: Activity_1029w7t
+      field_name: field__account_balance.value
+      field_value: '[accbalance]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: transaction
+    successors:
+      -
+        id: Activity_1prvh9t
+        condition: ''
+  Activity_0ycdo84:
+    plugin: 'eca_tamper:math'
+    label: 'Subtraction day [accbalance]'
     configuration:
-      replace_tokens: false
-      message: '6'
+      operation: subtraction
+      flip: false
+      value: '[certsubtract:field_remainder:value]'
+      eca_data: '[balance]'
+      eca_token_name: accbalance
+    successors:
+      -
+        id: Activity_1ecvcvi
+        condition: ''
+  Activity_0jhr6au:
+    plugin: eca_set_field_value
+    label: 'Unpublish certificate'
+    configuration:
+      field_name: '[status:value]'
+      field_value: '0'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certsubtract
     successors: {  }
