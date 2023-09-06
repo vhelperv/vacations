@@ -44,7 +44,7 @@ id: process_rifpqv5
 modeller: bpmn_io
 label: 'Approval system & Subtracting days'
 version: v1
-weight: null
+weight: -10
 events:
   Event_1cytdr3:
     plugin: 'content_entity:insert'
@@ -560,7 +560,7 @@ actions:
       object: loadvac
     successors:
       -
-        id: Activity_1hn25e9
+        id: Activity_0lw7qtz
         condition: ''
   Activity_0ilmsz0:
     plugin: eca_token_set_value
@@ -691,7 +691,7 @@ actions:
       object: loadvac
     successors:
       -
-        id: Activity_00adqwq
+        id: Activity_0comzng
         condition: Flow_1yloyuz
   Activity_1996w30:
     plugin: eca_list_add_entity
@@ -717,15 +717,6 @@ actions:
       save_entity: true
       object: vacation
     successors: {  }
-  Activity_00adqwq:
-    plugin: eca_switch_account
-    label: 'Swich account to admin'
-    configuration:
-      user_id: '1'
-    successors:
-      -
-        id: Activity_0comzng
-        condition: ''
   Activity_0comzng:
     plugin: eca_new_entity
     label: 'Create transaction [transaction]'
@@ -785,7 +776,7 @@ actions:
       object: transaction
     successors:
       -
-        id: Activity_11maila
+        id: Activity_1bc3m2k
         condition: ''
   Activity_0mv2u7z:
     plugin: eca_token_load_entity
@@ -1149,3 +1140,21 @@ actions:
       save_entity: true
       object: certsubtract
     successors: {  }
+  Activity_0lw7qtz:
+    plugin: eca_switch_account
+    label: 'Swich to admin'
+    configuration:
+      user_id: '1'
+    successors:
+      -
+        id: Activity_1hn25e9
+        condition: ''
+  Activity_1bc3m2k:
+    plugin: eca_switch_account
+    label: 'Swich to author node'
+    configuration:
+      user_id: '[loadvac:author:uid]'
+    successors:
+      -
+        id: Activity_11maila
+        condition: ''

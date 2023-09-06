@@ -1,6 +1,6 @@
 uuid: 1fcd0462-4dfd-4ff0-bbd9-096f18cc7e4b
 langcode: en
-status: false
+status: true
 dependencies:
   config:
     - field.field.node.certificate.field_date_creation
@@ -17,7 +17,6 @@ dependencies:
     - eca_content
     - eca_queue
     - eca_user
-    - node
     - user
 id: process_xkulvkc
 modeller: bpmn_io
@@ -49,9 +48,9 @@ events:
       -
         id: Activity_0daw65u
         condition: ''
-  Event_0poygja:
+  Event_1u5e8oz:
     plugin: 'eca_queue:processing_task'
-    label: Event_0poygja
+    label: Event_1u5e8oz
     configuration:
       distribute: false
       task_name: burn
@@ -59,7 +58,10 @@ events:
       cron: ''
     successors:
       -
-        id: Activity_1uxuget
+        id: Activity_0rjw7xi
+        condition: ''
+      -
+        id: Activity_0h6gvur
         condition: ''
 conditions:
   Flow_10rcmug:
@@ -186,14 +188,14 @@ actions:
     label: Activity_0sf03tt
     configuration:
       replace_tokens: false
-      message: '1'
+      message: '0'
     successors: {  }
   Activity_1c8uugl:
     plugin: action_message_action
     label: Activity_1c8uugl
     configuration:
       replace_tokens: false
-      message: '2 [employee:uid] - [employee:display-name]'
+      message: '2'
     successors: {  }
   Activity_0sjrv5c:
     plugin: action_message_action
@@ -305,7 +307,7 @@ actions:
     label: Activity_0bm7713
     configuration:
       replace_tokens: false
-      message: '1.1'
+      message: '1'
     successors: {  }
   Activity_04oobn0:
     plugin: eca_set_field_value
@@ -371,7 +373,7 @@ actions:
         id: Activity_030rfmp
         condition: ''
       -
-        id: Activity_1ojm3ce
+        id: Activity_0eoeqib
         condition: ''
   Activity_030rfmp:
     plugin: action_message_action
@@ -380,37 +382,11 @@ actions:
       replace_tokens: false
       message: '11'
     successors: {  }
-  Activity_1ojm3ce:
-    plugin: eca_enqueue_task_delayed
-    label: 'Queue task'
-    configuration:
-      delay_value: '90'
-      delay_unit: '1'
-      task_name: burn
-      task_value: ''
-      tokens: certificate
-    successors: {  }
-  Activity_1xywubi:
-    plugin: action_message_action
-    label: Activity_1xywubi
-    configuration:
-      replace_tokens: false
-      message: '23'
-    successors: {  }
-  Activity_1uxuget:
-    plugin: 'entity:unpublish_action:node'
-    label: Activity_1uxuget
-    configuration:
-      object: '[certificate]'
-    successors:
-      -
-        id: Activity_1xywubi
-        condition: ''
   Activity_0y9if4d:
     plugin: eca_set_field_value
     label: 'Set Remainder [Issued day]'
     configuration:
-      field_name: field_remainder
+      field_name: field_remainder.value
       field_value: '[certificate:field_issued_days:value]'
       method: 'set:clear'
       strip_tags: false
@@ -430,4 +406,92 @@ actions:
     configuration:
       replace_tokens: false
       message: '9'
+    successors: {  }
+  Activity_1cesq4n:
+    plugin: eca_enqueue_task_delayed
+    label: Activity_1cesq4n
+    configuration:
+      delay_value: '2'
+      delay_unit: '60'
+      task_name: burn
+      task_value: ''
+      tokens: nid
+    successors:
+      -
+        id: Activity_1eirc75
+        condition: ''
+  Activity_1eirc75:
+    plugin: action_message_action
+    label: Activity_1eirc75
+    configuration:
+      replace_tokens: false
+      message: '12'
+    successors: {  }
+  Activity_0eoeqib:
+    plugin: eca_token_set_value
+    label: Activity_0eoeqib
+    configuration:
+      token_name: nid
+      token_value: '[certificate:nid]'
+      use_yaml: false
+    successors:
+      -
+        id: Activity_1cesq4n
+        condition: ''
+  Activity_0rjw7xi:
+    plugin: eca_token_load_entity
+    label: Activity_0rjw7xi
+    configuration:
+      token_name: unpub
+      from: id
+      entity_type: node
+      entity_id: '[nid]'
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      latest_revision: false
+      unchanged: false
+      object: ''
+    successors:
+      -
+        id: Activity_138vnu1
+        condition: ''
+      -
+        id: Activity_0v0uazt
+        condition: ''
+  Activity_138vnu1:
+    plugin: eca_set_field_value
+    label: Activity_138vnu1
+    configuration:
+      field_name: '[status:value]'
+      field_value: '0'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: unpub
+    successors:
+      -
+        id: Activity_0t0obk5
+        condition: ''
+  Activity_0t0obk5:
+    plugin: action_message_action
+    label: Activity_0t0obk5
+    configuration:
+      replace_tokens: false
+      message: gooooooood
+    successors: {  }
+  Activity_0h6gvur:
+    plugin: action_message_action
+    label: Activity_0h6gvur
+    configuration:
+      replace_tokens: false
+      message: 'done - 1'
+    successors: {  }
+  Activity_0v0uazt:
+    plugin: action_message_action
+    label: Activity_0v0uazt
+    configuration:
+      replace_tokens: false
+      message: 'done - 2'
     successors: {  }
