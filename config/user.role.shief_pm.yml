@@ -29,7 +29,6 @@ permissions:
   - 'delete paragraph content person_who_approve'
   - 'edit any vacation content'
   - 'edit own certificate content'
-  - 'edit own vacation content'
   - 'update paragraph content person_who_approve'
   - 'view any unpublished certificate content'
   - 'view any unpublished content'

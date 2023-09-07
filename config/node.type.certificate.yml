@@ -20,12 +20,12 @@ third_party_settings:
     publish_revision: false
     publish_touch: false
     show_message_after_update: true
-    unpublish_enable: false
-    unpublish_required: true
+    unpublish_enable: true
+    unpublish_required: false
     unpublish_revision: false
 name: Certificate
 type: certificate
-description: ''
+description: 'Leave certificate. Automatic creation uses this CT. You can also create this as a reward for good work if you have access.'
 help: ''
 new_revision: true
 preview_mode: 1

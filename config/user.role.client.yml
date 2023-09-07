@@ -38,7 +38,6 @@ permissions:
   - 'delete paragraph content person_who_approve'
   - 'edit any vacation content'
   - 'edit own comments'
-  - 'edit own vacation content'
   - 'post comments'
   - 'skip comment approval'
   - 'update paragraph content person_who_approve'

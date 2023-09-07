@@ -747,7 +747,7 @@ actions:
     successors:
       -
         id: Activity_1wd8qrn
-        condition: Flow_1lvacce
+        condition: ''
   Activity_1tgbbw3:
     plugin: eca_set_field_value
     label: 'Set Title'
@@ -776,7 +776,7 @@ actions:
       object: transaction
     successors:
       -
-        id: Activity_1bc3m2k
+        id: Activity_01ku8g4
         condition: ''
   Activity_0mv2u7z:
     plugin: eca_token_load_entity
@@ -910,7 +910,7 @@ actions:
     successors:
       -
         id: Activity_0xm3lkw
-        condition: ''
+        condition: Flow_1lvacce
   Activity_0u6rnsn:
     plugin: eca_token_load_entity
     label: 'Load by nid [certsubtract]'
@@ -996,10 +996,7 @@ actions:
       trim: false
       save_entity: true
       object: certsubtract
-    successors:
-      -
-        id: Activity_16vrahd
-        condition: ''
+    successors: {  }
   Activity_0i3yonk:
     plugin: eca_set_field_value
     label: 'Set new value into field_numb_day'
@@ -1149,9 +1146,9 @@ actions:
       -
         id: Activity_1hn25e9
         condition: ''
-  Activity_1bc3m2k:
+  Activity_01ku8g4:
     plugin: eca_switch_account
-    label: 'Swich to author node'
+    label: 'Swich user to author'
     configuration:
       user_id: '[loadvac:author:uid]'
     successors:

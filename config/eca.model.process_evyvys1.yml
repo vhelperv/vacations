@@ -1,0 +1,20 @@
+uuid: ca729996-8bbd-470e-af61-f214786be82f
+langcode: en
+status: true
+dependencies:
+  config:
+    - eca.eca.process_evyvys1
+id: process_evyvys1
+label: 'Validation Vacation & Certificate'
+tags:
+  - untagged
+documentation: ''
+filename: ''
+modeldata: |
+  <?xml version="1.0" encoding="UTF-8"?>
+  <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:qa="http://some-company/schema/bpmn/qa" id="sample-diagram" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+    <bpmn2:process id="Process_eVYvYS1" name="Validation Vacation &#38; Certificate" isExecutable="true" camunda:versionTag="v1" />
+    <bpmndi:BPMNDiagram id="sid-6693f546-015f-481b-bc9b-818f69406367">
+      <bpmndi:BPMNPlane id="sid-f49538db-8474-42a0-81ee-aa980006265e" bpmnElement="Process_eVYvYS1" />
+    </bpmndi:BPMNDiagram>
+  </bpmn2:definitions>

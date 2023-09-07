@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.vacation.field_approve
     - field.field.node.vacation.field_numb_day
     - field.field.node.vacation.field_range
+    - field.field.node.vacation.field_reason
     - field.field.node.vacation.field_state_vacation
     - field.field.node.vacation.field_timestamp
     - field.field.node.vacation.field_type_vacation
@@ -28,6 +29,7 @@ hidden:
   field_approve: true
   field_numb_day: true
   field_range: true
+  field_reason: true
   field_state_vacation: true
   field_timestamp: true
   field_type_vacation: true

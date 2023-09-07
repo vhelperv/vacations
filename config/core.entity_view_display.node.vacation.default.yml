@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.vacation.field_approve
     - field.field.node.vacation.field_numb_day
     - field.field.node.vacation.field_range
+    - field.field.node.vacation.field_reason
     - field.field.node.vacation.field_state_vacation
     - field.field.node.vacation.field_timestamp
     - field.field.node.vacation.field_type_vacation
@@ -74,7 +75,7 @@ third_party_settings:
                 label: inline
                 settings: {  }
                 third_party_settings: {  }
-            weight: 5
+            weight: 6
             additional: {  }
           b10b0d9c-3484-4e7c-ba8a-5fdcdea21d52:
             uuid: b10b0d9c-3484-4e7c-ba8a-5fdcdea21d52
@@ -93,7 +94,7 @@ third_party_settings:
                 settings:
                   view_mode: default
                 third_party_settings: {  }
-            weight: 6
+            weight: 7
             additional: {  }
           f18e3a27-9341-455f-8c20-ae5f2b371cc7:
             uuid: f18e3a27-9341-455f-8c20-ae5f2b371cc7
@@ -149,6 +150,24 @@ third_party_settings:
                   separator: to
                 third_party_settings: {  }
             weight: 2
+            additional: {  }
+          57b335a7-8557-4714-9c61-d129fde67430:
+            uuid: 57b335a7-8557-4714-9c61-d129fde67430
+            region: content
+            configuration:
+              id: 'field_block:node:vacation:field_reason'
+              label: Reason
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: text_default
+                label: above
+                settings: {  }
+                third_party_settings: {  }
+            weight: 5
             additional: {  }
         third_party_settings: {  }
 id: node.vacation.default
@@ -221,4 +240,5 @@ content:
     third_party_settings: {  }
     weight: 8
     region: content
-hidden: {  }
+hidden:
+  field_reason: true
