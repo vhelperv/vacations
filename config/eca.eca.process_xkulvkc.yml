@@ -8,17 +8,23 @@ dependencies:
     - field.field.node.certificate.field_issued_days
     - field.field.node.certificate.field_period_of_validity
     - field.field.node.certificate.field_remainder
+    - field.field.node.transaction.field_employee_vacation
     - field.storage.node.field_bonus
     - field.storage.node.field_employee
+    - field.storage.node.field_employee_vacation
     - field.storage.node.field_issued_days
     - field.storage.node.field_period_of_validity
     - field.storage.node.field_remainder
     - node.type.certificate
+    - node.type.transaction
+    - views.view.balance
   module:
+    - eca_base
     - eca_content
     - eca_queue
     - eca_tamper
     - eca_user
+    - eca_views
     - user
 id: process_xkulvkc
 modeller: bpmn_io
@@ -396,6 +402,9 @@ actions:
       -
         id: Activity_1vo7lfn
         condition: ''
+      -
+        id: Activity_17puumx
+        condition: ''
   Activity_0wumvok:
     plugin: action_message_action
     label: Activity_0wumvok
@@ -457,3 +466,95 @@ actions:
       -
         id: Activity_0eksrfx
         condition: ''
+  Activity_17puumx:
+    plugin: eca_switch_account
+    label: 'Switch user to admin'
+    configuration:
+      user_id: '1'
+    successors:
+      -
+        id: Activity_1w9oty5
+        condition: ''
+  Activity_1w9oty5:
+    plugin: eca_new_entity
+    label: 'Create transaction [trensact]'
+    configuration:
+      token_name: trensact
+      type: 'node transaction'
+      langcode: en
+      label: ''
+      published: true
+      owner: '[loadcert:author:uid]'
+    successors:
+      -
+        id: Activity_1e6tr2k
+        condition: ''
+  Activity_1e6tr2k:
+    plugin: eca_set_field_value
+    label: 'Set title'
+    configuration:
+      field_name: title
+      field_value: 'Transaction #[random:number]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: transact
+    successors:
+      -
+        id: Activity_15shh48
+        condition: ''
+  Activity_15shh48:
+    plugin: eca_set_field_value
+    label: 'Set employee transaction'
+    configuration:
+      field_name: field_employee_vacation
+      field_value: '[loadcert:author:uid]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: transact
+    successors:
+      -
+        id: Activity_0e1kfo1
+        condition: ''
+  Activity_0e1kfo1:
+    plugin: eca_switch_account
+    label: 'Switch user to author'
+    configuration:
+      user_id: '[loadcert:author:uid]'
+    successors:
+      -
+        id: Activity_1az8wez
+        condition: ''
+  Activity_1az8wez:
+    plugin: eca_views_query
+    label: 'Load Balance [balanceview]'
+    configuration:
+      token_name: balanceview
+      view_id: balance
+      display_id: block_1
+      arguments: ''
+    successors:
+      -
+        id: Activity_1ddcaa7
+        condition: ''
+  Activity_1ddcaa7:
+    plugin: eca_count
+    label: 'Count user''s certificate [countcert]'
+    configuration:
+      token_name: countcert
+      list_token: balanceview
+    successors:
+      -
+        id: Activity_0xc2ddw
+        condition: ''
+  Activity_0xc2ddw:
+    plugin: eca_token_set_value
+    label: 'Token 0 [balance]'
+    configuration:
+      token_name: balance
+      token_value: '0'
+      use_yaml: false
+    successors: {  }
