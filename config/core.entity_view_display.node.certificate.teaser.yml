@@ -4,10 +4,10 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
-    - field.field.node.certificate.field_date_combustion
-    - field.field.node.certificate.field_date_creation
+    - field.field.node.certificate.field_bonus
     - field.field.node.certificate.field_employee
     - field.field.node.certificate.field_issued_days
+    - field.field.node.certificate.field_period_of_validity
     - field.field.node.certificate.field_remainder
     - node.type.certificate
   module:
@@ -23,8 +23,8 @@ content:
     weight: 100
     region: content
 hidden:
-  field_date_combustion: true
-  field_date_creation: true
+  field_bonus: true
   field_employee: true
   field_issued_days: true
+  field_period_of_validity: true
   field_remainder: true

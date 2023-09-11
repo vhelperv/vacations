@@ -3,14 +3,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.certificate.field_date_combustion
-    - field.field.node.certificate.field_date_creation
+    - field.field.node.certificate.field_bonus
     - field.field.node.certificate.field_employee
     - field.field.node.certificate.field_issued_days
+    - field.field.node.certificate.field_period_of_validity
     - field.field.node.certificate.field_remainder
     - node.type.certificate
   module:
-    - datetime
+    - datetime_range
     - path
 id: node.certificate.default
 targetEntityType: node
@@ -20,12 +20,6 @@ content:
   created:
     type: datetime_timestamp
     weight: 5
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_date_creation:
-    type: datetime_default
-    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -41,6 +35,12 @@ content:
     region: content
     settings:
       placeholder: ''
+    third_party_settings: {  }
+  field_period_of_validity:
+    type: daterange_default
+    weight: 2
+    region: content
+    settings: {  }
     third_party_settings: {  }
   path:
     type: path
@@ -79,7 +79,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
 hidden:
-  field_date_combustion: true
+  field_bonus: true
   field_remainder: true
   promote: true
   publish_on: true

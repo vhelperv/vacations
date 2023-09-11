@@ -3,19 +3,21 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.certificate.field_date_creation
+    - field.field.node.certificate.field_bonus
     - field.field.node.certificate.field_employee
     - field.field.node.certificate.field_issued_days
+    - field.field.node.certificate.field_period_of_validity
     - field.field.node.certificate.field_remainder
-    - field.storage.node.field_date_creation
+    - field.storage.node.field_bonus
     - field.storage.node.field_employee
     - field.storage.node.field_issued_days
+    - field.storage.node.field_period_of_validity
     - field.storage.node.field_remainder
     - node.type.certificate
   module:
-    - eca_base
     - eca_content
     - eca_queue
+    - eca_tamper
     - eca_user
     - user
 id: process_xkulvkc
@@ -26,10 +28,10 @@ weight: -10
 events:
   Event_0azw4w1:
     plugin: 'eca_queue:processing_task'
-    label: 'Task [delaysertificate]'
+    label: 'Task [delaycert]'
     configuration:
       distribute: false
-      task_name: delaysertificate
+      task_name: delaycert
       task_value: ''
       cron: ''
     successors:
@@ -54,47 +56,98 @@ events:
       -
         id: Activity_1jkxzjs
         condition: ''
+  Event_06to1gf:
+    plugin: 'content_entity:insert'
+    label: 'Insert Certificate'
+    configuration:
+      type: 'node certificate'
+    successors:
+      -
+        id: Activity_1co706p
+        condition: ''
+  Event_0x1mqgg:
+    plugin: 'eca_queue:processing_task'
+    label: 'Task [burn]'
+    configuration:
+      distribute: false
+      task_name: burn
+      task_value: ''
+      cron: ''
+    successors:
+      -
+        id: Activity_0f742oj
+        condition: ''
 conditions:
-  Flow_10rcmug:
+  Flow_0vkm900:
     plugin: eca_user_role
     configuration:
       negate: false
-      account: '[employee]'
-      role: developer_middle
-  Flow_0nyymc5:
-    plugin: eca_user_role
-    configuration:
-      negate: false
-      account: '[employee]'
-      role: developer_senior
-  Flow_1gy2cvw:
-    plugin: eca_user_role
-    configuration:
-      negate: false
-      account: '[employee]'
+      account: '[employee:uid]'
       role: pm
+  Flow_11tqlhr:
+    plugin: eca_user_role
+    configuration:
+      negate: false
+      account: '[employee:uid]'
+      role: developer_middle
+  Flow_1xi2ygc:
+    plugin: eca_user_role
+    configuration:
+      negate: false
+      account: '[employee:uid]'
+      role: developer_senior
+  Flow_04vsfep:
+    plugin: eca_user_role
+    configuration:
+      account: '[employee:uid]'
+      role: developer_senior
+      negate: true
+  Flow_0sd1a5m:
+    plugin: eca_user_role
+    configuration:
+      account: '[employee:uid]'
+      role: developer_middle
+      negate: true
+  Flow_0p0fkgh:
+    plugin: eca_user_role
+    configuration:
+      account: '[employee:uid]'
+      role: pm
+      negate: true
 gateways:
-  Gateway_043sdx6:
+  Gateway_1d27b5v:
     type: 0
     successors:
       -
-        id: Activity_04oobn0
-        condition: Flow_10rcmug
-      -
-        id: Activity_1x0xlzh
-        condition: Flow_0nyymc5
-      -
-        id: Activity_04oobn0
-        condition: Flow_1gy2cvw
-      -
-        id: Activity_04aemay
-        condition: ''
-  Gateway_1c0jzux:
+        id: Gateway_1vn2hx5
+        condition: Flow_0sd1a5m
+  Gateway_1vn2hx5:
     type: 0
     successors:
       -
-        id: Activity_0y9if4d
+        id: Gateway_015rpo2
+        condition: Flow_0p0fkgh
+  Gateway_015rpo2:
+    type: 0
+    successors:
+      -
+        id: Activity_1dqxhee
         condition: ''
+  Gateway_134cf2z:
+    type: 0
+    successors:
+      -
+        id: Activity_1ptt6gb
+        condition: Flow_0vkm900
+      -
+        id: Activity_1ptt6gb
+        condition: Flow_11tqlhr
+      -
+        id: Activity_08klt8j
+        condition: Flow_1xi2ygc
+      -
+        id: Gateway_1d27b5v
+        condition: Flow_04vsfep
 actions:
   Activity_12jvxut:
     plugin: eca_enqueue_task_delayed
@@ -102,15 +155,18 @@ actions:
     configuration:
       delay_value: '1'
       delay_unit: '60'
-      task_name: delaysertificate
+      task_name: delaycert
       task_value: ''
       tokens: employee
-    successors: {  }
+    successors:
+      -
+        id: Activity_09wvu70
+        condition: ''
   Activity_0gr7n7o:
     plugin: eca_new_entity
     label: 'Create certificate'
     configuration:
-      token_name: certificate
+      token_name: certif
       type: 'node certificate'
       langcode: en
       label: ''
@@ -120,9 +176,6 @@ actions:
       -
         id: Activity_0ya2jl3
         condition: ''
-      -
-        id: Activity_10rnhbw
-        condition: ''
   Activity_1yfeyl9:
     plugin: eca_switch_account
     label: 'User to admin'
@@ -131,9 +184,6 @@ actions:
     successors:
       -
         id: Activity_0gr7n7o
-        condition: ''
-      -
-        id: Activity_01l0h6r
         condition: ''
   Activity_0ya2jl3:
     plugin: eca_set_field_value
@@ -145,11 +195,8 @@ actions:
       strip_tags: false
       trim: false
       save_entity: true
-      object: certificate
+      object: certif
     successors:
-      -
-        id: Activity_1mpchlu
-        condition: ''
       -
         id: Activity_0h3562s
         condition: ''
@@ -163,93 +210,16 @@ actions:
       strip_tags: false
       trim: false
       save_entity: true
-      object: certificate
+      object: certif
     successors:
       -
-        id: Gateway_043sdx6
-        condition: ''
-      -
-        id: Activity_107r8jx
-        condition: ''
-  Activity_01l0h6r:
-    plugin: action_message_action
-    label: Activity_01l0h6r
-    configuration:
-      replace_tokens: false
-      message: '4'
-    successors: {  }
-  Activity_10rnhbw:
-    plugin: action_message_action
-    label: Activity_10rnhbw
-    configuration:
-      replace_tokens: false
-      message: '5'
-    successors: {  }
-  Activity_1mpchlu:
-    plugin: action_message_action
-    label: Activity_1mpchlu
-    configuration:
-      replace_tokens: false
-      message: '6'
-    successors: {  }
-  Activity_107r8jx:
-    plugin: action_message_action
-    label: Activity_107r8jx
-    configuration:
-      replace_tokens: false
-      message: '7'
-    successors: {  }
-  Activity_1idgnve:
-    plugin: action_message_action
-    label: Activity_1idgnve
-    configuration:
-      replace_tokens: false
-      message: '10'
-    successors: {  }
-  Activity_04aemay:
-    plugin: action_message_action
-    label: Activity_04aemay
-    configuration:
-      replace_tokens: false
-      message: '8 - setup 7'
-    successors:
-      -
-        id: Gateway_1c0jzux
-        condition: ''
-  Activity_0i7ejre:
-    plugin: eca_token_set_value
-    label: 'Load user name'
-    configuration:
-      token_name: employee
-      token_value: '[registartion]'
-      use_yaml: false
-    successors:
-      -
-        id: Activity_12jvxut
-        condition: ''
-  Activity_03gs3b2:
-    plugin: eca_set_field_value
-    label: 'Set current date'
-    configuration:
-      field_name: field_date_creation.value
-      field_value: '[current-date:raw]'
-      method: 'set:clear'
-      strip_tags: false
-      trim: false
-      save_entity: true
-      object: certificate
-    successors:
-      -
-        id: Activity_1idgnve
-        condition: ''
-      -
-        id: Activity_0u01q4q
+        id: Activity_0vw4d7e
         condition: ''
   Activity_0daw65u:
     plugin: eca_token_load_entity
-    label: 'Load entity user'
+    label: 'Load user'
     configuration:
-      token_name: registartion
+      token_name: employee
       from: current
       entity_type: _none
       entity_id: ''
@@ -261,103 +231,8 @@ actions:
       object: ''
     successors:
       -
-        id: Activity_0i7ejre
+        id: Activity_12jvxut
         condition: ''
-  Activity_04oobn0:
-    plugin: eca_set_field_value
-    label: 'Set Issued Days [9]'
-    configuration:
-      field_name: field_issued_days
-      field_value: '9'
-      method: 'set:clear'
-      strip_tags: false
-      trim: false
-      save_entity: true
-      object: certificate
-    successors:
-      -
-        id: Activity_08bvjbk
-        condition: ''
-  Activity_1x0xlzh:
-    plugin: eca_set_field_value
-    label: 'Set Issued Days [11]'
-    configuration:
-      field_name: field_issued_days
-      field_value: '11'
-      method: 'set:clear'
-      strip_tags: false
-      trim: false
-      save_entity: true
-      object: certificate
-    successors:
-      -
-        id: Gateway_1c0jzux
-        condition: ''
-      -
-        id: Activity_1n5h10e
-        condition: ''
-  Activity_1n5h10e:
-    plugin: action_message_action
-    label: Activity_1n5h10e
-    configuration:
-      replace_tokens: false
-      message: '8 - setup 11'
-    successors: {  }
-  Activity_08bvjbk:
-    plugin: action_message_action
-    label: Activity_08bvjbk
-    configuration:
-      replace_tokens: false
-      message: '8 - setup 9'
-    successors:
-      -
-        id: Gateway_1c0jzux
-        condition: ''
-  Activity_0u01q4q:
-    plugin: eca_enqueue_task_delayed
-    label: 'Queue task'
-    configuration:
-      delay_value: '1'
-      delay_unit: '60'
-      task_name: delaysertificate
-      task_value: ''
-      tokens: employee
-    successors:
-      -
-        id: Activity_030rfmp
-        condition: ''
-  Activity_030rfmp:
-    plugin: action_message_action
-    label: Activity_030rfmp
-    configuration:
-      replace_tokens: false
-      message: '11'
-    successors: {  }
-  Activity_0y9if4d:
-    plugin: eca_set_field_value
-    label: 'Set Remainder [Issued day]'
-    configuration:
-      field_name: field_remainder.value
-      field_value: '[certificate:field_issued_days:value]'
-      method: 'set:clear'
-      strip_tags: false
-      trim: false
-      save_entity: true
-      object: certificate
-    successors:
-      -
-        id: Activity_03gs3b2
-        condition: ''
-      -
-        id: Activity_14qgkhw
-        condition: ''
-  Activity_14qgkhw:
-    plugin: action_message_action
-    label: Activity_14qgkhw
-    configuration:
-      replace_tokens: false
-      message: '9'
-    successors: {  }
   Activity_1jkxzjs:
     plugin: eca_token_load_entity
     label: 'Load entity [eq]'
@@ -388,3 +263,197 @@ actions:
       save_entity: true
       object: eq
     successors: {  }
+  Activity_0vw4d7e:
+    plugin: eca_set_field_value
+    label: 'Set bonus'
+    configuration:
+      field_name: field_bonus
+      field_value: '0'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certif
+    successors:
+      -
+        id: Gateway_134cf2z
+        condition: ''
+  Activity_1ptt6gb:
+    plugin: eca_set_field_value
+    label: 'Set [9] day'
+    configuration:
+      field_name: field_issued_days
+      field_value: '9'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certif
+    successors:
+      -
+        id: Activity_0fme5gh
+        condition: ''
+  Activity_0fme5gh:
+    plugin: eca_set_field_value
+    label: 'Set remainder [9]'
+    configuration:
+      field_name: field_remainder
+      field_value: '9'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certif
+    successors:
+      -
+        id: Gateway_015rpo2
+        condition: ''
+  Activity_08klt8j:
+    plugin: eca_set_field_value
+    label: 'Set [11] day'
+    configuration:
+      field_name: field_issued_days
+      field_value: '11'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certif
+    successors:
+      -
+        id: Activity_0s9608i
+        condition: ''
+  Activity_0s9608i:
+    plugin: eca_set_field_value
+    label: 'Set remainder [11]'
+    configuration:
+      field_name: field_remainder
+      field_value: '11'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: certif
+    successors:
+      -
+        id: Gateway_015rpo2
+        condition: ''
+  Activity_1dqxhee:
+    plugin: eca_enqueue_task_delayed
+    label: 'Queue task'
+    configuration:
+      delay_value: '1'
+      delay_unit: '60'
+      task_name: delaycert
+      task_value: ''
+      tokens: employee
+    successors:
+      -
+        id: Activity_0pxx0fq
+        condition: ''
+  Activity_0pxx0fq:
+    plugin: action_message_action
+    label: Activity_0pxx0fq
+    configuration:
+      replace_tokens: false
+      message: 'done - 2'
+    successors: {  }
+  Activity_1co706p:
+    plugin: eca_token_load_entity
+    label: 'Load [loadcert]'
+    configuration:
+      token_name: loadcert
+      from: current
+      entity_type: _none
+      entity_id: ''
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      latest_revision: false
+      unchanged: false
+      object: ''
+    successors:
+      -
+        id: Activity_1wa7h99
+        condition: ''
+  Activity_1vo7lfn:
+    plugin: action_message_action
+    label: Activity_1vo7lfn
+    configuration:
+      replace_tokens: false
+      message: '[timeunp] done - 3'
+    successors: {  }
+  Activity_0eksrfx:
+    plugin: eca_enqueue_task_delayed
+    label: 'Delay task [burn]'
+    configuration:
+      delay_value: '[timeunp]'
+      delay_unit: '1'
+      task_name: burn
+      task_value: ''
+      tokens: loadcert
+    successors:
+      -
+        id: Activity_1vo7lfn
+        condition: ''
+  Activity_0wumvok:
+    plugin: action_message_action
+    label: Activity_0wumvok
+    configuration:
+      replace_tokens: false
+      message: 'done - 3'
+    successors: {  }
+  Activity_0f742oj:
+    plugin: eca_switch_account
+    label: 'Swich user to admin'
+    configuration:
+      user_id: '1'
+    successors:
+      -
+        id: Activity_0wumvok
+        condition: ''
+      -
+        id: Activity_0rhxso6
+        condition: ''
+  Activity_1vqgas0:
+    plugin: action_message_action
+    label: Activity_1vqgas0
+    configuration:
+      replace_tokens: false
+      message: 'done - 4'
+    successors: {  }
+  Activity_0rhxso6:
+    plugin: eca_set_field_value
+    label: 'Unpublish certificate'
+    configuration:
+      field_name: '[status:value]'
+      field_value: '0'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: loadcert
+    successors:
+      -
+        id: Activity_1vqgas0
+        condition: ''
+  Activity_09wvu70:
+    plugin: action_message_action
+    label: Activity_09wvu70
+    configuration:
+      replace_tokens: false
+      message: 'done - 1'
+    successors: {  }
+  Activity_1wa7h99:
+    plugin: 'eca_tamper:math'
+    label: 'Subtractoin [timeunp]'
+    configuration:
+      operation: subtraction
+      flip: false
+      value: '[loadcert:field_period_of_validity:start_date:raw]'
+      eca_data: '[loadcert:field_period_of_validity:end_date:raw]'
+      eca_token_name: timeunp
+    successors:
+      -
+        id: Activity_0eksrfx
+        condition: ''

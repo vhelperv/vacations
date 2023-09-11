@@ -6,7 +6,7 @@ id: process_evyvys1
 modeller: bpmn_io
 label: 'Validation Vacation & Certificate'
 version: v1
-weight: null
+weight: -10
 events: {  }
 conditions: {  }
 gateways: {  }

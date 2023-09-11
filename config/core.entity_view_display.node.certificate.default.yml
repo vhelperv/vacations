@@ -3,15 +3,15 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.certificate.field_date_combustion
-    - field.field.node.certificate.field_date_creation
+    - field.field.node.certificate.field_bonus
     - field.field.node.certificate.field_employee
     - field.field.node.certificate.field_issued_days
+    - field.field.node.certificate.field_period_of_validity
     - field.field.node.certificate.field_remainder
     - node.type.certificate
     - views.view._certificate_transaction
   module:
-    - datetime
+    - datetime_range
     - layout_builder
     - layout_discovery
     - user
@@ -42,40 +42,6 @@ third_party_settings:
                 third_party_settings: {  }
             weight: 0
             additional: {  }
-          cefb9896-fe67-479e-9b5c-93d29d316fab:
-            uuid: cefb9896-fe67-479e-9b5c-93d29d316fab
-            region: content
-            configuration:
-              id: 'field_block:node:certificate:field_date_creation'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: datetime_default
-                label: inline
-                settings:
-                  timezone_override: ''
-                  format_type: medium
-                third_party_settings: {  }
-            weight: 1
-            additional: {  }
-          c82733c7-c0da-463f-bff4-8acd94a1b459:
-            uuid: c82733c7-c0da-463f-bff4-8acd94a1b459
-            region: content
-            configuration:
-              id: 'field_block:node:certificate:field_date_combustion'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: datetime_default
-                label: inline
-                settings:
-                  timezone_override: ''
-                  format_type: medium
-                third_party_settings: {  }
-            weight: 2
-            additional: {  }
           78a36fd8-9d8c-42e4-9ee8-8f8c5f213da8:
             uuid: 78a36fd8-9d8c-42e4-9ee8-8f8c5f213da8
             region: content
@@ -91,7 +57,7 @@ third_party_settings:
                   thousand_separator: ''
                   prefix_suffix: true
                 third_party_settings: {  }
-            weight: 3
+            weight: 5
             additional: {  }
           ca319a0c-c388-4b43-913b-e7838b3dc763:
             uuid: ca319a0c-c388-4b43-913b-e7838b3dc763
@@ -108,7 +74,7 @@ third_party_settings:
                   thousand_separator: ''
                   prefix_suffix: true
                 third_party_settings: {  }
-            weight: 4
+            weight: 6
             additional: {  }
           e514ddb2-893d-4df3-a16e-02f2344fbeb7:
             uuid: e514ddb2-893d-4df3-a16e-02f2344fbeb7
@@ -121,7 +87,49 @@ third_party_settings:
               context_mapping: {  }
               views_label: ''
               items_per_page: none
-            weight: 5
+            weight: 7
+            additional: {  }
+          ca594102-44ed-4aba-93ca-ea0e24c78c97:
+            uuid: ca594102-44ed-4aba-93ca-ea0e24c78c97
+            region: content
+            configuration:
+              id: 'field_block:node:certificate:field_bonus'
+              label: Bonus
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: boolean
+                label: inline
+                settings:
+                  format: yes-no
+                  format_custom_false: ''
+                  format_custom_true: ''
+                third_party_settings: {  }
+            weight: 1
+            additional: {  }
+          7340ab85-5caf-43a6-8917-491b3dcba5b1:
+            uuid: 7340ab85-5caf-43a6-8917-491b3dcba5b1
+            region: content
+            configuration:
+              id: 'field_block:node:certificate:field_period_of_validity'
+              label: 'Period of validity'
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: daterange_custom
+                label: inline
+                settings:
+                  timezone_override: ''
+                  date_format: d/m/Y
+                  separator: to
+                third_party_settings: {  }
+            weight: 4
             additional: {  }
         third_party_settings: {  }
 id: node.certificate.default
@@ -129,24 +137,6 @@ targetEntityType: node
 bundle: certificate
 mode: default
 content:
-  field_date_combustion:
-    type: datetime_default
-    label: inline
-    settings:
-      timezone_override: ''
-      format_type: medium
-    third_party_settings: {  }
-    weight: 2
-    region: content
-  field_date_creation:
-    type: datetime_default
-    label: inline
-    settings:
-      timezone_override: ''
-      format_type: medium
-    third_party_settings: {  }
-    weight: 1
-    region: content
   field_employee:
     type: entity_reference_label
     label: inline
@@ -164,6 +154,16 @@ content:
     third_party_settings: {  }
     weight: 3
     region: content
+  field_period_of_validity:
+    type: daterange_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+      separator: '-'
+    third_party_settings: {  }
+    weight: 5
+    region: content
   field_remainder:
     type: number_integer
     label: inline
@@ -174,4 +174,5 @@ content:
     weight: 4
     region: content
 hidden:
+  field_bonus: true
   links: true
