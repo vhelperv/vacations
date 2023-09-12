@@ -9,7 +9,7 @@ id: node.transaction.field_employee_vacation
 field_name: field_employee_vacation
 entity_type: node
 bundle: transaction
-label: 'Employee Vacation'
+label: Employee
 description: 'The employee for whom the transaction is executed'
 required: false
 translatable: false

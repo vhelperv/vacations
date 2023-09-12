@@ -4,11 +4,11 @@ status: true
 dependencies:
   config:
     - field.field.node.transaction.field__account_balance
+    - field.field.node.transaction.field_add_day
     - field.field.node.transaction.field_balance
     - field.field.node.transaction.field_certificate
     - field.field.node.transaction.field_employee_vacation
     - field.field.node.transaction.field_numb_day
-    - field.field.node.transaction.field_numb_vac_day
     - field.field.node.transaction.field_refer_to_vacation_entity
     - field.field.node.transaction.field_timestamp
     - node.type.transaction
@@ -23,6 +23,13 @@ content:
   field__account_balance:
     type: number
     weight: 27
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_add_day:
+    type: number
+    weight: 29
     region: content
     settings:
       placeholder: ''
@@ -53,13 +60,6 @@ content:
   field_numb_day:
     type: number
     weight: 4
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_numb_vac_day:
-    type: number
-    weight: 5
     region: content
     settings:
       placeholder: ''

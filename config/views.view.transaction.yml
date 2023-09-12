@@ -3,9 +3,9 @@ langcode: en
 status: false
 dependencies:
   config:
+    - field.storage.node.field_add_day
     - field.storage.node.field_certificate
     - field.storage.node.field_numb_day
-    - field.storage.node.field_numb_vac_day
     - field.storage.node.field_timestamp
     - field.storage.node.field_vacation_s_employee_
     - node.type.transaction
@@ -330,10 +330,10 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_numb_vac_day:
-          id: field_numb_vac_day
-          table: node__field_numb_vac_day
-          field: field_numb_vac_day
+        field_add_day:
+          id: field_add_day
+          table: node__field_add_day
+          field: field_add_day
           relationship: none
           group_type: group
           admin_label: ''
@@ -520,9 +520,9 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_add_day'
         - 'config:field.storage.node.field_certificate'
         - 'config:field.storage.node.field_numb_day'
-        - 'config:field.storage.node.field_numb_vac_day'
         - 'config:field.storage.node.field_timestamp'
         - 'config:field.storage.node.field_vacation_s_employee_'
   page_1:
@@ -542,8 +542,8 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_add_day'
         - 'config:field.storage.node.field_certificate'
         - 'config:field.storage.node.field_numb_day'
-        - 'config:field.storage.node.field_numb_vac_day'
         - 'config:field.storage.node.field_timestamp'
         - 'config:field.storage.node.field_vacation_s_employee_'

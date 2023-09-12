@@ -82,6 +82,15 @@ events:
       -
         id: Activity_0mv2u7z
         condition: ''
+  Event_1smsc0f:
+    plugin: 'content_entity:create'
+    label: 'Init vacation'
+    configuration:
+      type: 'node vacation'
+    successors:
+      -
+        id: Activity_16nzv53
+        condition: ''
 conditions:
   Flow_1880gj1:
     plugin: eca_scalar
@@ -753,7 +762,7 @@ actions:
     label: 'Set Title'
     configuration:
       field_name: title
-      field_value: 'Transaction #[random:number]'
+      field_value: 'Vacation''s Transaction #[random:number]'
       method: 'set:clear'
       strip_tags: false
       trim: false
@@ -996,7 +1005,10 @@ actions:
       trim: false
       save_entity: true
       object: certsubtract
-    successors: {  }
+    successors:
+      -
+        id: Activity_16vrahd
+        condition: ''
   Activity_0i3yonk:
     plugin: eca_set_field_value
     label: 'Set new value into field_numb_day'
@@ -1025,7 +1037,7 @@ actions:
       object: certsubtract
     successors:
       -
-        id: Activity_0comzng
+        id: Activity_044go7i
         condition: ''
   Activity_0zkvs1o:
     plugin: eca_token_set_value
@@ -1155,3 +1167,24 @@ actions:
       -
         id: Activity_11maila
         condition: ''
+  Activity_044go7i:
+    plugin: eca_switch_account
+    label: 'Switch to admin'
+    configuration:
+      user_id: '1'
+    successors:
+      -
+        id: Activity_0comzng
+        condition: ''
+  Activity_16nzv53:
+    plugin: eca_set_field_value
+    label: 'Set title'
+    configuration:
+      field_name: title
+      field_value: F
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: false
+      object: ''
+    successors: {  }

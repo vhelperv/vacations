@@ -24,13 +24,13 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 5
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
   field_approve:
     type: paragraphs
-    weight: 4
+    weight: 3
     region: content
     settings:
       title: Paragraph
@@ -55,7 +55,7 @@ content:
     third_party_settings: {  }
   field_reason:
     type: text_textarea
-    weight: 3
+    weight: 2
     region: content
     settings:
       rows: 5
@@ -63,27 +63,19 @@ content:
     third_party_settings: {  }
   field_type_vacation:
     type: options_select
-    weight: 2
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
   path:
     type: path
-    weight: 7
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
-  title:
-    type: string_textfield
-    weight: 0
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 6
+    weight: 5
     region: content
     settings:
       match_operator: CONTAINS
@@ -100,4 +92,5 @@ hidden:
   publish_on: true
   status: true
   sticky: true
+  title: true
   unpublish_on: true

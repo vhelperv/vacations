@@ -8,8 +8,14 @@ dependencies:
     - field.field.node.certificate.field_issued_days
     - field.field.node.certificate.field_period_of_validity
     - field.field.node.certificate.field_remainder
+    - field.field.node.transaction.field_add_day
+    - field.field.node.transaction.field_balance
+    - field.field.node.transaction.field_certificate
     - field.field.node.transaction.field_employee_vacation
+    - field.storage.node.field_add_day
+    - field.storage.node.field_balance
     - field.storage.node.field_bonus
+    - field.storage.node.field_certificate
     - field.storage.node.field_employee
     - field.storage.node.field_employee_vacation
     - field.storage.node.field_issued_days
@@ -55,7 +61,7 @@ events:
         condition: ''
   Event_1h5a9e7:
     plugin: 'content_entity:insert'
-    label: 'Init Certificate'
+    label: 'Insert Certificate'
     configuration:
       type: 'node certificate'
     successors:
@@ -82,6 +88,15 @@ events:
     successors:
       -
         id: Activity_0f742oj
+        condition: ''
+  Event_1rh6bo4:
+    plugin: 'content_entity:create'
+    label: 'Init Certificate'
+    configuration:
+      type: 'node certificate'
+    successors:
+      -
+        id: Activity_1ryh96q
         condition: ''
 conditions:
   Flow_0vkm900:
@@ -120,6 +135,24 @@ conditions:
       account: '[employee:uid]'
       role: pm
       negate: true
+  Flow_0k4ajeh:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[countcert]'
+      right: '0'
+      operator: equal
+      type: value
+  Flow_1akfdbc:
+    plugin: eca_scalar
+    configuration:
+      case: false
+      left: '[countcert]'
+      right: '0'
+      operator: equal
+      type: value
+      negate: true
 gateways:
   Gateway_1d27b5v:
     type: 0
@@ -154,6 +187,15 @@ gateways:
       -
         id: Gateway_1d27b5v
         condition: Flow_04vsfep
+  Gateway_0136wo5:
+    type: 0
+    successors:
+      -
+        id: Activity_05f71tk
+        condition: Flow_0k4ajeh
+      -
+        id: Activity_164ls2g
+        condition: Flow_1akfdbc
 actions:
   Activity_12jvxut:
     plugin: eca_enqueue_task_delayed
@@ -477,9 +519,9 @@ actions:
         condition: ''
   Activity_1w9oty5:
     plugin: eca_new_entity
-    label: 'Create transaction [trensact]'
+    label: 'Create transaction [transact]'
     configuration:
-      token_name: trensact
+      token_name: transact
       type: 'node transaction'
       langcode: en
       label: ''
@@ -494,7 +536,7 @@ actions:
     label: 'Set title'
     configuration:
       field_name: title
-      field_value: 'Transaction #[random:number]'
+      field_value: 'Certificate''s Transaction #[random:number]'
       method: 'set:clear'
       strip_tags: false
       trim: false
@@ -509,7 +551,7 @@ actions:
     label: 'Set employee transaction'
     configuration:
       field_name: field_employee_vacation
-      field_value: '[loadcert:author:uid]'
+      field_value: '[loadcert:field_employee:target_id]'
       method: 'set:clear'
       strip_tags: false
       trim: false
@@ -517,16 +559,19 @@ actions:
       object: transact
     successors:
       -
-        id: Activity_0e1kfo1
+        id: Activity_0yqo7uc
         condition: ''
   Activity_0e1kfo1:
     plugin: eca_switch_account
     label: 'Switch user to author'
     configuration:
-      user_id: '[loadcert:author:uid]'
+      user_id: '[loadcert:field_employee:target_id]'
     successors:
       -
         id: Activity_1az8wez
+        condition: ''
+      -
+        id: Activity_1xzc6hz
         condition: ''
   Activity_1az8wez:
     plugin: eca_views_query
@@ -537,6 +582,9 @@ actions:
       display_id: block_1
       arguments: ''
     successors:
+      -
+        id: Activity_0yuzg24
+        condition: ''
       -
         id: Activity_1ddcaa7
         condition: ''
@@ -550,6 +598,9 @@ actions:
       -
         id: Activity_0xc2ddw
         condition: ''
+      -
+        id: Activity_0vvid3m
+        condition: ''
   Activity_0xc2ddw:
     plugin: eca_token_set_value
     label: 'Token 0 [balance]'
@@ -557,4 +608,121 @@ actions:
       token_name: balance
       token_value: '0'
       use_yaml: false
+    successors:
+      -
+        id: Gateway_0136wo5
+        condition: ''
+  Activity_0yqo7uc:
+    plugin: eca_set_field_value
+    label: 'Set added day'
+    configuration:
+      field_name: field_add_day
+      field_value: '[loadcert:field_issued_days:value]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: transact
+    successors:
+      -
+        id: Activity_0uw01kn
+        condition: ''
+  Activity_0uw01kn:
+    plugin: eca_set_field_value
+    label: 'Set sertificate ref'
+    configuration:
+      field_name: field_certificate
+      field_value: '[loadcert:nid]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: transact
+    successors:
+      -
+        id: Activity_0e1kfo1
+        condition: ''
+  Activity_05f71tk:
+    plugin: eca_set_field_value
+    label: 'Set Balance'
+    configuration:
+      field_name: field_balance.value
+      field_value: '[balance]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: transact
+    successors: {  }
+  Activity_164ls2g:
+    plugin: 'eca_tamper:math'
+    label: 'Add field_remainder to balance'
+    configuration:
+      operation: addition
+      flip: false
+      value: '[balanceview:0:field_remainder]'
+      eca_data: '[balance]'
+      eca_token_name: balance
+    successors:
+      -
+        id: Activity_0pinbjg
+        condition: ''
+  Activity_0pinbjg:
+    plugin: 'eca_tamper:math'
+    label: 'Subtraction 1 from countcert'
+    configuration:
+      operation: addition
+      flip: false
+      value: '1'
+      eca_data: '[countcert]'
+      eca_token_name: countcert
+    successors:
+      -
+        id: Activity_16e77j7
+        condition: ''
+  Activity_16e77j7:
+    plugin: eca_list_remove
+    label: 'Drop first from [balanceview]'
+    configuration:
+      value: ''
+      token_name: ''
+      method: first
+      index: ''
+      list_token: balanceview
+    successors:
+      -
+        id: Gateway_0136wo5
+        condition: ''
+  Activity_0yuzg24:
+    plugin: action_message_action
+    label: Activity_0yuzg24
+    configuration:
+      replace_tokens: false
+      message: '[balanceview:0]'
+    successors: {  }
+  Activity_1xzc6hz:
+    plugin: action_message_action
+    label: Activity_1xzc6hz
+    configuration:
+      replace_tokens: false
+      message: '[loadcert:author:uid]'
+    successors: {  }
+  Activity_0vvid3m:
+    plugin: action_message_action
+    label: Activity_0vvid3m
+    configuration:
+      replace_tokens: false
+      message: '[countcert]'
+    successors: {  }
+  Activity_1ryh96q:
+    plugin: eca_set_field_value
+    label: 'Set title'
+    configuration:
+      field_name: title
+      field_value: 'Bonus Certificate #[random:number]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: false
+      object: ''
     successors: {  }
