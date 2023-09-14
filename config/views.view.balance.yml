@@ -22,6 +22,7 @@ dependencies:
     - user.role.shief_pm
     - user.role.teamlead
   module:
+    - datetime
     - node
     - user
 id: balance
@@ -286,21 +287,20 @@ display:
     position: 1
     display_options:
       sorts:
-        nid:
-          id: nid
-          table: node_field_data
-          field: nid
+        field_period_of_validity_end_value:
+          id: field_period_of_validity_end_value
+          table: node__field_period_of_validity
+          field: field_period_of_validity_end_value
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: node
-          entity_field: nid
-          plugin_id: standard
+          plugin_id: datetime
           order: ASC
           expose:
             label: ''
             field_identifier: ''
           exposed: false
+          granularity: second
       defaults:
         sorts: false
       display_extenders: {  }
@@ -372,39 +372,3 @@ display:
         - 'user.node_grants:view'
         - user.roles
       tags: {  }
-  block_3:
-    id: block_3
-    display_title: Block
-    display_plugin: block
-    position: 1
-    display_options:
-      sorts:
-        nid:
-          id: nid
-          table: node_field_data
-          field: nid
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: nid
-          plugin_id: standard
-          order: ASC
-          expose:
-            label: ''
-            field_identifier: ''
-          exposed: false
-      defaults:
-        sorts: false
-      display_extenders: {  }
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - user
-        - 'user.node_grants:view'
-        - user.roles
-      tags:
-        - 'config:field.storage.node.field_remainder'

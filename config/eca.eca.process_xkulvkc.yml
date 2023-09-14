@@ -176,7 +176,7 @@ gateways:
     type: 0
     successors:
       -
-        id: Activity_1dqxhee
+        id: Activity_1s9zeju
         condition: ''
   Gateway_134cf2z:
     type: 0
@@ -248,7 +248,7 @@ actions:
       method: 'set:clear'
       strip_tags: false
       trim: false
-      save_entity: true
+      save_entity: false
       object: certif
     successors:
       -
@@ -263,7 +263,7 @@ actions:
       method: 'set:clear'
       strip_tags: false
       trim: false
-      save_entity: true
+      save_entity: false
       object: certif
     successors:
       -
@@ -311,7 +311,7 @@ actions:
       method: 'set:clear'
       strip_tags: false
       trim: false
-      save_entity: true
+      save_entity: false
       object: certif
     successors:
       -
@@ -326,7 +326,7 @@ actions:
       method: 'set:clear'
       strip_tags: false
       trim: false
-      save_entity: true
+      save_entity: false
       object: certif
     successors:
       -
@@ -341,7 +341,7 @@ actions:
       method: 'set:clear'
       strip_tags: false
       trim: false
-      save_entity: true
+      save_entity: false
       object: certif
     successors:
       -
@@ -356,7 +356,7 @@ actions:
       method: 'set:clear'
       strip_tags: false
       trim: false
-      save_entity: true
+      save_entity: false
       object: certif
     successors:
       -
@@ -371,7 +371,7 @@ actions:
       method: 'set:clear'
       strip_tags: false
       trim: false
-      save_entity: true
+      save_entity: false
       object: certif
     successors:
       -
@@ -567,7 +567,7 @@ actions:
     configuration:
       token_name: balanceview
       view_id: balance
-      display_id: block_3
+      display_id: block_1
       arguments: ''
     successors:
       -
@@ -723,4 +723,13 @@ actions:
     successors:
       -
         id: Activity_01w5tpy
+        condition: ''
+  Activity_1s9zeju:
+    plugin: eca_save_entity
+    label: 'Save entity'
+    configuration:
+      object: certif
+    successors:
+      -
+        id: Activity_1dqxhee
         condition: ''

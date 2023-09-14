@@ -20,10 +20,28 @@ settings:
   handler_settings:
     target_bundles: null
     sort:
-      field: _none
+      field: name
       direction: ASC
     auto_create: false
     filter:
-      type: _none
-    include_anonymous: true
+      type: role
+      role:
+        ceo: ceo
+        developer_junior: developer_junior
+        developer_middle: developer_middle
+        developer_senior: developer_senior
+        teamlead: teamlead
+        pm: pm
+        shief_pm: shief_pm
+        head_of_department: head_of_department
+        sales: sales
+        marketing: marketing
+        recruiting: recruiting
+        hr: hr
+        om: om
+        accounting: accounting
+        admin_staff: admin_staff
+        client: client
+        administrator: '0'
+    include_anonymous: false
 field_type: entity_reference
