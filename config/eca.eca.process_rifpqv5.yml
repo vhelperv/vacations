@@ -64,15 +64,6 @@ events:
       -
         id: Activity_1nv7w3k
         condition: ''
-  Event_1jpln7k:
-    plugin: 'content_entity:insert'
-    label: 'Insert vacation'
-    configuration:
-      type: 'node vacation'
-    successors:
-      -
-        id: Activity_00ejyen
-        condition: ''
   Event_1mkjlbs:
     plugin: 'content_entity:update'
     label: 'Load Vacation'
@@ -89,7 +80,16 @@ events:
       type: 'node vacation'
     successors:
       -
-        id: Activity_16nzv53
+        id: Activity_00ejyen
+        condition: ''
+  Event_1wu1c7r:
+    plugin: 'content_entity:insert'
+    label: 'Save vacation'
+    configuration:
+      type: 'node vacation'
+    successors:
+      -
+        id: Activity_10b0nh7
         condition: ''
 conditions:
   Flow_1880gj1:
@@ -258,7 +258,7 @@ gateways:
         id: Activity_0ksziyg
         condition: Flow_0m3h7np
       -
-        id: Activity_1wnor07
+        id: Activity_0o2cdwj
         condition: Flow_1on24zn
   Gateway_1x8nv9p:
     type: 0
@@ -355,7 +355,7 @@ actions:
       object: ''
     successors:
       -
-        id: Activity_0pj75s9
+        id: Activity_0r2y3av
         condition: ''
   Activity_0pj75s9:
     plugin: eca_set_field_value
@@ -366,7 +366,7 @@ actions:
       method: 'set:clear'
       strip_tags: false
       trim: false
-      save_entity: true
+      save_entity: false
       object: vacation
     successors:
       -
@@ -396,10 +396,7 @@ actions:
       trim: false
       save_entity: true
       object: vacation
-    successors:
-      -
-        id: Activity_0j6w1aw
-        condition: ''
+    successors: {  }
   Activity_0pxpwwn:
     plugin: 'eca_tamper:timetodate'
     label: 'Convert Unix to Day'
@@ -416,15 +413,15 @@ actions:
     label: 'Set Vacation''s Employee'
     configuration:
       field_name: '[field_vacation_s_employee_:target_id]'
-      field_value: '[current-user:uid]'
+      field_value: '[user]'
       method: 'set:clear'
       strip_tags: false
       trim: false
-      save_entity: true
+      save_entity: false
       object: vacation
     successors:
       -
-        id: Activity_0a28vpb
+        id: Activity_0poljyu
         condition: ''
   Activity_0innsk8:
     plugin: eca_token_load_entity
@@ -714,18 +711,6 @@ actions:
       -
         id: Gateway_1vzq9rl
         condition: ''
-  Activity_0j6w1aw:
-    plugin: eca_set_field_value
-    label: 'Set title'
-    configuration:
-      field_name: title
-      field_value: 'Vacation Request #[random:number]'
-      method: 'set:clear'
-      strip_tags: false
-      trim: false
-      save_entity: true
-      object: vacation
-    successors: {  }
   Activity_0comzng:
     plugin: eca_new_entity
     label: 'Create transaction [transaction]'
@@ -890,7 +875,7 @@ actions:
       object: transaction
     successors:
       -
-        id: Activity_0o2cdwj
+        id: Activity_1fjgsgh
         condition: ''
   Activity_1wd8qrn:
     plugin: 'eca_tamper:math'
@@ -937,18 +922,6 @@ actions:
     successors:
       -
         id: Activity_1sbiffq
-        condition: ''
-  Activity_0o2cdwj:
-    plugin: eca_views_query
-    label: 'Load Balance [balanceview2]'
-    configuration:
-      token_name: balanceview2
-      view_id: balance
-      display_id: block_1
-      arguments: ''
-    successors:
-      -
-        id: Activity_0u6rnsn
         condition: ''
   Activity_1tonknm:
     plugin: 'eca_tamper:math'
@@ -1151,7 +1124,7 @@ actions:
     successors: {  }
   Activity_0lw7qtz:
     plugin: eca_switch_account
-    label: 'Swich to admin'
+    label: 'Switch to admin'
     configuration:
       user_id: '1'
     successors:
@@ -1181,10 +1154,105 @@ actions:
     label: 'Set title'
     configuration:
       field_name: title
-      field_value: F
+      field_value: 'Vacation #[random:number]'
       method: 'set:clear'
       strip_tags: false
       trim: false
       save_entity: false
-      object: ''
+      object: vacation
+    successors:
+      -
+        id: Activity_0pj75s9
+        condition: ''
+  Activity_1knpz9i:
+    plugin: eca_switch_account
+    label: 'Switch to admin'
+    configuration:
+      user_id: '1'
+    successors:
+      -
+        id: Activity_16nzv53
+        condition: ''
+  Activity_0poljyu:
+    plugin: eca_switch_account
+    label: 'Switch to author '
+    configuration:
+      user_id: '[user]'
     successors: {  }
+  Activity_0r2y3av:
+    plugin: eca_token_set_value
+    label: 'Set current user into token'
+    configuration:
+      token_name: user
+      token_value: '[current-user:uid]'
+      use_yaml: false
+    successors:
+      -
+        id: Activity_1knpz9i
+        condition: ''
+  Activity_0o2cdwj:
+    plugin: eca_switch_account
+    label: 'Switch to admin'
+    configuration:
+      user_id: '1'
+    successors:
+      -
+        id: Activity_1wnor07
+        condition: ''
+  Activity_0qtcq7b:
+    plugin: eca_switch_account
+    label: 'Switch to admin'
+    configuration:
+      user_id: '1'
+    successors:
+      -
+        id: Activity_0a28vpb
+        condition: ''
+  Activity_10b0nh7:
+    plugin: eca_token_load_entity
+    label: 'Load Vacation'
+    configuration:
+      token_name: vacation
+      from: current
+      entity_type: _none
+      entity_id: ''
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      latest_revision: false
+      unchanged: false
+      object: ''
+    successors:
+      -
+        id: Activity_0qtcq7b
+        condition: ''
+  Activity_1fjgsgh:
+    plugin: eca_switch_account
+    label: 'Swich user to author'
+    configuration:
+      user_id: '[loadvac:author:uid]'
+    successors:
+      -
+        id: Activity_0frf6av
+        condition: ''
+  Activity_0az0kea:
+    plugin: eca_switch_account
+    label: 'Switch to admin'
+    configuration:
+      user_id: '1'
+    successors:
+      -
+        id: Activity_0u6rnsn
+        condition: ''
+  Activity_0frf6av:
+    plugin: eca_views_query
+    label: 'Load Balance [balanceview2]'
+    configuration:
+      token_name: balanceview2
+      view_id: balance
+      display_id: block_1
+      arguments: ''
+    successors:
+      -
+        id: Activity_0az0kea
+        condition: ''

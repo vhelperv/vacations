@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - filter.format.basic_html
-    - node.type.vacation
   module:
     - comment
     - contact
@@ -31,7 +30,6 @@ permissions:
   - 'access user profiles'
   - 'change own username'
   - 'create status_approve workflow_transition'
-  - 'create vacation content'
   - 'edit own comments'
   - 'post comments'
   - 'schedule publishing of nodes'
