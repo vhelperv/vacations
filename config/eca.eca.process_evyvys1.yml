@@ -1,13 +1,152 @@
 uuid: 066b7aa6-7c9a-467a-8f55-cd3c46677d82
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - eca_base
+    - eca_form
+    - eca_tamper
 id: process_evyvys1
 modeller: bpmn_io
 label: 'Validation Vacation & Certificate'
 version: v1
 weight: -10
-events: {  }
-conditions: {  }
+events:
+  Event_1x6jxwe:
+    plugin: 'form:form_validate'
+    label: 'Validate certificate'
+    configuration:
+      form_id: node-certificate-form
+      entity_type_id: ''
+      bundle: ''
+      operation: ''
+    successors:
+      -
+        id: Activity_10oiwxk
+        condition: ''
+  Event_1tiupjq:
+    plugin: 'form:form_validate'
+    label: 'Validate vacation'
+    configuration:
+      form_id: node-vacation-form
+      entity_type_id: ''
+      bundle: ''
+      operation: ''
+    successors:
+      -
+        id: Activity_1dvlddl
+        condition: ''
+conditions:
+  Flow_1b7hrrh:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[certemployee]'
+      right: '[current-user:uid]'
+      operator: equal
+      type: value
+  Flow_0s2x00o:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[unixstartdate]'
+      right: '[current-date:raw]'
+      operator: lessthan
+      type: value
+  Flow_1wc8gtu:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[typevac]'
+      right: '2'
+      operator: equal
+      type: value
 gateways: {  }
-actions: {  }
+actions:
+  Activity_191wffh:
+    plugin: eca_form_field_set_error
+    label: 'ERROR: Certificate for yourself'
+    configuration:
+      message: 'You cannot provide yourself with a certificate!'
+      field_name: op
+    successors: {  }
+  Activity_10oiwxk:
+    plugin: eca_form_field_get_value
+    label: 'Check value field_employee'
+    configuration:
+      token_name: certemployee
+      field_name: field_employee.0.target_id
+      strip_tags: true
+      trim: true
+      xss_filter: true
+    successors:
+      -
+        id: Activity_191wffh
+        condition: Flow_1b7hrrh
+      -
+        id: Activity_1bchrvq
+        condition: ''
+  Activity_1bchrvq:
+    plugin: eca_form_field_get_value
+    label: 'Get value start date'
+    configuration:
+      token_name: startdate
+      field_name: field_period_of_validity.0.value
+      strip_tags: true
+      trim: true
+      xss_filter: true
+    successors:
+      -
+        id: Activity_0id92iz
+        condition: ''
+  Activity_18sltp8:
+    plugin: eca_form_field_set_error
+    label: 'ERROR: You cannot take on past days'
+    configuration:
+      message: 'You cannot take on past days!'
+      field_name: op
+    successors: {  }
+  Activity_0id92iz:
+    plugin: 'eca_tamper:strtotime'
+    label: 'Convert to UNIX'
+    configuration:
+      eca_data: '[startdate]'
+      eca_token_name: '[unixstartdate]'
+    successors:
+      -
+        id: Activity_18sltp8
+        condition: Flow_0s2x00o
+  Activity_1dvlddl:
+    plugin: eca_form_field_get_value
+    label: 'Get type vacation'
+    configuration:
+      token_name: typevac
+      field_name: field_type_vacation.0.target_id
+      strip_tags: true
+      trim: true
+      xss_filter: true
+    successors:
+      -
+        id: Activity_13orx8b
+        condition: Flow_1wc8gtu
+  Activity_1cy3c14:
+    plugin: eca_form_field_set_error
+    label: Activity_1cy3c14
+    configuration:
+      message: '[typevac]'
+      field_name: op
+    successors: {  }
+  Activity_13orx8b:
+    plugin: eca_form_field_set_options
+    label: Activity_13orx8b
+    configuration:
+      options: 'type : datetime'
+      use_yaml: true
+      field_name: field_range
+    successors:
+      -
+        id: Activity_1cy3c14
+        condition: ''
