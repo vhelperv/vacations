@@ -12,7 +12,7 @@ dependencies:
 id: views_block__balance_block_2
 theme: gin
 region: header
-weight: 0
+weight: -3
 provider: null
 plugin: 'views_block:balance-block_2'
 settings:

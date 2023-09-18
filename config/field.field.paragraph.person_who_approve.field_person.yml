@@ -16,32 +16,7 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: 'default:user'
+  handler: eca
   handler_settings:
-    target_bundles: null
-    sort:
-      field: _none
-      direction: ASC
-    auto_create: false
-    filter:
-      type: role
-      role:
-        ceo: ceo
-        teamlead: teamlead
-        pm: pm
-        shief_pm: shief_pm
-        head_of_department: head_of_department
-        client: client
-        administrator: '0'
-        developer_junior: '0'
-        developer_middle: '0'
-        developer_senior: '0'
-        sales: '0'
-        marketing: '0'
-        recruiting: '0'
-        hr: '0'
-        om: '0'
-        accounting: '0'
-        admin_staff: '0'
-    include_anonymous: true
+    field_name: field_person
 field_type: entity_reference

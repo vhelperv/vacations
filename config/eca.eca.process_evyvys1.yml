@@ -2,10 +2,19 @@ uuid: 066b7aa6-7c9a-467a-8f55-cd3c46677d82
 langcode: en
 status: true
 dependencies:
+  config:
+    - field.field.paragraph.person_who_approve.field_person
+    - field.storage.paragraph.field_person
+    - paragraphs.paragraphs_type.person_who_approve
+    - views.view.balance
+    - views.view.person_approve
   module:
     - eca_base
+    - eca_content
     - eca_form
     - eca_tamper
+    - eca_user
+    - eca_views
 id: process_evyvys1
 modeller: bpmn_io
 label: 'Validation Vacation & Certificate'
@@ -36,6 +45,17 @@ events:
       -
         id: Activity_1dvlddl
         condition: ''
+  Event_09zi5p4:
+    plugin: 'content_entity:reference_selection'
+    label: 'Create field_person'
+    configuration:
+      type: 'paragraph person_who_approve'
+      field_name: field_person
+      token_name: selectpeople
+    successors:
+      -
+        id: Gateway_0b1o51u
+        condition: ''
 conditions:
   Flow_1b7hrrh:
     plugin: eca_scalar
@@ -55,16 +75,250 @@ conditions:
       right: '[current-date:raw]'
       operator: lessthan
       type: value
-  Flow_1wc8gtu:
+  Flow_10y16yh:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[startvacunix]'
+      right: '[current-date:raw]'
+      operator: lessthan
+      type: value
+  Flow_009rady:
+    plugin: 'eca_tamper_condition:timetodate'
+    configuration:
+      date_format: D
+      negate: false
+      case: false
+      left: '[startvacunix]'
+      right: Sun
+      operator: equal
+      type: value
+  Flow_0dstamj:
+    plugin: 'eca_tamper_condition:timetodate'
+    configuration:
+      date_format: D
+      negate: false
+      case: false
+      left: '[startvacunix]'
+      right: Sat
+      operator: equal
+      type: value
+  Flow_17ez20o:
+    plugin: 'eca_tamper_condition:timetodate'
+    configuration:
+      date_format: D
+      negate: false
+      case: false
+      left: '[endvacunix]'
+      right: Sun
+      operator: equal
+      type: value
+  Flow_1h14fti:
+    plugin: 'eca_tamper_condition:timetodate'
+    configuration:
+      date_format: D
+      negate: false
+      case: false
+      left: '[endvacunix]'
+      right: Sun
+      operator: equal
+      type: value
+  Flow_1xbeabb:
+    plugin: eca_scalar
+    configuration:
+      case: false
+      left: '[countcert]'
+      right: '0'
+      operator: equal
+      type: value
+      negate: true
+  Flow_1la69qk:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[countcert]'
+      right: '0'
+      operator: equal
+      type: value
+  Flow_1of7as7:
     plugin: eca_scalar
     configuration:
       negate: false
       case: false
       left: '[typevac]'
-      right: '2'
+      right: '1'
       operator: equal
       type: value
-gateways: {  }
+  Flow_11p3zlb:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[numbday]'
+      right: '[balance]'
+      operator: greaterthan
+      type: value
+  Flow_0uujeou:
+    plugin: eca_scalar
+    configuration:
+      case: false
+      left: '[balance]'
+      right: '1'
+      operator: equal
+      type: value
+      negate: true
+  Flow_1yyu7vi:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[balance]'
+      right: '1'
+      operator: equal
+      type: value
+  Flow_1kzawc7:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: developer_junior
+  Flow_02wmraj:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: developer_middle
+  Flow_0dpcrri:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: developer_senior
+  Flow_1hh9ogw:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: shief_pm
+  Flow_1t81smb:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: head_of_department
+  Flow_0aqq9ta:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: teamlead
+  Flow_0shdsv2:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: pm
+  Flow_00q94vi:
+    plugin: eca_scalar
+    configuration:
+      case: false
+      left: '[countperson]'
+      right: '0'
+      operator: equal
+      type: value
+      negate: true
+  Flow_1bdy78q:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[countperson]'
+      right: '0'
+      operator: equal
+      type: value
+  Flow_13wgsjr:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: developer_junior
+  Flow_00ljuix:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: developer_middle
+  Flow_1tdckn9:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: developer_senior
+gateways:
+  Gateway_0riv56h:
+    type: 0
+    successors:
+      -
+        id: Activity_0c6euzb
+        condition: Flow_1xbeabb
+      -
+        id: Activity_0pvf0t0
+        condition: Flow_1la69qk
+  Gateway_0t7wu80:
+    type: 0
+    successors:
+      -
+        id: Activity_0tc3gj8
+        condition: Flow_0uujeou
+      -
+        id: Activity_117kvko
+        condition: Flow_1yyu7vi
+  Gateway_0b1o51u:
+    type: 0
+    successors:
+      -
+        id: Activity_0klc9j7
+        condition: Flow_1kzawc7
+      -
+        id: Activity_0klc9j7
+        condition: Flow_02wmraj
+      -
+        id: Activity_0klc9j7
+        condition: Flow_0dpcrri
+      -
+        id: Activity_17s4sx2
+        condition: Flow_1hh9ogw
+      -
+        id: Activity_17s4sx2
+        condition: Flow_1t81smb
+      -
+        id: Activity_17s4sx2
+        condition: Flow_0aqq9ta
+      -
+        id: Activity_0okihrh
+        condition: Flow_0shdsv2
+      -
+        id: Activity_0tlbn95
+        condition: ''
+  Gateway_11bq3cu:
+    type: 0
+    successors:
+      -
+        id: Activity_1cpymx3
+        condition: Flow_00q94vi
+      -
+        id: Gateway_0mektns
+        condition: Flow_1bdy78q
+  Gateway_0mektns:
+    type: 0
+    successors:
+      -
+        id: Gateway_1sw2u5t
+        condition: Flow_13wgsjr
+      -
+        id: Gateway_1sw2u5t
+        condition: Flow_00ljuix
+      -
+        id: Gateway_1sw2u5t
+        condition: Flow_1tdckn9
+  Gateway_1sw2u5t:
+    type: 0
+    successors:
+      -
+        id: Activity_18m3hyb
+        condition: ''
 actions:
   Activity_191wffh:
     plugin: eca_form_field_set_error
@@ -121,6 +375,163 @@ actions:
         condition: Flow_0s2x00o
   Activity_1dvlddl:
     plugin: eca_form_field_get_value
+    label: 'Get start date vacation'
+    configuration:
+      token_name: startvac
+      field_name: field_range.0.value
+      strip_tags: true
+      trim: true
+      xss_filter: true
+    successors:
+      -
+        id: Activity_15l7dtc
+        condition: ''
+      -
+        id: Activity_18kqzsm
+        condition: ''
+  Activity_040zn6o:
+    plugin: eca_form_field_set_error
+    label: 'ERROR: You cannot take on past days'
+    configuration:
+      message: 'You cannot take on past days!'
+      field_name: op
+    successors: {  }
+  Activity_15l7dtc:
+    plugin: 'eca_tamper:strtotime'
+    label: 'Convert to UNIX'
+    configuration:
+      eca_data: '[startvac]'
+      eca_token_name: startvacunix
+    successors:
+      -
+        id: Activity_040zn6o
+        condition: Flow_10y16yh
+      -
+        id: Activity_03akgun
+        condition: Flow_009rady
+      -
+        id: Activity_03akgun
+        condition: Flow_0dstamj
+  Activity_03akgun:
+    plugin: eca_form_field_set_error
+    label: 'ERROR: Sun and Sat'
+    configuration:
+      message: 'You cannot start vacation on Saturday and Sunday. Сhoose another date!'
+      field_name: op
+    successors: {  }
+  Activity_18kqzsm:
+    plugin: eca_form_field_get_value
+    label: 'Get end date vacation'
+    configuration:
+      token_name: endvac
+      field_name: field_range.0.end_value
+      strip_tags: true
+      trim: true
+      xss_filter: true
+    successors:
+      -
+        id: Activity_02y7k8o
+        condition: ''
+      -
+        id: Activity_0fedyok
+        condition: ''
+  Activity_02y7k8o:
+    plugin: 'eca_tamper:strtotime'
+    label: 'Convert to UNIX'
+    configuration:
+      eca_data: '[endvac]'
+      eca_token_name: endvacunix
+    successors:
+      -
+        id: Activity_138ah2e
+        condition: ''
+      -
+        id: Activity_0932pmb
+        condition: Flow_17ez20o
+      -
+        id: Activity_0932pmb
+        condition: Flow_1h14fti
+  Activity_0932pmb:
+    plugin: eca_form_field_set_error
+    label: 'ERROR: Sun and Sat'
+    configuration:
+      message: 'You cannot start vacation on Saturday and Sunday. Сhoose another date!'
+      field_name: op
+    successors: {  }
+  Activity_05u4q7j:
+    plugin: eca_views_query
+    label: 'Load Balance [balanceview]'
+    configuration:
+      token_name: balanceview
+      view_id: balance
+      display_id: block_1
+      arguments: ''
+    successors:
+      -
+        id: Activity_036n9xt
+        condition: ''
+  Activity_036n9xt:
+    plugin: eca_count
+    label: 'Count user''s certificate [countcert]'
+    configuration:
+      token_name: countcert
+      list_token: balanceview
+    successors:
+      -
+        id: Activity_0qlm72c
+        condition: ''
+  Activity_0qlm72c:
+    plugin: eca_token_set_value
+    label: 'Token 0 [balance]'
+    configuration:
+      token_name: balance
+      token_value: '0'
+      use_yaml: false
+    successors:
+      -
+        id: Gateway_0riv56h
+        condition: ''
+  Activity_0c6euzb:
+    plugin: 'eca_tamper:math'
+    label: 'Add field_remainder to balance'
+    configuration:
+      operation: addition
+      flip: false
+      value: '[balanceview:0:field_remainder]'
+      eca_data: '[balance]'
+      eca_token_name: balance
+    successors:
+      -
+        id: Activity_0vujbqn
+        condition: ''
+  Activity_0vujbqn:
+    plugin: 'eca_tamper:math'
+    label: 'Subtraction 1 from countcert'
+    configuration:
+      operation: subtraction
+      flip: false
+      value: '1'
+      eca_data: '[countcert]'
+      eca_token_name: countcert
+    successors:
+      -
+        id: Activity_06otyig
+        condition: ''
+  Activity_06otyig:
+    plugin: eca_list_remove
+    label: 'Drop first from [balanceview]'
+    configuration:
+      value: ''
+      token_name: ''
+      method: first
+      index: ''
+      list_token: balanceview
+    successors:
+      -
+        id: Gateway_0riv56h
+        condition: ''
+  Activity_138ah2e:
+    plugin: eca_form_field_get_value
     label: 'Get type vacation'
     configuration:
       token_name: typevac
@@ -130,23 +541,376 @@ actions:
       xss_filter: true
     successors:
       -
-        id: Activity_13orx8b
-        condition: Flow_1wc8gtu
-  Activity_1cy3c14:
-    plugin: eca_form_field_set_error
-    label: Activity_1cy3c14
+        id: Activity_05u4q7j
+        condition: Flow_1of7as7
+  Activity_0pvf0t0:
+    plugin: 'eca_tamper:math'
+    label: 'Vacation period in UNIX [numbvac]'
     configuration:
-      message: '[typevac]'
-      field_name: op
-    successors: {  }
-  Activity_13orx8b:
-    plugin: eca_form_field_set_options
-    label: Activity_13orx8b
-    configuration:
-      options: 'type : datetime'
-      use_yaml: true
-      field_name: field_range
+      operation: subtraction
+      flip: false
+      value: '[startvacunix]'
+      eca_data: '[endvacunix]'
+      eca_token_name: numbvac
     successors:
       -
-        id: Activity_1cy3c14
+        id: Activity_1t9veqt
         condition: ''
+  Activity_0tc3gj8:
+    plugin: eca_form_field_set_error
+    label: 'ERROR: Not enough days. Balance: * days'
+    configuration:
+      message: 'Not enough days on the balance! Your balance - [balance] days'
+      field_name: op
+    successors: {  }
+  Activity_1t9veqt:
+    plugin: 'eca_tamper:timetodate'
+    label: 'Vacation period in days [numbday]'
+    configuration:
+      date_format: d
+      eca_data: '[numbvac]'
+      eca_token_name: numbday
+    successors:
+      -
+        id: Gateway_0t7wu80
+        condition: Flow_11p3zlb
+  Activity_117kvko:
+    plugin: eca_form_field_set_error
+    label: 'ERROR: Not enough days. Balance: 1 day'
+    configuration:
+      message: 'Not enough days on the balance! Your balance - [balance] day'
+      field_name: op
+    successors: {  }
+  Activity_0fedyok:
+    plugin: eca_form_field_get_value
+    label: 'Get field_approve'
+    configuration:
+      token_name: approve
+      field_name: field_approve
+      strip_tags: true
+      trim: true
+      xss_filter: true
+    successors:
+      -
+        id: Activity_0mk4hr8
+        condition: ''
+  Activity_0klc9j7:
+    plugin: eca_views_query
+    label: 'Load teamleads using view [teamleads]'
+    configuration:
+      token_name: teamleads
+      view_id: person_approve
+      display_id: block_1
+      arguments: teamlead
+    successors:
+      -
+        id: Activity_0cst5b4
+        condition: ''
+  Activity_0okihrh:
+    plugin: eca_views_query
+    label: 'Load chiefs pm using view [chiefspm]'
+    configuration:
+      token_name: chiefspm
+      view_id: person_approve
+      display_id: block_1
+      arguments: shief_pm
+    successors:
+      -
+        id: Activity_1vhhnxy
+        condition: ''
+  Activity_17s4sx2:
+    plugin: eca_views_query
+    label: 'Load ceo using view [ceo]'
+    configuration:
+      token_name: ceo
+      view_id: person_approve
+      display_id: block_1
+      arguments: ceo
+    successors:
+      -
+        id: Activity_11gulh5
+        condition: ''
+  Activity_0cst5b4:
+    plugin: eca_views_query
+    label: 'Load pms using view [pms]'
+    configuration:
+      token_name: pms
+      view_id: person_approve
+      display_id: block_1
+      arguments: pm
+    successors:
+      -
+        id: Activity_1mb8lwh
+        condition: ''
+  Activity_1mb8lwh:
+    plugin: eca_views_query
+    label: 'Load chiefs pm using view [chiefspm]'
+    configuration:
+      token_name: chiefspm
+      view_id: person_approve
+      display_id: block_1
+      arguments: shief_pm
+    successors:
+      -
+        id: Activity_09quwo9
+        condition: ''
+  Activity_09quwo9:
+    plugin: eca_views_query
+    label: 'Load clients using view [clients]'
+    configuration:
+      token_name: clients
+      view_id: person_approve
+      display_id: block_1
+      arguments: client
+    successors:
+      -
+        id: Activity_1f49a56
+        condition: ''
+  Activity_1f49a56:
+    plugin: eca_list_add_entity
+    label: 'Add teamleads to selectpeople'
+    configuration:
+      method: append
+      index: ''
+      list_token: selectpeople
+      object: teamleads
+    successors:
+      -
+        id: Activity_09e973t
+        condition: ''
+  Activity_09e973t:
+    plugin: eca_list_add_entity
+    label: 'Add pms to selectpeople'
+    configuration:
+      method: append
+      index: ''
+      list_token: selectpeople
+      object: pms
+    successors:
+      -
+        id: Activity_1432no8
+        condition: ''
+  Activity_1432no8:
+    plugin: eca_list_add_entity
+    label: 'Add chiefs pm to selectpeople'
+    configuration:
+      method: append
+      index: ''
+      list_token: selectpeople
+      object: chiefspm
+    successors:
+      -
+        id: Activity_0xo84g6
+        condition: ''
+  Activity_0xo84g6:
+    plugin: eca_list_add_entity
+    label: 'Add clients to selectpeople'
+    configuration:
+      method: append
+      index: ''
+      list_token: selectpeople
+      object: clients
+    successors: {  }
+  Activity_1vhhnxy:
+    plugin: eca_views_query
+    label: 'Load clients using view [clients]'
+    configuration:
+      token_name: clients
+      view_id: person_approve
+      display_id: block_1
+      arguments: client
+    successors:
+      -
+        id: Activity_0ziz9fc
+        condition: ''
+  Activity_0ziz9fc:
+    plugin: eca_list_add_entity
+    label: 'Add chiefs pm to selectpeople'
+    configuration:
+      method: append
+      index: ''
+      list_token: selectpeople
+      object: chiefspm
+    successors:
+      -
+        id: Activity_1pup40u
+        condition: ''
+  Activity_1pup40u:
+    plugin: eca_list_add_entity
+    label: 'Add clients to selectpeople'
+    configuration:
+      method: append
+      index: ''
+      list_token: selectpeople
+      object: clients
+    successors: {  }
+  Activity_11gulh5:
+    plugin: eca_list_add_entity
+    label: 'Add ceo to selectpeople'
+    configuration:
+      method: append
+      index: ''
+      list_token: selectpeople
+      object: ceo
+    successors: {  }
+  Activity_0tlbn95:
+    plugin: eca_views_query
+    label: 'Load head of departaments using view [headofdepartament]'
+    configuration:
+      token_name: headofdepartament
+      view_id: person_approve
+      display_id: block_1
+      arguments: head_of_department
+    successors:
+      -
+        id: Activity_1qz9qaf
+        condition: ''
+  Activity_1qz9qaf:
+    plugin: eca_list_add_entity
+    label: 'Add head of departament to selectpeople'
+    configuration:
+      method: append
+      index: ''
+      list_token: selectpeople
+      object: headofdepartament
+    successors: {  }
+  Activity_1wbctjg:
+    plugin: eca_form_field_set_error
+    label: Activity_1wbctjg
+    configuration:
+      message: '[personrole]'
+      field_name: op
+    successors:
+      -
+        id: Activity_1r6hn6c
+        condition: ''
+  Activity_0mk4hr8:
+    plugin: eca_count
+    label: 'Count person + 1 [countperson]'
+    configuration:
+      token_name: countperson
+      list_token: approve
+    successors:
+      -
+        id: Activity_18c4stk
+        condition: ''
+  Activity_18c4stk:
+    plugin: 'eca_tamper:math'
+    label: 'countperson - 1'
+    configuration:
+      operation: subtraction
+      flip: false
+      value: '1'
+      eca_data: '[countperson]'
+      eca_token_name: countperson
+    successors:
+      -
+        id: Gateway_11bq3cu
+        condition: ''
+  Activity_1r6hn6c:
+    plugin: 'eca_tamper:math'
+    label: 'countperson - 1 '
+    configuration:
+      operation: subtraction
+      flip: false
+      value: '1'
+      eca_data: '[countperson]'
+      eca_token_name: countperson
+    successors:
+      -
+        id: Activity_0tizhbm
+        condition: ''
+  Activity_1cpymx3:
+    plugin: eca_token_set_value
+    label: 'Get person ID [person]'
+    configuration:
+      token_name: person
+      token_value: '[approve:0:subform:field_person:0:target_id]'
+      use_yaml: false
+    successors:
+      -
+        id: Activity_1q1a852
+        condition: ''
+  Activity_0tizhbm:
+    plugin: eca_list_remove
+    label: 'Drop first from [approve]'
+    configuration:
+      value: ''
+      token_name: ''
+      method: first
+      index: ''
+      list_token: approve
+    successors:
+      -
+        id: Gateway_11bq3cu
+        condition: ''
+  Activity_1q1a852:
+    plugin: eca_token_load_entity
+    label: 'Load user by ID'
+    configuration:
+      token_name: userapp
+      from: id
+      entity_type: user
+      entity_id: '[person]'
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      latest_revision: false
+      unchanged: false
+      object: ''
+    successors:
+      -
+        id: Activity_1djq364
+        condition: ''
+  Activity_1djq364:
+    plugin: eca_token_set_value
+    label: 'Get person roles [personroles]'
+    configuration:
+      token_name: personroles
+      token_value: '[userapp:roles]'
+      use_yaml: false
+    successors:
+      -
+        id: Activity_0qw9m95
+        condition: ''
+  Activity_0qw9m95:
+    plugin: eca_token_set_value
+    label: 'Get person role [personrole]'
+    configuration:
+      token_name: personrole
+      token_value: '[personroles:0:target_id]'
+      use_yaml: false
+    successors:
+      -
+        id: Activity_0j04v27
+        condition: ''
+  Activity_0j04v27:
+    plugin: eca_list_add
+    label: Activity_0j04v27
+    configuration:
+      value: '[personrole]'
+      method: append
+      index: ''
+      list_token: roles
+    successors:
+      -
+        id: Activity_1wbctjg
+        condition: ''
+  Activity_18m3hyb:
+    plugin: eca_token_set_value
+    label: 'First role to [frole]'
+    configuration:
+      token_name: frole
+      token_value: '[roles:0]'
+      use_yaml: false
+    successors:
+      -
+        id: Activity_1dyf0db
+        condition: ''
+  Activity_1dyf0db:
+    plugin: eca_count
+    label: 'Count roles [countroles]'
+    configuration:
+      token_name: countroles
+      list_token: roles
+    successors: {  }
