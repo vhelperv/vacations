@@ -4288,9 +4288,9 @@ modeldata: |
           <di:waypoint x="1470" y="-1220" />
         </bpmndi:BPMNEdge>
         <bpmndi:BPMNEdge id="Flow_1rhs5zh_di" bpmnElement="Flow_1rhs5zh">
-          <di:waypoint x="1730" y="-1095" />
-          <di:waypoint x="1730" y="-1150" />
-          <di:waypoint x="1650" y="-1150" />
+          <di:waypoint x="1715" y="-1080" />
+          <di:waypoint x="1600" y="-1080" />
+          <di:waypoint x="1600" y="-1140" />
         </bpmndi:BPMNEdge>
         <bpmndi:BPMNEdge id="Flow_0kv4bju_di" bpmnElement="Flow_0kv4bju">
           <di:waypoint x="2300" y="-1210" />

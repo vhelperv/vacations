@@ -213,6 +213,11 @@ conditions:
     configuration:
       negate: false
       role: pm
+  Flow_1kbzoki:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: sales
   Flow_00q94vi:
     plugin: eca_scalar
     configuration:
@@ -246,6 +251,101 @@ conditions:
     configuration:
       negate: false
       role: developer_senior
+  Flow_1blrlbw:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: pm
+  Flow_0sjwtts:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: teamlead
+  Flow_17q7tue:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: head_of_department
+  Flow_0r3vzzn:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: shief_pm
+  Flow_140f5hy:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: marketing
+  Flow_1hj5t6d:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: recruiting
+  Flow_1b5jyos:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: hr
+  Flow_1oroem2:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: om
+  Flow_1y3w0gy:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: accounting
+  Flow_0jrw9ry:
+    plugin: eca_current_user_role
+    configuration:
+      negate: false
+      role: admin_staff
+  Flow_19sjxqg:
+    plugin: eca_current_user_role
+    configuration:
+      role: developer_junior
+      negate: true
+  Flow_0l9cs2v:
+    plugin: eca_current_user_role
+    configuration:
+      role: developer_middle
+      negate: true
+  Flow_1dswxc0:
+    plugin: eca_current_user_role
+    configuration:
+      role: developer_senior
+      negate: true
+  Flow_1o0djhu:
+    plugin: eca_current_user_role
+    configuration:
+      role: pm
+      negate: true
+  Flow_1pqdc8l:
+    plugin: eca_current_user_role
+    configuration:
+      role: shief_pm
+      negate: true
+  Flow_1lwq5n2:
+    plugin: eca_current_user_role
+    configuration:
+      role: teamlead
+      negate: true
+  Flow_1h5ohmo:
+    plugin: eca_current_user_role
+    configuration:
+      role: head_of_department
+      negate: true
+  Flow_1afurht:
+    plugin: eca_current_user_role
+    configuration:
+      role: ceo
+      negate: true
+  Flow_0r86yzq:
+    plugin: eca_current_user_role
+    configuration:
+      role: client
+      negate: true
 gateways:
   Gateway_0riv56h:
     type: 0
@@ -291,7 +391,25 @@ gateways:
         condition: Flow_0shdsv2
       -
         id: Activity_0tlbn95
-        condition: ''
+        condition: Flow_1kbzoki
+      -
+        id: Activity_0tlbn95
+        condition: Flow_140f5hy
+      -
+        id: Activity_0tlbn95
+        condition: Flow_1hj5t6d
+      -
+        id: Activity_0tlbn95
+        condition: Flow_1b5jyos
+      -
+        id: Activity_0tlbn95
+        condition: Flow_1oroem2
+      -
+        id: Activity_0tlbn95
+        condition: Flow_1y3w0gy
+      -
+        id: Activity_0tlbn95
+        condition: Flow_0jrw9ry
   Gateway_11bq3cu:
     type: 0
     successors:
@@ -299,7 +417,7 @@ gateways:
         id: Activity_1cpymx3
         condition: Flow_00q94vi
       -
-        id: Gateway_0mektns
+        id: Activity_1wbctjg
         condition: Flow_1bdy78q
   Gateway_0mektns:
     type: 0
@@ -313,11 +431,74 @@ gateways:
       -
         id: Gateway_1sw2u5t
         condition: Flow_1tdckn9
+      -
+        id: Activity_0hpbudn
+        condition: Flow_1blrlbw
+      -
+        id: Gateway_0oyj2a9
+        condition: Flow_0sjwtts
+      -
+        id: Gateway_0oyj2a9
+        condition: Flow_17q7tue
+      -
+        id: Gateway_0oyj2a9
+        condition: Flow_0r3vzzn
+      -
+        id: Gateway_0obb9nf
+        condition: Flow_19sjxqg
+      -
+        id: Gateway_0obb9nf
+        condition: Flow_0l9cs2v
+      -
+        id: Gateway_0obb9nf
+        condition: Flow_1dswxc0
+      -
+        id: Gateway_0obb9nf
+        condition: Flow_1o0djhu
+      -
+        id: Gateway_0g0ewaa
+        condition: Flow_1pqdc8l
+      -
+        id: Gateway_0obb9nf
+        condition: Flow_1lwq5n2
+      -
+        id: Gateway_0g0ewaa
+        condition: Flow_1h5ohmo
+      -
+        id: Gateway_0g0ewaa
+        condition: Flow_1afurht
+      -
+        id: Gateway_0g0ewaa
+        condition: Flow_0r86yzq
   Gateway_1sw2u5t:
     type: 0
     successors:
       -
-        id: Activity_18m3hyb
+        id: Activity_1ss7h9o
+        condition: ''
+  Gateway_0oyj2a9:
+    type: 0
+    successors:
+      -
+        id: Activity_1p1yjr5
+        condition: ''
+  Gateway_0obb9nf:
+    type: 0
+    successors:
+      -
+        id: Activity_1fg434p
+        condition: ''
+  Gateway_0g0ewaa:
+    type: 0
+    successors:
+      -
+        id: Activity_1fg434p
+        condition: ''
+  Gateway_1ke6lr2:
+    type: 0
+    successors:
+      -
+        id: Activity_1kxydd7
         condition: ''
 actions:
   Activity_191wffh:
@@ -778,11 +959,11 @@ actions:
     plugin: eca_form_field_set_error
     label: Activity_1wbctjg
     configuration:
-      message: '[personrole]'
+      message: '[roles]'
       field_name: op
     successors:
       -
-        id: Activity_1r6hn6c
+        id: Gateway_0mektns
         condition: ''
   Activity_0mk4hr8:
     plugin: eca_count
@@ -818,31 +999,21 @@ actions:
       eca_token_name: countperson
     successors:
       -
-        id: Activity_0tizhbm
+        id: Activity_0varulp
+        condition: ''
+      -
+        id: Gateway_11bq3cu
         condition: ''
   Activity_1cpymx3:
     plugin: eca_token_set_value
     label: 'Get person ID [person]'
     configuration:
       token_name: person
-      token_value: '[approve:0:subform:field_person:0:target_id]'
+      token_value: '[approve]'
       use_yaml: false
     successors:
       -
-        id: Activity_1q1a852
-        condition: ''
-  Activity_0tizhbm:
-    plugin: eca_list_remove
-    label: 'Drop first from [approve]'
-    configuration:
-      value: ''
-      token_name: ''
-      method: first
-      index: ''
-      list_token: approve
-    successors:
-      -
-        id: Gateway_11bq3cu
+        id: Activity_0j04v27
         condition: ''
   Activity_1q1a852:
     plugin: eca_token_load_entity
@@ -880,21 +1051,18 @@ actions:
       token_name: personrole
       token_value: '[personroles:0:target_id]'
       use_yaml: false
-    successors:
-      -
-        id: Activity_0j04v27
-        condition: ''
+    successors: {  }
   Activity_0j04v27:
     plugin: eca_list_add
-    label: Activity_0j04v27
+    label: 'Add [personrole] to [roles]'
     configuration:
-      value: '[personrole]'
+      value: '[person]'
       method: append
       index: ''
       list_token: roles
     successors:
       -
-        id: Activity_1wbctjg
+        id: Activity_0tizhbm
         condition: ''
   Activity_18m3hyb:
     plugin: eca_token_set_value
@@ -905,12 +1073,144 @@ actions:
       use_yaml: false
     successors:
       -
-        id: Activity_1dyf0db
+        id: Activity_1c4c98y
         condition: ''
   Activity_1dyf0db:
     plugin: eca_count
-    label: 'Count roles [countroles]'
+    label: 'Count [roles] as [countroles]'
     configuration:
       token_name: countroles
       list_token: roles
+    successors:
+      -
+        id: Activity_18m3hyb
+        condition: ''
+  Activity_1c4c98y:
+    plugin: eca_list_remove
+    label: 'Drop first '
+    configuration:
+      value: ''
+      token_name: ''
+      method: first
+      index: ''
+      list_token: roles
+    successors: {  }
+  Activity_1ss7h9o:
+    plugin: eca_list_add
+    label: 'Add pm to list [mustapprove]'
+    configuration:
+      value: pm
+      method: append
+      index: ''
+      list_token: mustapprove
+    successors:
+      -
+        id: Activity_1mnat5x
+        condition: ''
+  Activity_1mnat5x:
+    plugin: eca_list_add
+    label: 'Add pm to list [mustapprove]'
+    configuration:
+      value: teamlead
+      method: append
+      index: ''
+      list_token: mustapprove
+    successors:
+      -
+        id: Activity_1ar8vs8
+        condition: ''
+  Activity_1ar8vs8:
+    plugin: eca_list_add
+    label: 'Add chief pm to list [mustapprove]'
+    configuration:
+      value: shief_pm
+      method: append
+      index: ''
+      list_token: mustapprove
+    successors:
+      -
+        id: Gateway_1ke6lr2
+        condition: ''
+  Activity_0hpbudn:
+    plugin: eca_list_add
+    label: 'Add chief pm to list [mustapprove]'
+    configuration:
+      value: shief_pm
+      method: append
+      index: ''
+      list_token: mustapprove
+    successors:
+      -
+        id: Gateway_1ke6lr2
+        condition: ''
+  Activity_1p1yjr5:
+    plugin: eca_list_add
+    label: 'Add ceo to list [mustapprove]'
+    configuration:
+      value: ceo
+      method: append
+      index: ''
+      list_token: mustapprove
+    successors:
+      -
+        id: Gateway_1ke6lr2
+        condition: ''
+  Activity_1fg434p:
+    plugin: eca_list_add
+    label: 'Add head of departament to list [mustapprove]'
+    configuration:
+      value: head_of_department
+      method: append
+      index: ''
+      list_token: mustapprove
+    successors:
+      -
+        id: Gateway_1ke6lr2
+        condition: ''
+  Activity_1kxydd7:
+    plugin: eca_count
+    label: 'Save count [mustapprove] as [numbapp]'
+    configuration:
+      token_name: numbapp
+      list_token: mustapprove
+    successors:
+      -
+        id: Activity_1dyf0db
+        condition: ''
+  Activity_1101l5r:
+    plugin: eca_list_remove
+    label: Activity_1101l5r
+    configuration:
+      value: ''
+      token_name: ''
+      method: first
+      index: ''
+      list_token: approve
+    successors: {  }
+  Activity_0varulp:
+    plugin: action_message_action
+    label: Activity_0varulp
+    configuration:
+      replace_tokens: false
+      message: '[approve]'
+    successors: {  }
+  Activity_0tizhbm:
+    plugin: eca_list_remove_entity
+    label: 'Drop first from [approve]'
+    configuration:
+      token_name: ''
+      method: last
+      index: ''
+      list_token: person
+      object: ''
+    successors:
+      -
+        id: Activity_1r6hn6c
+        condition: ''
+  Activity_121xgsw:
+    plugin: eca_form_field_set_error
+    label: Activity_121xgsw
+    configuration:
+      message: '[approve]'
+      field_name: op
     successors: {  }
