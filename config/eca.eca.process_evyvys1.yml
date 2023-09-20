@@ -218,59 +218,11 @@ conditions:
     configuration:
       negate: false
       role: sales
-  Flow_00q94vi:
-    plugin: eca_scalar
-    configuration:
-      case: false
-      left: '[countperson]'
-      right: '0'
-      operator: equal
-      type: value
-      negate: true
-  Flow_1bdy78q:
-    plugin: eca_scalar
-    configuration:
-      negate: false
-      case: false
-      left: '[countperson]'
-      right: '0'
-      operator: equal
-      type: value
-  Flow_13wgsjr:
+  Flow_14xbzpm:
     plugin: eca_current_user_role
     configuration:
       negate: false
       role: developer_junior
-  Flow_00ljuix:
-    plugin: eca_current_user_role
-    configuration:
-      negate: false
-      role: developer_middle
-  Flow_1tdckn9:
-    plugin: eca_current_user_role
-    configuration:
-      negate: false
-      role: developer_senior
-  Flow_1blrlbw:
-    plugin: eca_current_user_role
-    configuration:
-      negate: false
-      role: pm
-  Flow_0sjwtts:
-    plugin: eca_current_user_role
-    configuration:
-      negate: false
-      role: teamlead
-  Flow_17q7tue:
-    plugin: eca_current_user_role
-    configuration:
-      negate: false
-      role: head_of_department
-  Flow_0r3vzzn:
-    plugin: eca_current_user_role
-    configuration:
-      negate: false
-      role: shief_pm
   Flow_140f5hy:
     plugin: eca_current_user_role
     configuration:
@@ -301,50 +253,119 @@ conditions:
     configuration:
       negate: false
       role: admin_staff
-  Flow_19sjxqg:
-    plugin: eca_current_user_role
+  Flow_19fjguy:
+    plugin: eca_user_role
     configuration:
-      role: developer_junior
-      negate: true
-  Flow_0l9cs2v:
-    plugin: eca_current_user_role
+      negate: false
+      account: '[person]'
+      role: teamlead
+  Flow_1edntjw:
+    plugin: eca_user_role
     configuration:
-      role: developer_middle
-      negate: true
-  Flow_1dswxc0:
-    plugin: eca_current_user_role
-    configuration:
-      role: developer_senior
-      negate: true
-  Flow_1o0djhu:
-    plugin: eca_current_user_role
-    configuration:
+      negate: false
+      account: '[person]'
       role: pm
-      negate: true
-  Flow_1pqdc8l:
+  Flow_0yv3dmv:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[teamlead]'
+      right: '0'
+      operator: equal
+      type: value
+  Flow_1xwdumi:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[pm]'
+      right: '0'
+      operator: equal
+      type: value
+  Flow_1w9v9xn:
     plugin: eca_current_user_role
     configuration:
-      role: shief_pm
-      negate: true
-  Flow_1lwq5n2:
+      negate: false
+      role: developer_middle
+  Flow_102n7ek:
     plugin: eca_current_user_role
     configuration:
+      negate: false
+      role: developer_senior
+  Flow_0zvhczv:
+    plugin: eca_scalar
+    configuration:
+      case: false
+      left: '[countperson]'
+      right: '1'
+      operator: equal
+      type: value
+      negate: true
+  Flow_145lt0e:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[countperson]'
+      right: '1'
+      operator: equal
+      type: value
+  Flow_0o600fg:
+    plugin: eca_user_role
+    configuration:
+      account: '[person]'
       role: teamlead
       negate: true
-  Flow_1h5ohmo:
-    plugin: eca_current_user_role
+  Flow_1kdc3nd:
+    plugin: eca_user_role
     configuration:
-      role: head_of_department
+      account: '[person]'
+      role: pm
       negate: true
-  Flow_1afurht:
+  Flow_1pj4l6s:
     plugin: eca_current_user_role
     configuration:
-      role: ceo
+      negate: false
+      role: pm
+  Flow_19n1zr1:
+    plugin: eca_scalar
+    configuration:
+      case: false
+      left: '[countperson]'
+      right: '1'
+      operator: equal
+      type: value
       negate: true
-  Flow_0r86yzq:
-    plugin: eca_current_user_role
+  Flow_1du0xnt:
+    plugin: eca_user_role
     configuration:
-      role: client
+      negate: false
+      account: '[person]'
+      role: shief_pm
+  Flow_1jtvtp2:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[countperson]'
+      right: '1'
+      operator: equal
+      type: value
+  Flow_03293cj:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[chiefpm]'
+      right: '0'
+      operator: equal
+      type: value
+  Flow_1kggwui:
+    plugin: eca_user_role
+    configuration:
+      account: '[person]'
+      role: shief_pm
       negate: true
 gateways:
   Gateway_0riv56h:
@@ -415,91 +436,46 @@ gateways:
     successors:
       -
         id: Activity_1cpymx3
-        condition: Flow_00q94vi
+        condition: Flow_0zvhczv
+      -
+        id: Gateway_0atr1fq
+        condition: Flow_145lt0e
+  Gateway_0b1jdlo:
+    type: 0
+    successors:
+      -
+        id: Activity_0tizhbm
+        condition: ''
+  Gateway_0atr1fq:
+    type: 0
+    successors:
       -
         id: Activity_1wbctjg
-        condition: Flow_1bdy78q
-  Gateway_0mektns:
+        condition: Flow_0yv3dmv
+      -
+        id: Activity_0v8f1mt
+        condition: Flow_1xwdumi
+  Gateway_1xym0dc:
     type: 0
     successors:
       -
-        id: Gateway_1sw2u5t
-        condition: Flow_13wgsjr
+        id: Activity_1rsup91
+        condition: Flow_19n1zr1
       -
-        id: Gateway_1sw2u5t
-        condition: Flow_00ljuix
-      -
-        id: Gateway_1sw2u5t
-        condition: Flow_1tdckn9
-      -
-        id: Activity_0hpbudn
-        condition: Flow_1blrlbw
-      -
-        id: Gateway_0oyj2a9
-        condition: Flow_0sjwtts
-      -
-        id: Gateway_0oyj2a9
-        condition: Flow_17q7tue
-      -
-        id: Gateway_0oyj2a9
-        condition: Flow_0r3vzzn
-      -
-        id: Gateway_0obb9nf
-        condition: Flow_19sjxqg
-      -
-        id: Gateway_0obb9nf
-        condition: Flow_0l9cs2v
-      -
-        id: Gateway_0obb9nf
-        condition: Flow_1dswxc0
-      -
-        id: Gateway_0obb9nf
-        condition: Flow_1o0djhu
-      -
-        id: Gateway_0g0ewaa
-        condition: Flow_1pqdc8l
-      -
-        id: Gateway_0obb9nf
-        condition: Flow_1lwq5n2
-      -
-        id: Gateway_0g0ewaa
-        condition: Flow_1h5ohmo
-      -
-        id: Gateway_0g0ewaa
-        condition: Flow_1afurht
-      -
-        id: Gateway_0g0ewaa
-        condition: Flow_0r86yzq
-  Gateway_1sw2u5t:
+        id: Gateway_1cyx1ba
+        condition: Flow_1jtvtp2
+  Gateway_0lwe86r:
     type: 0
     successors:
       -
-        id: Activity_1ss7h9o
+        id: Activity_0nhgbat
         condition: ''
-  Gateway_0oyj2a9:
+  Gateway_1cyx1ba:
     type: 0
     successors:
       -
-        id: Activity_1p1yjr5
-        condition: ''
-  Gateway_0obb9nf:
-    type: 0
-    successors:
-      -
-        id: Activity_1fg434p
-        condition: ''
-  Gateway_0g0ewaa:
-    type: 0
-    successors:
-      -
-        id: Activity_1fg434p
-        condition: ''
-  Gateway_1ke6lr2:
-    type: 0
-    successors:
-      -
-        id: Activity_1kxydd7
-        condition: ''
+        id: Activity_11nmd9h
+        condition: Flow_03293cj
 actions:
   Activity_191wffh:
     plugin: eca_form_field_set_error
@@ -821,18 +797,6 @@ actions:
       arguments: pm
     successors:
       -
-        id: Activity_1mb8lwh
-        condition: ''
-  Activity_1mb8lwh:
-    plugin: eca_views_query
-    label: 'Load chiefs pm using view [chiefspm]'
-    configuration:
-      token_name: chiefspm
-      view_id: person_approve
-      display_id: block_1
-      arguments: shief_pm
-    successors:
-      -
         id: Activity_09quwo9
         condition: ''
   Activity_09quwo9:
@@ -867,18 +831,6 @@ actions:
       index: ''
       list_token: selectpeople
       object: pms
-    successors:
-      -
-        id: Activity_1432no8
-        condition: ''
-  Activity_1432no8:
-    plugin: eca_list_add_entity
-    label: 'Add chiefs pm to selectpeople'
-    configuration:
-      method: append
-      index: ''
-      list_token: selectpeople
-      object: chiefspm
     successors:
       -
         id: Activity_0xo84g6
@@ -957,14 +909,11 @@ actions:
     successors: {  }
   Activity_1wbctjg:
     plugin: eca_form_field_set_error
-    label: Activity_1wbctjg
+    label: 'ERROR: Need Teamlead'
     configuration:
-      message: '[roles]'
+      message: 'You need to choose your Teamlead for approval!'
       field_name: op
-    successors:
-      -
-        id: Gateway_0mektns
-        condition: ''
+    successors: {  }
   Activity_0mk4hr8:
     plugin: eca_count
     label: 'Count person + 1 [countperson]'
@@ -973,21 +922,17 @@ actions:
       list_token: approve
     successors:
       -
-        id: Activity_18c4stk
-        condition: ''
-  Activity_18c4stk:
-    plugin: 'eca_tamper:math'
-    label: 'countperson - 1'
-    configuration:
-      operation: subtraction
-      flip: false
-      value: '1'
-      eca_data: '[countperson]'
-      eca_token_name: countperson
-    successors:
+        id: Activity_0u8uaa7
+        condition: Flow_14xbzpm
       -
-        id: Gateway_11bq3cu
-        condition: ''
+        id: Activity_0u8uaa7
+        condition: Flow_1w9v9xn
+      -
+        id: Activity_0u8uaa7
+        condition: Flow_102n7ek
+      -
+        id: Activity_0nxpafl
+        condition: Flow_1pj4l6s
   Activity_1r6hn6c:
     plugin: 'eca_tamper:math'
     label: 'countperson - 1 '
@@ -999,9 +944,6 @@ actions:
       eca_token_name: countperson
     successors:
       -
-        id: Activity_0varulp
-        condition: ''
-      -
         id: Gateway_11bq3cu
         condition: ''
   Activity_1cpymx3:
@@ -1009,208 +951,157 @@ actions:
     label: 'Get person ID [person]'
     configuration:
       token_name: person
-      token_value: '[approve]'
+      token_value: '[approve:0:subform:field_person:0:target_id]'
       use_yaml: false
     successors:
       -
-        id: Activity_0j04v27
-        condition: ''
-  Activity_1q1a852:
-    plugin: eca_token_load_entity
-    label: 'Load user by ID'
-    configuration:
-      token_name: userapp
-      from: id
-      entity_type: user
-      entity_id: '[person]'
-      revision_id: ''
-      properties: ''
-      langcode: _interface
-      latest_revision: false
-      unchanged: false
-      object: ''
-    successors:
+        id: Activity_06hdi1b
+        condition: Flow_19fjguy
       -
-        id: Activity_1djq364
-        condition: ''
-  Activity_1djq364:
-    plugin: eca_token_set_value
-    label: 'Get person roles [personroles]'
-    configuration:
-      token_name: personroles
-      token_value: '[userapp:roles]'
-      use_yaml: false
-    successors:
+        id: Activity_0mpqe3w
+        condition: Flow_1edntjw
       -
-        id: Activity_0qw9m95
-        condition: ''
-  Activity_0qw9m95:
-    plugin: eca_token_set_value
-    label: 'Get person role [personrole]'
-    configuration:
-      token_name: personrole
-      token_value: '[personroles:0:target_id]'
-      use_yaml: false
-    successors: {  }
-  Activity_0j04v27:
-    plugin: eca_list_add
-    label: 'Add [personrole] to [roles]'
-    configuration:
-      value: '[person]'
-      method: append
-      index: ''
-      list_token: roles
-    successors:
+        id: Gateway_0b1jdlo
+        condition: Flow_0o600fg
       -
-        id: Activity_0tizhbm
-        condition: ''
-  Activity_18m3hyb:
-    plugin: eca_token_set_value
-    label: 'First role to [frole]'
-    configuration:
-      token_name: frole
-      token_value: '[roles:0]'
-      use_yaml: false
-    successors:
-      -
-        id: Activity_1c4c98y
-        condition: ''
-  Activity_1dyf0db:
-    plugin: eca_count
-    label: 'Count [roles] as [countroles]'
-    configuration:
-      token_name: countroles
-      list_token: roles
-    successors:
-      -
-        id: Activity_18m3hyb
-        condition: ''
-  Activity_1c4c98y:
-    plugin: eca_list_remove
-    label: 'Drop first '
-    configuration:
-      value: ''
-      token_name: ''
-      method: first
-      index: ''
-      list_token: roles
-    successors: {  }
-  Activity_1ss7h9o:
-    plugin: eca_list_add
-    label: 'Add pm to list [mustapprove]'
-    configuration:
-      value: pm
-      method: append
-      index: ''
-      list_token: mustapprove
-    successors:
-      -
-        id: Activity_1mnat5x
-        condition: ''
-  Activity_1mnat5x:
-    plugin: eca_list_add
-    label: 'Add pm to list [mustapprove]'
-    configuration:
-      value: teamlead
-      method: append
-      index: ''
-      list_token: mustapprove
-    successors:
-      -
-        id: Activity_1ar8vs8
-        condition: ''
-  Activity_1ar8vs8:
-    plugin: eca_list_add
-    label: 'Add chief pm to list [mustapprove]'
-    configuration:
-      value: shief_pm
-      method: append
-      index: ''
-      list_token: mustapprove
-    successors:
-      -
-        id: Gateway_1ke6lr2
-        condition: ''
-  Activity_0hpbudn:
-    plugin: eca_list_add
-    label: 'Add chief pm to list [mustapprove]'
-    configuration:
-      value: shief_pm
-      method: append
-      index: ''
-      list_token: mustapprove
-    successors:
-      -
-        id: Gateway_1ke6lr2
-        condition: ''
-  Activity_1p1yjr5:
-    plugin: eca_list_add
-    label: 'Add ceo to list [mustapprove]'
-    configuration:
-      value: ceo
-      method: append
-      index: ''
-      list_token: mustapprove
-    successors:
-      -
-        id: Gateway_1ke6lr2
-        condition: ''
-  Activity_1fg434p:
-    plugin: eca_list_add
-    label: 'Add head of departament to list [mustapprove]'
-    configuration:
-      value: head_of_department
-      method: append
-      index: ''
-      list_token: mustapprove
-    successors:
-      -
-        id: Gateway_1ke6lr2
-        condition: ''
-  Activity_1kxydd7:
-    plugin: eca_count
-    label: 'Save count [mustapprove] as [numbapp]'
-    configuration:
-      token_name: numbapp
-      list_token: mustapprove
-    successors:
-      -
-        id: Activity_1dyf0db
-        condition: ''
-  Activity_1101l5r:
-    plugin: eca_list_remove
-    label: Activity_1101l5r
-    configuration:
-      value: ''
-      token_name: ''
-      method: first
-      index: ''
-      list_token: approve
-    successors: {  }
-  Activity_0varulp:
-    plugin: action_message_action
-    label: Activity_0varulp
-    configuration:
-      replace_tokens: false
-      message: '[approve]'
-    successors: {  }
+        id: Gateway_0b1jdlo
+        condition: Flow_1kdc3nd
   Activity_0tizhbm:
-    plugin: eca_list_remove_entity
+    plugin: eca_list_remove
     label: 'Drop first from [approve]'
     configuration:
-      token_name: ''
-      method: last
-      index: ''
-      list_token: person
-      object: ''
+      value: ''
+      token_name: app
+      method: index
+      index: '0'
+      list_token: approve
     successors:
       -
         id: Activity_1r6hn6c
         condition: ''
-  Activity_121xgsw:
-    plugin: eca_form_field_set_error
-    label: Activity_121xgsw
+  Activity_06hdi1b:
+    plugin: 'eca_tamper:math'
+    label: 'Add 1 to [teamlead]'
     configuration:
-      message: '[approve]'
+      operation: addition
+      flip: false
+      value: '1'
+      eca_data: '[teamlead]'
+      eca_token_name: teamlead
+    successors:
+      -
+        id: Gateway_0b1jdlo
+        condition: ''
+  Activity_0mpqe3w:
+    plugin: 'eca_tamper:math'
+    label: 'Add 1 to [pm]'
+    configuration:
+      operation: addition
+      flip: false
+      value: '1'
+      eca_data: '[pm]'
+      eca_token_name: pm
+    successors:
+      -
+        id: Gateway_0b1jdlo
+        condition: ''
+  Activity_0v8f1mt:
+    plugin: eca_form_field_set_error
+    label: 'ERROR: Need PM'
+    configuration:
+      message: 'You need to choose your PM for approval!'
+      field_name: op
+    successors: {  }
+  Activity_0u8uaa7:
+    plugin: eca_token_set_value
+    label: 'Init token [teamlead].value(0)'
+    configuration:
+      token_name: teamlead
+      token_value: '0'
+      use_yaml: false
+    successors:
+      -
+        id: Activity_00hkjro
+        condition: ''
+  Activity_00hkjro:
+    plugin: eca_token_set_value
+    label: 'Init token [pm].value(0)'
+    configuration:
+      token_name: pm
+      token_value: '0'
+      use_yaml: false
+    successors:
+      -
+        id: Gateway_11bq3cu
+        condition: ''
+  Activity_0nxpafl:
+    plugin: eca_token_set_value
+    label: 'Init token [chiefpm].value(0)'
+    configuration:
+      token_name: chiefpm
+      token_value: '0'
+      use_yaml: false
+    successors:
+      -
+        id: Gateway_1xym0dc
+        condition: ''
+  Activity_1rsup91:
+    plugin: eca_token_set_value
+    label: 'Get person ID [person]'
+    configuration:
+      token_name: person
+      token_value: '[approve:0:subform:field_person:0:target_id]'
+      use_yaml: false
+    successors:
+      -
+        id: Activity_1od25m6
+        condition: Flow_1du0xnt
+      -
+        id: Gateway_0lwe86r
+        condition: Flow_1kggwui
+  Activity_1od25m6:
+    plugin: 'eca_tamper:math'
+    label: 'Add 1 to [chiefpm]'
+    configuration:
+      operation: addition
+      flip: false
+      value: '1'
+      eca_data: '[chiefpm]'
+      eca_token_name: chiefpm
+    successors:
+      -
+        id: Gateway_0lwe86r
+        condition: ''
+  Activity_0nhgbat:
+    plugin: eca_list_remove
+    label: 'Drop first from [approve]'
+    configuration:
+      value: ''
+      token_name: ''
+      method: index
+      index: '0'
+      list_token: approve
+    successors:
+      -
+        id: Activity_07kclkp
+        condition: ''
+  Activity_07kclkp:
+    plugin: 'eca_tamper:math'
+    label: 'countperson - 1'
+    configuration:
+      operation: subtraction
+      flip: false
+      value: '1'
+      eca_data: '[countperson]'
+      eca_token_name: countperson
+    successors:
+      -
+        id: Gateway_1xym0dc
+        condition: ''
+  Activity_11nmd9h:
+    plugin: eca_form_field_set_error
+    label: 'ERROR: Need Chief PM'
+    configuration:
+      message: 'You need to choose your Chief PM for approval!'
       field_name: op
     successors: {  }
