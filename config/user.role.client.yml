@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - filter.format.basic_html
-    - node.type.vacation
   module:
     - admin_toolbar_search
     - comment
@@ -48,4 +47,3 @@ permissions:
   - 'view unpublished paragraphs'
   - 'view update notifications'
   - 'view user email addresses'
-  - 'view vacation revisions'

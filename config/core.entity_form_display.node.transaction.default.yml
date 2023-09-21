@@ -22,21 +22,21 @@ mode: default
 content:
   field__account_balance:
     type: number
-    weight: 27
+    weight: 6
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_add_day:
     type: number
-    weight: 29
+    weight: 8
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_balance:
     type: number
-    weight: 26
+    weight: 5
     region: content
     settings:
       placeholder: ''
@@ -66,7 +66,7 @@ content:
     third_party_settings: {  }
   field_refer_to_vacation_entity:
     type: entity_reference_autocomplete
-    weight: 28
+    weight: 7
     region: content
     settings:
       match_operator: CONTAINS
@@ -82,7 +82,7 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 7
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }

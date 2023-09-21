@@ -1,10 +1,10 @@
 request_status_rejected:
-  anonymous:
-    grant_view: 0
-    grant_update: 0
-    grant_delete: 0
   workflow_author:
     grant_view: true
+    grant_update: 0
+    grant_delete: 0
+  anonymous:
+    grant_view: 0
     grant_update: 0
     grant_delete: 0
   administrator:
@@ -76,12 +76,12 @@ request_status_rejected:
     grant_update: 0
     grant_delete: 0
 request_status_on_hold:
-  anonymous:
-    grant_view: 0
-    grant_update: 0
-    grant_delete: 0
   workflow_author:
     grant_view: true
+    grant_update: 0
+    grant_delete: 0
+  anonymous:
+    grant_view: 0
     grant_update: 0
     grant_delete: 0
   administrator:
@@ -153,12 +153,12 @@ request_status_on_hold:
     grant_update: true
     grant_delete: 0
 request_status_approved:
-  anonymous:
-    grant_view: 0
-    grant_update: 0
-    grant_delete: 0
   workflow_author:
     grant_view: true
+    grant_update: 0
+    grant_delete: 0
+  anonymous:
+    grant_view: 0
     grant_update: 0
     grant_delete: 0
   administrator:
@@ -230,11 +230,11 @@ request_status_approved:
     grant_update: 0
     grant_delete: 0
 request_status_sancel:
-  anonymous:
-    grant_view: true
-    grant_update: 0
-    grant_delete: 0
   workflow_author:
+    grant_view: true
+    grant_update: true
+    grant_delete: 0
+  anonymous:
     grant_view: 0
     grant_update: 0
     grant_delete: 0

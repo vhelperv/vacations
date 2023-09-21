@@ -527,7 +527,7 @@ actions:
     label: 'Set title'
     configuration:
       field_name: title
-      field_value: 'Certificate''s Transaction #[random:number]'
+      field_value: 'Certificate''s Transaction #[node:nid]'
       method: 'set:clear'
       strip_tags: false
       trim: false

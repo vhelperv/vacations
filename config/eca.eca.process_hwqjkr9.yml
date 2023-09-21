@@ -1,0 +1,355 @@
+uuid: d04e81c5-06a7-4741-904c-337b2c69f002
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.vacation_range
+  module:
+    - eca_base
+    - eca_form
+    - eca_tamper
+    - eca_views
+id: process_hwqjkr9
+modeller: bpmn_io
+label: 'Range Validation'
+version: v1
+weight: null
+events:
+  Event_1jhande:
+    plugin: 'form:form_validate'
+    label: 'Validate vacation'
+    configuration:
+      form_id: node-vacation-form
+      entity_type_id: ''
+      bundle: ''
+      operation: ''
+    successors:
+      -
+        id: Activity_0v1a405
+        condition: ''
+conditions:
+  Flow_0p8qasf:
+    plugin: eca_scalar
+    configuration:
+      case: false
+      left: '[countranges]'
+      right: '0'
+      operator: equal
+      type: value
+      negate: true
+  Flow_1rebx13:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[endvac]'
+      right: '[datestart]'
+      operator: greaterthan
+      type: value
+  Flow_1oql6n6:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[endvac]'
+      right: '[dateend]'
+      operator: lessthan
+      type: value
+  Flow_1d7gs9q:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[startvac]'
+      right: '[datestart]'
+      operator: greaterthan
+      type: value
+  Flow_058isqy:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[startvac]'
+      right: '[dateend]'
+      operator: equal
+      type: value
+  Flow_1b0zjui:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[endvac]'
+      right: '[datestart]'
+      operator: equal
+      type: value
+  Flow_17is555:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[endvac]'
+      right: '[dateend]'
+      operator: equal
+      type: value
+  Flow_0j5ndoo:
+    plugin: eca_scalar
+    configuration:
+      case: false
+      left: '[countranges]'
+      right: '0'
+      operator: equal
+      type: value
+      negate: true
+  Flow_1lnbmz5:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[startvac]'
+      right: '[dateend]'
+      operator: lessthan
+      type: value
+  Flow_057zdw3:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[startvac]'
+      right: '[datestart]'
+      operator: equal
+      type: value
+  Flow_1tq80yq:
+    plugin: eca_form_has_errors
+    configuration:
+      negate: false
+  Flow_0acxgrj:
+    plugin: eca_form_has_errors
+    configuration:
+      negate: false
+gateways:
+  Gateway_0wiompp:
+    type: 0
+    successors:
+      -
+        id: Activity_07e22l4
+        condition: Flow_0p8qasf
+  Gateway_0mx2pi2:
+    type: 0
+    successors:
+      -
+        id: Activity_01qqvy7
+        condition: Flow_0j5ndoo
+  Gateway_1tnixio:
+    type: 0
+    successors:
+      -
+        id: Activity_1wwfnv9
+        condition: Flow_1oql6n6
+  Gateway_17bv8f7:
+    type: 0
+    successors:
+      -
+        id: Activity_0be0764
+        condition: Flow_1d7gs9q
+actions:
+  Activity_0v1a405:
+    plugin: eca_form_field_get_value
+    label: 'Get start date vacation [startvac]'
+    configuration:
+      token_name: startvac
+      field_name: field_range.0.value
+      strip_tags: true
+      trim: true
+      xss_filter: true
+    successors:
+      -
+        id: Activity_1vaxpz0
+        condition: ''
+      -
+        id: Activity_1r3e2mb
+        condition: ''
+  Activity_1vaxpz0:
+    plugin: eca_views_query
+    label: 'Load Vaction Ranges [ranges]'
+    configuration:
+      token_name: ranges
+      view_id: vacation_range
+      display_id: block_1
+      arguments: ''
+    successors:
+      -
+        id: Activity_0di147j
+        condition: ''
+  Activity_0di147j:
+    plugin: eca_count
+    label: 'Count Ranges [countranges]'
+    configuration:
+      token_name: countranges
+      list_token: ranges
+    successors:
+      -
+        id: Gateway_0wiompp
+        condition: ''
+  Activity_0be0764:
+    plugin: eca_form_field_set_error
+    label: 'ERROR: Vacation exists'
+    configuration:
+      message: 'Vacation for this date already exists: [ranges:0]'
+      field_name: op
+    successors: {  }
+  Activity_07e22l4:
+    plugin: eca_token_set_value
+    label: 'Get first date start [datestart]'
+    configuration:
+      token_name: datestart
+      token_value: '[ranges:0:field_range:value]'
+      use_yaml: false
+    successors:
+      -
+        id: Activity_02fgo03
+        condition: ''
+  Activity_02fgo03:
+    plugin: eca_token_set_value
+    label: 'Get first date end [dateend]'
+    configuration:
+      token_name: dateend
+      token_value: '[ranges:0:field_range:end_value]'
+      use_yaml: false
+    successors:
+      -
+        id: Activity_0be0764
+        condition: Flow_058isqy
+      -
+        id: Gateway_17bv8f7
+        condition: Flow_1lnbmz5
+      -
+        id: Activity_0be0764
+        condition: Flow_057zdw3
+      -
+        id: Activity_0dgenov
+        condition: Flow_1tq80yq
+  Activity_0dgenov:
+    plugin: eca_list_remove
+    label: 'Drop first'
+    configuration:
+      value: ''
+      token_name: ''
+      method: first
+      index: ''
+      list_token: ranges
+    successors:
+      -
+        id: Activity_06uuk4l
+        condition: ''
+  Activity_06uuk4l:
+    plugin: 'eca_tamper:math'
+    label: 'countranges - 1'
+    configuration:
+      operation: subtraction
+      flip: false
+      value: '1'
+      eca_data: '[countranges]'
+      eca_token_name: countranges
+    successors:
+      -
+        id: Gateway_0wiompp
+        condition: ''
+  Activity_1r3e2mb:
+    plugin: eca_form_field_get_value
+    label: 'Get start date vacation [endvac]'
+    configuration:
+      token_name: endvac
+      field_name: field_range.0.value
+      strip_tags: true
+      trim: true
+      xss_filter: true
+    successors:
+      -
+        id: Activity_1gm46a9
+        condition: ''
+  Activity_1gm46a9:
+    plugin: eca_views_query
+    label: 'Load Vaction Ranges [ranges]'
+    configuration:
+      token_name: ranges
+      view_id: vacation_range
+      display_id: block_1
+      arguments: ''
+    successors:
+      -
+        id: Activity_1birma5
+        condition: ''
+  Activity_1birma5:
+    plugin: eca_count
+    label: 'Count Ranges [countranges]'
+    configuration:
+      token_name: countranges
+      list_token: ranges
+    successors:
+      -
+        id: Gateway_0mx2pi2
+        condition: ''
+  Activity_01qqvy7:
+    plugin: eca_token_set_value
+    label: 'Get first date start [datestart]'
+    configuration:
+      token_name: datestart
+      token_value: '[ranges:0:field_range:value]'
+      use_yaml: false
+    successors:
+      -
+        id: Activity_05o7q9z
+        condition: ''
+  Activity_05o7q9z:
+    plugin: eca_token_set_value
+    label: 'Get first date end [dateend]'
+    configuration:
+      token_name: dateend
+      token_value: '[ranges:0:field_range:end_value]'
+      use_yaml: false
+    successors:
+      -
+        id: Gateway_1tnixio
+        condition: Flow_1rebx13
+      -
+        id: Activity_1wwfnv9
+        condition: Flow_1b0zjui
+      -
+        id: Activity_1wwfnv9
+        condition: Flow_17is555
+      -
+        id: Activity_1vig10e
+        condition: Flow_0acxgrj
+  Activity_1vig10e:
+    plugin: eca_list_remove
+    label: 'Drop first'
+    configuration:
+      value: ''
+      token_name: ''
+      method: first
+      index: ''
+      list_token: ranges
+    successors:
+      -
+        id: Activity_0xsh4q1
+        condition: ''
+  Activity_0xsh4q1:
+    plugin: 'eca_tamper:math'
+    label: 'countranges - 1'
+    configuration:
+      operation: subtraction
+      flip: false
+      value: '1'
+      eca_data: '[countranges]'
+      eca_token_name: countranges
+    successors:
+      -
+        id: Gateway_0mx2pi2
+        condition: ''
+  Activity_1wwfnv9:
+    plugin: eca_form_field_set_error
+    label: 'ERROR: Vacation exists'
+    configuration:
+      message: 'Vacation for this date already exists: [ranges:0]'
+      field_name: op
+    successors: {  }

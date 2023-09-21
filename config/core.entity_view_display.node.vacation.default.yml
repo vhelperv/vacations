@@ -62,21 +62,6 @@ third_party_settings:
                 third_party_settings: {  }
             weight: 4
             additional: {  }
-          b17d3548-7490-40de-b379-ffa79643e8a0:
-            uuid: b17d3548-7490-40de-b379-ffa79643e8a0
-            region: content
-            configuration:
-              id: 'field_block:node:vacation:field_state_vacation'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: list_default
-                label: inline
-                settings: {  }
-                third_party_settings: {  }
-            weight: 6
-            additional: {  }
           b10b0d9c-3484-4e7c-ba8a-5fdcdea21d52:
             uuid: b10b0d9c-3484-4e7c-ba8a-5fdcdea21d52
             region: content
@@ -94,7 +79,7 @@ third_party_settings:
                 settings:
                   view_mode: default
                 third_party_settings: {  }
-            weight: 7
+            weight: 8
             additional: {  }
           f18e3a27-9341-455f-8c20-ae5f2b371cc7:
             uuid: f18e3a27-9341-455f-8c20-ae5f2b371cc7
@@ -168,6 +153,24 @@ third_party_settings:
                 settings: {  }
                 third_party_settings: {  }
             weight: 5
+            additional: {  }
+          b17d3548-7490-40de-b379-ffa79643e8a0:
+            uuid: b17d3548-7490-40de-b379-ffa79643e8a0
+            region: content
+            configuration:
+              id: 'field_block:node:vacation:field_state_vacation'
+              label: 'State Vacation'
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: list_default
+                label: inline
+                settings: {  }
+                third_party_settings: {  }
+            weight: 7
             additional: {  }
         third_party_settings: {  }
 id: node.vacation.default

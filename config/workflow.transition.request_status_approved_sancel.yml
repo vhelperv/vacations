@@ -11,7 +11,7 @@ module: workflow
 from_sid: request_status_approved
 to_sid: request_status_sancel
 roles:
-  workflow_author: '0'
+  workflow_author: workflow_author
   anonymous: '0'
   administrator: '0'
   ceo: '0'

@@ -15,6 +15,7 @@ label: Developer-Senior
 weight: 7
 is_admin: null
 permissions:
+  - 'access request_status workflow_transition form'
   - 'create paragraph content person_who_approve'
   - 'create request_status workflow_transition'
   - 'create status_approve workflow_transition'
@@ -25,4 +26,3 @@ permissions:
   - 'view paragraph content person_who_approve'
   - 'view unpublished paragraphs'
   - 'view update notifications'
-  - 'view vacation revisions'
