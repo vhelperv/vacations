@@ -258,7 +258,7 @@ actions:
     plugin: eca_set_field_value
     label: 'Set employee'
     configuration:
-      field_name: field_employee
+      field_name: field_employee.value
       field_value: '[employee:uid]'
       method: 'set:clear'
       strip_tags: false

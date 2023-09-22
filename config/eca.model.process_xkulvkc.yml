@@ -144,7 +144,7 @@ modeldata: |
             <camunda:string>no</camunda:string>
           </camunda:field>
           <camunda:field name="field_name">
-            <camunda:string>field_employee</camunda:string>
+            <camunda:string>field_employee.value</camunda:string>
           </camunda:field>
           <camunda:field name="save_entity">
             <camunda:string>no</camunda:string>
