@@ -1,0 +1,118 @@
+uuid: aadd7649-7e6e-4e21-988d-3a860ce5e321
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.vacation.field_state_vacation
+    - field.storage.node.field_state_vacation
+    - node.type.vacation
+  module:
+    - eca_base
+    - eca_content
+    - eca_user
+    - node
+id: process_bkatfeq
+modeller: bpmn_io
+label: 'Сancel Vacation'
+version: v1
+weight: null
+events:
+  Event_15ffmew:
+    plugin: 'content_entity:update'
+    label: 'Update vacation'
+    configuration:
+      type: 'node vacation'
+    successors:
+      -
+        id: Activity_0w1qf9o
+        condition: ''
+conditions:
+  Flow_0w6exzz:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[vac:field_state_vacation:value]'
+      right: request_status_sancel
+      operator: equal
+      type: value
+  Flow_1u5grnq:
+    plugin: eca_entity_field_value
+    configuration:
+      negate: false
+      case: false
+      expected_value: '0'
+      field_name: status.value
+      operator: equal
+      type: value
+      entity: ''
+  Flow_1wmv3ev:
+    plugin: eca_entity_field_value
+    configuration:
+      negate: false
+      case: false
+      expected_value: '1'
+      field_name: status.value
+      operator: equal
+      type: value
+      entity: ''
+gateways:
+  Gateway_16a8oev:
+    type: 0
+    successors:
+      -
+        id: Activity_1uzylpi
+        condition: Flow_1u5grnq
+      -
+        id: Activity_0hoh2rf
+        condition: Flow_1wmv3ev
+actions:
+  Activity_0w1qf9o:
+    plugin: eca_token_load_entity
+    label: 'Load vacation [vac]'
+    configuration:
+      token_name: vac
+      from: current
+      entity_type: _none
+      entity_id: ''
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      latest_revision: false
+      unchanged: false
+      object: ''
+    successors:
+      -
+        id: Activity_1pgngbn
+        condition: Flow_0w6exzz
+  Activity_1uzylpi:
+    plugin: action_message_action
+    label: Activity_1uzylpi
+    configuration:
+      replace_tokens: false
+      message: '[vac:field_state_vacation:value]'
+    successors: {  }
+  Activity_0g0y07s:
+    plugin: 'entity:unpublish_action:node'
+    label: 'Unpublish vac'
+    configuration:
+      object: vac
+    successors: {  }
+  Activity_1pgngbn:
+    plugin: eca_token_load_user_current
+    label: 'Save current user [author]'
+    configuration:
+      token_name: author
+    successors:
+      -
+        id: Gateway_16a8oev
+        condition: ''
+  Activity_0hoh2rf:
+    plugin: eca_switch_account
+    label: 'Switch current user to admin'
+    configuration:
+      user_id: '1'
+    successors:
+      -
+        id: Activity_0g0y07s
+        condition: ''

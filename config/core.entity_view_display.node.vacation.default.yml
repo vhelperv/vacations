@@ -60,7 +60,7 @@ third_party_settings:
                 settings:
                   link: false
                 third_party_settings: {  }
-            weight: 4
+            weight: 5
             additional: {  }
           b10b0d9c-3484-4e7c-ba8a-5fdcdea21d52:
             uuid: b10b0d9c-3484-4e7c-ba8a-5fdcdea21d52
@@ -96,7 +96,7 @@ third_party_settings:
                   thousand_separator: ''
                   prefix_suffix: true
                 third_party_settings: {  }
-            weight: 3
+            weight: 4
             additional: {  }
           41c977ed-9017-43c9-b70b-e54399ea9b0c:
             uuid: 41c977ed-9017-43c9-b70b-e54399ea9b0c
@@ -152,7 +152,7 @@ third_party_settings:
                 label: above
                 settings: {  }
                 third_party_settings: {  }
-            weight: 5
+            weight: 6
             additional: {  }
           b17d3548-7490-40de-b379-ffa79643e8a0:
             uuid: b17d3548-7490-40de-b379-ffa79643e8a0
@@ -166,8 +166,8 @@ third_party_settings:
                 entity: layout_builder.entity
                 view_mode: view_mode
               formatter:
-                type: list_default
-                label: inline
+                type: workflow_default
+                label: above
                 settings: {  }
                 third_party_settings: {  }
             weight: 7

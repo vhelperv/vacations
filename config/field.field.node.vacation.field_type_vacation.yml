@@ -6,6 +6,8 @@ dependencies:
     - field.storage.node.field_type_vacation
     - node.type.vacation
     - taxonomy.vocabulary.type_vacation
+  content:
+    - 'taxonomy_term:type_vacation:47399f17-61d2-4ecb-a59f-11488aa342e3'
 id: node.vacation.field_type_vacation
 field_name: field_type_vacation
 entity_type: node
@@ -14,7 +16,9 @@ label: 'Type Vacation'
 description: ''
 required: true
 translatable: false
-default_value: {  }
+default_value:
+  -
+    target_uuid: 47399f17-61d2-4ecb-a59f-11488aa342e3
 default_value_callback: ''
 settings:
   handler: 'default:taxonomy_term'
