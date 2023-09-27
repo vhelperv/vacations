@@ -1134,7 +1134,7 @@ modeldata: |
           </camunda:field>
         </bpmn2:extensionElements>
         <bpmn2:incoming>Flow_1twknn8</bpmn2:incoming>
-        <bpmn2:outgoing>Flow_0wgdyo9</bpmn2:outgoing>
+        <bpmn2:outgoing>Flow_1rybmry</bpmn2:outgoing>
       </bpmn2:task>
       <bpmn2:sequenceFlow id="Flow_1twknn8" sourceRef="Activity_09quwo9" targetRef="Activity_1f49a56" />
       <bpmn2:task id="Activity_09e973t" name="Add pms to selectpeople" camunda:modelerTemplate="org.drupal.action.eca_list_add_entity">
@@ -1155,11 +1155,9 @@ modeldata: |
             <camunda:string></camunda:string>
           </camunda:field>
         </bpmn2:extensionElements>
-        <bpmn2:incoming>Flow_0wgdyo9</bpmn2:incoming>
-        <bpmn2:outgoing>Flow_1lbh5f8</bpmn2:outgoing>
+        <bpmn2:incoming>Flow_1rybmry</bpmn2:incoming>
+        <bpmn2:outgoing>Flow_1f97cwc</bpmn2:outgoing>
       </bpmn2:task>
-      <bpmn2:sequenceFlow id="Flow_0wgdyo9" sourceRef="Activity_1f49a56" targetRef="Activity_09e973t" />
-      <bpmn2:sequenceFlow id="Flow_1lbh5f8" sourceRef="Activity_09e973t" targetRef="Activity_0xo84g6" />
       <bpmn2:task id="Activity_0xo84g6" name="Add clients to selectpeople" camunda:modelerTemplate="org.drupal.action.eca_list_add_entity">
         <bpmn2:extensionElements>
           <camunda:properties>
@@ -1178,7 +1176,7 @@ modeldata: |
             <camunda:string></camunda:string>
           </camunda:field>
         </bpmn2:extensionElements>
-        <bpmn2:incoming>Flow_1lbh5f8</bpmn2:incoming>
+        <bpmn2:incoming>Flow_1f97cwc</bpmn2:incoming>
       </bpmn2:task>
       <bpmn2:task id="Activity_1vhhnxy" name="Load clients using view [clients]" camunda:modelerTemplate="org.drupal.action.eca_views_query">
         <bpmn2:extensionElements>
@@ -2098,6 +2096,8 @@ modeldata: |
           </camunda:field>
         </bpmn2:extensionElements>
       </bpmn2:sequenceFlow>
+      <bpmn2:sequenceFlow id="Flow_1rybmry" sourceRef="Activity_1f49a56" targetRef="Activity_09e973t" />
+      <bpmn2:sequenceFlow id="Flow_1f97cwc" sourceRef="Activity_09e973t" targetRef="Activity_0xo84g6" />
     </bpmn2:process>
     <bpmndi:BPMNDiagram id="sid-6693f546-015f-481b-bc9b-818f69406367">
       <bpmndi:BPMNPlane id="sid-f49538db-8474-42a0-81ee-aa980006265e" bpmnElement="Process_eVYvYS1">
@@ -2530,14 +2530,6 @@ modeldata: |
           <di:waypoint x="-1870" y="-860" />
           <di:waypoint x="-1830" y="-860" />
         </bpmndi:BPMNEdge>
-        <bpmndi:BPMNEdge id="Flow_0wgdyo9_di" bpmnElement="Flow_0wgdyo9">
-          <di:waypoint x="-1730" y="-860" />
-          <di:waypoint x="-1690" y="-860" />
-        </bpmndi:BPMNEdge>
-        <bpmndi:BPMNEdge id="Flow_1lbh5f8_di" bpmnElement="Flow_1lbh5f8">
-          <di:waypoint x="-1590" y="-860" />
-          <di:waypoint x="-1550" y="-860" />
-        </bpmndi:BPMNEdge>
         <bpmndi:BPMNEdge id="Flow_17m89zv_di" bpmnElement="Flow_17m89zv">
           <di:waypoint x="-2150" y="-730" />
           <di:waypoint x="-2110" y="-730" />
@@ -2728,6 +2720,14 @@ modeldata: |
         <bpmndi:BPMNEdge id="Flow_1kggwui_di" bpmnElement="Flow_1kggwui">
           <di:waypoint x="-750" y="-40" />
           <di:waypoint x="-485" y="-40" />
+        </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="Flow_1rybmry_di" bpmnElement="Flow_1rybmry">
+          <di:waypoint x="-1730" y="-860" />
+          <di:waypoint x="-1690" y="-860" />
+        </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="Flow_1f97cwc_di" bpmnElement="Flow_1f97cwc">
+          <di:waypoint x="-1590" y="-860" />
+          <di:waypoint x="-1550" y="-860" />
         </bpmndi:BPMNEdge>
       </bpmndi:BPMNPlane>
     </bpmndi:BPMNDiagram>
