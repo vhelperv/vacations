@@ -677,7 +677,7 @@ display:
         type: normal
         title: 'My Vacation'
         description: ''
-        weight: 0
+        weight: -89
         expanded: false
         menu_name: admin
         parent: system.admin

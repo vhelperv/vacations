@@ -635,6 +635,7 @@ display:
       menu:
         type: normal
         title: 'My Certificates'
+        weight: -90
         menu_name: admin
         parent: system.admin
     cache_metadata:
