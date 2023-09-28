@@ -8,7 +8,6 @@ dependencies:
     - comment
     - contact
     - filter
-    - node
     - scheduler
     - search
     - shortcut
@@ -23,7 +22,6 @@ is_admin: false
 permissions:
   - 'access comments'
   - 'access content'
-  - 'access content overview'
   - 'access shortcuts'
   - 'access site-wide contact form'
   - 'access toolbar'

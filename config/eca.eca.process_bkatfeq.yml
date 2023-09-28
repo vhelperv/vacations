@@ -386,7 +386,7 @@ actions:
       eca_token_name: dayret
     successors:
       -
-        id: Activity_0kms8ud
+        id: Activity_1l3yrws
         condition: ''
   Activity_0kms8ud:
     plugin: eca_set_field_value
@@ -699,3 +699,12 @@ actions:
       -
         id: Activity_1pgngbn
         condition: Flow_0w6exzz
+  Activity_1l3yrws:
+    plugin: eca_switch_account
+    label: 'Switch to admin'
+    configuration:
+      user_id: '1'
+    successors:
+      -
+        id: Activity_0kms8ud
+        condition: ''

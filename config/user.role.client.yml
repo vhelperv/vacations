@@ -25,7 +25,6 @@ permissions:
   - 'access any request_status workflow_transion overview'
   - 'access comments'
   - 'access content'
-  - 'access content overview'
   - 'access request_status workflow_transition form'
   - 'access toolbar'
   - 'access user profiles'

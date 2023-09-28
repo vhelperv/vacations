@@ -562,7 +562,7 @@ display:
           entity_field: status
           plugin_id: boolean
           operator: '='
-          value: '1'
+          value: '0'
           group: 1
           exposed: true
           expose:
@@ -645,6 +645,7 @@ display:
           replica: false
           query_tags: {  }
       relationships: {  }
+      use_ajax: false
       header: {  }
       footer: {  }
       display_extenders: {  }

@@ -1180,7 +1180,7 @@ actions:
     successors: {  }
   Activity_1sbiffq:
     plugin: eca_set_field_value
-    label: 'Set sertificate into transaction'
+    label: 'Set certificate into transaction'
     configuration:
       field_name: field_certificate
       field_value: '[certsubtract:nid]'
