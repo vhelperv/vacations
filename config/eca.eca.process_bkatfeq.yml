@@ -1,4 +1,4 @@
-uuid: aadd7649-7e6e-4e21-988d-3a860ce5e321
+uuid: 98222a38-c250-470c-abe5-6ce666606c19
 langcode: en
 status: true
 dependencies:
@@ -138,6 +138,26 @@ conditions:
       operator: equal
       type: value
       negate: true
+  Flow_0x4k9f7:
+    plugin: eca_entity_field_value
+    configuration:
+      case: false
+      expected_value: '[current-date:short]'
+      field_name: field_range.0.end_value
+      operator: lessthan
+      type: value
+      negate: true
+      entity: cert
+  Flow_0tr2b7k:
+    plugin: eca_entity_field_value
+    configuration:
+      negate: false
+      case: false
+      expected_value: '[current-date:short]'
+      field_name: field_range.0.end_value
+      operator: lessthan
+      type: value
+      entity: cert
 gateways:
   Gateway_16a8oev:
     type: 0
@@ -172,6 +192,15 @@ gateways:
       -
         id: Activity_18t0tzh
         condition: Flow_1uvdcrd
+  Gateway_0pvce2q:
+    type: 0
+    successors:
+      -
+        id: Activity_123s1ko
+        condition: Flow_0x4k9f7
+      -
+        id: Activity_1mcj6x2
+        condition: Flow_0tr2b7k
 actions:
   Activity_0g0y07s:
     plugin: 'entity:unpublish_action:node'
@@ -348,7 +377,7 @@ actions:
       object: ''
     successors:
       -
-        id: Activity_123s1ko
+        id: Gateway_0pvce2q
         condition: ''
   Activity_1y9sal8:
     plugin: eca_views_query
@@ -707,4 +736,17 @@ actions:
     successors:
       -
         id: Activity_0kms8ud
+        condition: ''
+  Activity_1mcj6x2:
+    plugin: eca_list_remove_entity
+    label: 'Drop first'
+    configuration:
+      token_name: ''
+      method: first
+      index: ''
+      list_token: listtransact
+      object: ''
+    successors:
+      -
+        id: Activity_0rsag3i
         condition: ''

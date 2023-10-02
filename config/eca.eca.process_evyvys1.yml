@@ -56,6 +56,18 @@ events:
       -
         id: Gateway_0b1o51u
         condition: ''
+  Event_0lzvpfy:
+    plugin: 'form:form_validate'
+    label: 'Validate vacation'
+    configuration:
+      form_id: node-vacation-form
+      entity_type_id: ''
+      bundle: ''
+      operation: ''
+    successors:
+      -
+        id: Activity_0lyxbkg
+        condition: ''
 conditions:
   Flow_1b7hrrh:
     plugin: eca_scalar
@@ -90,7 +102,7 @@ conditions:
       date_format: D
       negate: false
       case: false
-      left: '[startvacunix]'
+      left: '[startvacatunix]'
       right: Sun
       operator: equal
       type: value
@@ -100,7 +112,7 @@ conditions:
       date_format: D
       negate: false
       case: false
-      left: '[startvacunix]'
+      left: '[startvacatunix]'
       right: Sat
       operator: equal
       type: value
@@ -110,7 +122,7 @@ conditions:
       date_format: D
       negate: false
       case: false
-      left: '[endvacunix]'
+      left: '[endvacatunix]'
       right: Sun
       operator: equal
       type: value
@@ -120,7 +132,7 @@ conditions:
       date_format: D
       negate: false
       case: false
-      left: '[endvacunix]'
+      left: '[endvacatunix]'
       right: Sun
       operator: equal
       type: value
@@ -259,27 +271,12 @@ conditions:
       negate: false
       account: '[person]'
       role: teamlead
-  Flow_1edntjw:
-    plugin: eca_user_role
-    configuration:
-      negate: false
-      account: '[person]'
-      role: pm
   Flow_0yv3dmv:
     plugin: eca_scalar
     configuration:
       negate: false
       case: false
       left: '[teamlead]'
-      right: '0'
-      operator: equal
-      type: value
-  Flow_1xwdumi:
-    plugin: eca_scalar
-    configuration:
-      negate: false
-      case: false
-      left: '[pm]'
       right: '0'
       operator: equal
       type: value
@@ -316,12 +313,6 @@ conditions:
     configuration:
       account: '[person]'
       role: teamlead
-      negate: true
-  Flow_1kdc3nd:
-    plugin: eca_user_role
-    configuration:
-      account: '[person]'
-      role: pm
       negate: true
   Flow_1pj4l6s:
     plugin: eca_current_user_role
@@ -367,6 +358,43 @@ conditions:
       account: '[person]'
       role: shief_pm
       negate: true
+  Flow_13a76zy:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[number]'
+      right: '14'
+      operator: greaterthan
+      type: value
+  Flow_0zbsezb:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[number]'
+      right: '7'
+      operator: equal
+      type: value
+  Flow_0mqc3y7:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[number]'
+      right: '7'
+      operator: lessthan
+      type: value
+  Flow_05yapve:
+    plugin: eca_token_exists
+    configuration:
+      negate: false
+      token_name: starterror
+  Flow_19zun93:
+    plugin: eca_token_exists
+    configuration:
+      negate: false
+      token_name: enderror
 gateways:
   Gateway_0riv56h:
     type: 0
@@ -452,9 +480,6 @@ gateways:
       -
         id: Activity_1wbctjg
         condition: Flow_0yv3dmv
-      -
-        id: Activity_0v8f1mt
-        condition: Flow_1xwdumi
   Gateway_1xym0dc:
     type: 0
     successors:
@@ -476,6 +501,15 @@ gateways:
       -
         id: Activity_11nmd9h
         condition: Flow_03293cj
+  Gateway_0hi7ryj:
+    type: 0
+    successors:
+      -
+        id: Activity_03akgun
+        condition: Flow_05yapve
+      -
+        id: Activity_0932pmb
+        condition: Flow_19zun93
 actions:
   Activity_191wffh:
     plugin: eca_form_field_set_error
@@ -563,12 +597,6 @@ actions:
       -
         id: Activity_040zn6o
         condition: Flow_10y16yh
-      -
-        id: Activity_03akgun
-        condition: Flow_009rady
-      -
-        id: Activity_03akgun
-        condition: Flow_0dstamj
   Activity_03akgun:
     plugin: eca_form_field_set_error
     label: 'ERROR: Sun and Sat'
@@ -602,12 +630,6 @@ actions:
       -
         id: Activity_138ah2e
         condition: ''
-      -
-        id: Activity_0932pmb
-        condition: Flow_17ez20o
-      -
-        id: Activity_0932pmb
-        condition: Flow_1h14fti
   Activity_0932pmb:
     plugin: eca_form_field_set_error
     label: 'ERROR: Sun and Sat'
@@ -958,14 +980,8 @@ actions:
         id: Activity_06hdi1b
         condition: Flow_19fjguy
       -
-        id: Activity_0mpqe3w
-        condition: Flow_1edntjw
-      -
         id: Gateway_0b1jdlo
         condition: Flow_0o600fg
-      -
-        id: Gateway_0b1jdlo
-        condition: Flow_1kdc3nd
   Activity_0tizhbm:
     plugin: eca_list_remove
     label: 'Drop first from [approve]'
@@ -992,26 +1008,6 @@ actions:
       -
         id: Gateway_0b1jdlo
         condition: ''
-  Activity_0mpqe3w:
-    plugin: 'eca_tamper:math'
-    label: 'Add 1 to [pm]'
-    configuration:
-      operation: addition
-      flip: false
-      value: '1'
-      eca_data: '[pm]'
-      eca_token_name: pm
-    successors:
-      -
-        id: Gateway_0b1jdlo
-        condition: ''
-  Activity_0v8f1mt:
-    plugin: eca_form_field_set_error
-    label: 'ERROR: Need PM'
-    configuration:
-      message: 'You need to choose your PM for approval!'
-      field_name: op
-    successors: {  }
   Activity_0u8uaa7:
     plugin: eca_token_set_value
     label: 'Init token [teamlead].value(0)'
@@ -1104,4 +1100,115 @@ actions:
     configuration:
       message: 'You need to choose your Chief PM for approval!'
       field_name: op
+    successors: {  }
+  Activity_0lyxbkg:
+    plugin: eca_form_field_get_value
+    label: 'Get start date vacation'
+    configuration:
+      token_name: startvacat
+      field_name: field_range.0.value
+      strip_tags: true
+      trim: true
+      xss_filter: true
+    successors:
+      -
+        id: Activity_0cha727
+        condition: ''
+  Activity_073tfli:
+    plugin: eca_form_field_get_value
+    label: 'Get end date vacation'
+    configuration:
+      token_name: endvacat
+      field_name: field_range.0.end_value
+      strip_tags: true
+      trim: true
+      xss_filter: true
+    successors:
+      -
+        id: Activity_1tpcnd9
+        condition: ''
+  Activity_0cha727:
+    plugin: 'eca_tamper:strtotime'
+    label: 'Convert to UNIX [startvacatunix]'
+    configuration:
+      eca_data: '[startvacat]'
+      eca_token_name: startvacatunix
+    successors:
+      -
+        id: Activity_1fl3rhl
+        condition: Flow_009rady
+      -
+        id: Activity_1fl3rhl
+        condition: Flow_0dstamj
+      -
+        id: Activity_073tfli
+        condition: ''
+  Activity_1tpcnd9:
+    plugin: 'eca_tamper:strtotime'
+    label: 'Convert to UNIX [endvacatunix]'
+    configuration:
+      eca_data: '[endvacat]'
+      eca_token_name: endvacatunix
+    successors:
+      -
+        id: Activity_1ahuskc
+        condition: Flow_17ez20o
+      -
+        id: Activity_1ahuskc
+        condition: Flow_1h14fti
+      -
+        id: Activity_04s96w8
+        condition: ''
+  Activity_04s96w8:
+    plugin: 'eca_tamper:math'
+    label: 'Calc days in UNIX [numb]'
+    configuration:
+      operation: subtraction
+      flip: false
+      value: '[startvacatunix]'
+      eca_data: '[endvacatunix]'
+      eca_token_name: numb
+    successors:
+      -
+        id: Activity_0cr79a4
+        condition: ''
+  Activity_0cr79a4:
+    plugin: 'eca_tamper:timetodate'
+    label: 'Numb Day'
+    configuration:
+      date_format: d
+      eca_data: '[numb]'
+      eca_token_name: number
+    successors:
+      -
+        id: Activity_0abyhmk
+        condition: Flow_13a76zy
+      -
+        id: Gateway_0hi7ryj
+        condition: Flow_0zbsezb
+      -
+        id: Gateway_0hi7ryj
+        condition: Flow_0mqc3y7
+  Activity_0abyhmk:
+    plugin: eca_form_field_set_error
+    label: 'ERROR: Number days greater than 14'
+    configuration:
+      message: 'You cannot take a vacation for more than 14 days! [number] ---'
+      field_name: op
+    successors: {  }
+  Activity_1fl3rhl:
+    plugin: eca_token_set_value
+    label: 'Token 1 [starterror]'
+    configuration:
+      token_name: starterror
+      token_value: '1'
+      use_yaml: false
+    successors: {  }
+  Activity_1ahuskc:
+    plugin: eca_token_set_value
+    label: 'Token 1 [enderror]'
+    configuration:
+      token_name: enderror
+      token_value: '1'
+      use_yaml: false
     successors: {  }

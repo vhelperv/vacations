@@ -69,6 +69,7 @@ module:
   scheduler: 0
   search: 0
   shortcut: 0
+  simple_popup_views: 0
   system: 0
   tamper: 0
   taxonomy: 0
@@ -81,6 +82,11 @@ module:
   user: 0
   view_unpublished: 0
   views_ui: 0
+  webform: 0
+  webform_access: 0
+  webform_devel: 0
+  webform_node: 0
+  webform_ui: 0
   workflow: 0
   workflow_access: 0
   workflow_cleanup: 0
