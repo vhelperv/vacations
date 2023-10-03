@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.vacation.field_range
     - field.field.node.vacation.field_reason
     - field.field.node.vacation.field_state_vacation
+    - field.field.node.vacation.field_time_vacation
     - field.field.node.vacation.field_timestamp
     - field.field.node.vacation.field_type_vacation
     - field.field.node.vacation.field_vacation_s_employee_
@@ -31,6 +32,7 @@ hidden:
   field_range: true
   field_reason: true
   field_state_vacation: true
+  field_time_vacation: true
   field_timestamp: true
   field_type_vacation: true
   field_vacation_s_employee_: true

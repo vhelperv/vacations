@@ -14,6 +14,8 @@ dependencies:
     - field.field.node.vacation.field_numb_day
     - field.field.node.vacation.field_range
     - field.field.node.vacation.field_state_vacation
+    - field.field.node.vacation.field_time_vacation
+    - field.field.node.vacation.field_type_vacation
     - field.field.node.vacation.field_vacation_s_employee_
     - field.field.paragraph.person_who_approve.field_permission
     - field.field.paragraph.person_who_approve.field_person
@@ -27,6 +29,8 @@ dependencies:
     - field.storage.node.field_refer_to_vacation_entity
     - field.storage.node.field_remainder
     - field.storage.node.field_state_vacation
+    - field.storage.node.field_time_vacation
+    - field.storage.node.field_type_vacation
     - field.storage.node.field_vacation_s_employee_
     - field.storage.paragraph.field_permission
     - field.storage.paragraph.field_person
@@ -38,6 +42,7 @@ dependencies:
   module:
     - eca_base
     - eca_content
+    - eca_form
     - eca_tamper
     - eca_user
     - eca_views
@@ -98,6 +103,18 @@ events:
     configuration:
       type: 'node vacation'
     successors: {  }
+  Event_19acke4:
+    plugin: 'form:form_build'
+    label: 'Build Form Vacation'
+    configuration:
+      form_id: node-vacation-form
+      entity_type_id: ''
+      bundle: ''
+      operation: ''
+    successors:
+      -
+        id: Activity_1ae0sj3
+        condition: ''
 conditions:
   Flow_1880gj1:
     plugin: eca_scalar
@@ -312,6 +329,24 @@ conditions:
       operator: equal
       type: value
       negate: true
+  Flow_1rnyhnv:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[type]'
+      right: '1'
+      operator: equal
+      type: value
+  Flow_1cfefh2:
+    plugin: eca_scalar
+    configuration:
+      negate: false
+      case: false
+      left: '[type]'
+      right: '2'
+      operator: equal
+      type: value
 gateways:
   Gateway_05pv8vu:
     type: 0
@@ -421,6 +456,15 @@ gateways:
       -
         id: Activity_06rab4n
         condition: Flow_1hjrjah
+  Gateway_124jw3t:
+    type: 0
+    successors:
+      -
+        id: Activity_03bb4vr
+        condition: Flow_1rnyhnv
+      -
+        id: Activity_05i205h
+        condition: Flow_1cfefh2
 actions:
   Activity_1jd9bh0:
     plugin: eca_token_load_entity
@@ -1734,4 +1778,82 @@ actions:
     successors:
       -
         id: Gateway_0krb3bu
+        condition: ''
+  Activity_01bbszy:
+    plugin: eca_form_field_get_value
+    label: 'Get type vacation [type]'
+    configuration:
+      token_name: type
+      field_name: field_type_vacation.0.target_id
+      strip_tags: true
+      trim: true
+      xss_filter: true
+    successors:
+      -
+        id: Gateway_124jw3t
+        condition: ''
+  Activity_03bb4vr:
+    plugin: eca_form_field_disable
+    label: 'Disable field'
+    configuration:
+      flag: true
+      field_name: field_time_vacation
+    successors: {  }
+  Activity_1k7i0ju:
+    plugin: eca_switch_account
+    label: 'Switch to admin'
+    configuration:
+      user_id: '1'
+    successors:
+      -
+        id: Activity_1sih0b9
+        condition: ''
+  Activity_1sih0b9:
+    plugin: eca_form_add_ajax
+    label: 'Use Ajax'
+    configuration:
+      disable_validation_errors: false
+      validate_fields: field_type_vacation
+      target: field_time_vacation
+      field_name: field_type_vacation
+    successors:
+      -
+        id: Activity_01bbszy
+        condition: ''
+  Activity_04cfg1r:
+    plugin: eca_form_field_disable
+    label: 'Eneble field'
+    configuration:
+      flag: false
+      field_name: field_time_vacation
+    successors: {  }
+  Activity_1ae0sj3:
+    plugin: eca_form_field_disable
+    label: 'Disable field'
+    configuration:
+      flag: true
+      field_name: field_time_vacation
+    successors:
+      -
+        id: Activity_17y1epy
+        condition: ''
+  Activity_17y1epy:
+    plugin: eca_form_field_require
+    label: 'Not required field'
+    configuration:
+      flag: false
+      field_name: field_time_vacation
+    successors:
+      -
+        id: Activity_1k7i0ju
+        condition: ''
+  Activity_05i205h:
+    plugin: eca_form_field_require
+    label: 'Required field'
+    configuration:
+      flag: true
+      field_name: field_time_vacation
+    successors:
+      -
+        id: Activity_04cfg1r
         condition: ''

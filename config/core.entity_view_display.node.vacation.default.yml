@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.vacation.field_range
     - field.field.node.vacation.field_reason
     - field.field.node.vacation.field_state_vacation
+    - field.field.node.vacation.field_time_vacation
     - field.field.node.vacation.field_timestamp
     - field.field.node.vacation.field_type_vacation
     - field.field.node.vacation.field_vacation_s_employee_
@@ -19,6 +20,7 @@ dependencies:
     - layout_builder
     - layout_discovery
     - options
+    - time_field
     - user
 third_party_settings:
   layout_builder:
@@ -60,7 +62,7 @@ third_party_settings:
                 settings:
                   link: false
                 third_party_settings: {  }
-            weight: 5
+            weight: 6
             additional: {  }
           b10b0d9c-3484-4e7c-ba8a-5fdcdea21d52:
             uuid: b10b0d9c-3484-4e7c-ba8a-5fdcdea21d52
@@ -79,7 +81,7 @@ third_party_settings:
                 settings:
                   view_mode: default
                 third_party_settings: {  }
-            weight: 8
+            weight: 9
             additional: {  }
           f18e3a27-9341-455f-8c20-ae5f2b371cc7:
             uuid: f18e3a27-9341-455f-8c20-ae5f2b371cc7
@@ -96,7 +98,7 @@ third_party_settings:
                   thousand_separator: ''
                   prefix_suffix: true
                 third_party_settings: {  }
-            weight: 4
+            weight: 5
             additional: {  }
           41c977ed-9017-43c9-b70b-e54399ea9b0c:
             uuid: 41c977ed-9017-43c9-b70b-e54399ea9b0c
@@ -152,7 +154,7 @@ third_party_settings:
                 label: above
                 settings: {  }
                 third_party_settings: {  }
-            weight: 6
+            weight: 7
             additional: {  }
           b17d3548-7490-40de-b379-ffa79643e8a0:
             uuid: b17d3548-7490-40de-b379-ffa79643e8a0
@@ -170,7 +172,27 @@ third_party_settings:
                 label: above
                 settings: {  }
                 third_party_settings: {  }
-            weight: 7
+            weight: 8
+            additional: {  }
+          49ea9d16-8a82-4d06-a6c3-606804ad2950:
+            uuid: 49ea9d16-8a82-4d06-a6c3-606804ad2950
+            region: content
+            configuration:
+              id: 'field_block:node:vacation:field_time_vacation'
+              label: 'Time Vacation'
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: time_range_formatter
+                label: inline
+                settings:
+                  time_format: 'h:i a'
+                  timerange_format: 'start ~ end'
+                third_party_settings: {  }
+            weight: 4
             additional: {  }
         third_party_settings: {  }
 id: node.vacation.default
@@ -212,6 +234,15 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 6
+    region: content
+  field_time_vacation:
+    type: time_range_formatter
+    label: above
+    settings:
+      time_format: 'h:i a'
+      timerange_format: 'start ~ end'
+    third_party_settings: {  }
+    weight: 10
     region: content
   field_timestamp:
     type: datetime_default

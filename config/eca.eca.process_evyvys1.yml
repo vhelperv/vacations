@@ -1177,9 +1177,6 @@ actions:
       -
         id: Gateway_0hi7ryj
         condition: Flow_0mqc3y7
-      -
-        id: Activity_1a18vl3
-        condition: ''
   Activity_0abyhmk:
     plugin: eca_form_field_set_error
     label: 'ERROR: Number days greater than 14'
@@ -1202,11 +1199,4 @@ actions:
       token_name: enderror
       token_value: '1'
       use_yaml: false
-    successors: {  }
-  Activity_1a18vl3:
-    plugin: action_message_action
-    label: Activity_1a18vl3
-    configuration:
-      replace_tokens: false
-      message: '[number]'
     successors: {  }
